@@ -5,14 +5,10 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+	private static InputManager instance;
 
-
-
-    private static InputManager instance;
-
+	Dictionary<string, BufferInput> bufferInputs;
     Gamepad gp;
-
-    float timer = 0f;
 
     void Awake()
     {
@@ -30,12 +26,13 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         gp = Gamepad.current;
+		bufferInputs.Add("buttonWest", new BufferInput(0.25f));
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
+
     }
 
     //left and right joysticks
@@ -118,7 +115,7 @@ public class InputManager : MonoBehaviour
     //Xbox X and PS4 Square
     public static bool button_West()
     {
-        return instance.gp.buttonWest.wasPressedThisFrame;
+        return instance.bufferInputs["buttonWest"].Refresh(instance.gp.buttonWest.wasPressedThisFrame);
     }
 
     //start button
@@ -134,5 +131,37 @@ public class InputManager : MonoBehaviour
     }
 
 
+
+	class BufferInput
+	{
+		public readonly float timeout;
+		public float timer = 0;
+		public bool pressed = false;
+
+		public BufferInput(float timeout)
+		{
+			this.timeout = timeout;
+		}
+
+		public bool Refresh(bool pressed)
+		{
+			if (pressed)
+			{
+				this.pressed = true;
+				timer = 0;
+			}
+			else if (this.pressed)
+			{
+				timer += Time.deltaTime;
+				if (timer >= timeout)
+				{
+					timer = 0;
+					this.pressed = false;
+				}
+			}
+
+			return this.pressed;
+		}
+	}
 
 }
