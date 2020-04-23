@@ -758,7 +758,8 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 460344558718780575, guid: 9ffd747efb8d1474f93b5089a00fc94a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9ffd747efb8d1474f93b5089a00fc94a, type: 3}
 --- !u!4 &1847932806293314902 stripped
 Transform:
@@ -919,7 +920,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room bottom wall
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2703147073685692290, guid: 21a10b924cd4f724f82cf3c4a81f6784, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 21a10b924cd4f724f82cf3c4a81f6784, type: 3}
 --- !u!4 &480199048146164974 stripped
 Transform:
@@ -1334,7 +1336,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room left wall
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4906567140325811187, guid: 23a7b2ccfd410e44680b7ef235f63602, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 23a7b2ccfd410e44680b7ef235f63602, type: 3}
 --- !u!4 &7943285028863279416 stripped
 Transform:
@@ -1514,7 +1517,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1776650541858317777, guid: 748c36ccd9c676f4a9f862f41140c2a6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 748c36ccd9c676f4a9f862f41140c2a6, type: 3}
 --- !u!4 &6620677362915648043 stripped
 Transform:
@@ -1780,7 +1784,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square bottom left corner
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8137238469420599970, guid: 3a987a78791011e4c8f57ff9c8f394a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3a987a78791011e4c8f57ff9c8f394a0, type: 3}
 --- !u!4 &2508040946946385012 stripped
 Transform:
@@ -1980,7 +1985,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8511884670150288215, guid: 339087b8c9aec3a48b417f302aaec620, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 339087b8c9aec3a48b417f302aaec620, type: 3}
 --- !u!4 &3160374759807039045 stripped
 Transform:
@@ -2055,7 +2061,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square bottom right
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5966039351963357410, guid: 10064ca753b4f36469345f6d3d9561d0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 10064ca753b4f36469345f6d3d9561d0, type: 3}
 --- !u!4 &4018562132619513749 stripped
 Transform:
@@ -2532,7 +2539,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8511884670150288215, guid: 339087b8c9aec3a48b417f302aaec620, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 339087b8c9aec3a48b417f302aaec620, type: 3}
 --- !u!4 &1062656208278689571 stripped
 Transform:
@@ -2607,7 +2615,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room left wall (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4906567140325811187, guid: 23a7b2ccfd410e44680b7ef235f63602, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 23a7b2ccfd410e44680b7ef235f63602, type: 3}
 --- !u!4 &4361941727165367816 stripped
 Transform:
@@ -2682,7 +2691,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room no walls (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9199885715926394091, guid: 8725df043c01e39489c1e3a4e85b6108, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8725df043c01e39489c1e3a4e85b6108, type: 3}
 --- !u!4 &518922631540871454 stripped
 Transform:
@@ -2757,7 +2767,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8511884670150288215, guid: 339087b8c9aec3a48b417f302aaec620, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 339087b8c9aec3a48b417f302aaec620, type: 3}
 --- !u!4 &1062656208351606162 stripped
 Transform:
@@ -3448,7 +3459,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3808106282785261888, guid: b561f0cff5a1af043a117b332a3f6bc7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b561f0cff5a1af043a117b332a3f6bc7, type: 3}
 --- !u!4 &5496087328785113048 stripped
 Transform:
@@ -3869,7 +3881,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room top wall
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 312801612427364232, guid: 6fdf9983420c7fc49937a1f1df9cb897, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6fdf9983420c7fc49937a1f1df9cb897, type: 3}
 --- !u!4 &8991526103250888864 stripped
 Transform:
@@ -3944,7 +3957,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room left wall (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4906567140325811187, guid: 23a7b2ccfd410e44680b7ef235f63602, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 23a7b2ccfd410e44680b7ef235f63602, type: 3}
 --- !u!4 &4361941726359250384 stripped
 Transform:
@@ -4145,7 +4159,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room no walls
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9199885715926394091, guid: 8725df043c01e39489c1e3a4e85b6108, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8725df043c01e39489c1e3a4e85b6108, type: 3}
 --- !u!4 &518922630626692676 stripped
 Transform:
@@ -4584,7 +4599,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Square room no walls (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9199885715926394091, guid: 8725df043c01e39489c1e3a4e85b6108, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8725df043c01e39489c1e3a4e85b6108, type: 3}
 --- !u!4 &518922631063549225 stripped
 Transform:
