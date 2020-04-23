@@ -22,6 +22,7 @@ public class PlayerManager : Pawn
     void moveAround()
     {
         Vector2 leftStick = InputManager.getLeftJoyStick();
+        LOG("Left Stick: "+leftStick);
         _rb.velocity = new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed;
     }
 

@@ -140,7 +140,7 @@ public class Enemy : Pawn
 
         Debug.DrawRay(_transf.position, playerDirection * sightDistance, Color.red, Game.getlevelThreeAI());
 
-        if (Physics.Raycast(_transf.position, playerDirection * sightDistance, out hit))
+        if (Physics.Raycast(_transf.position, playerDirection, out hit, sightDistance, ~(1 << 8)))
         {
             Debug.DrawLine(_transf.position, hit.transform.position, Color.green, Game.getlevelTwoAI());
             if (hit.transform.name == Game.player.name)

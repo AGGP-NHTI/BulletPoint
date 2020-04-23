@@ -94,6 +94,8 @@ public class EnemyShooter : Enemy
 
         agent.SetDestination(Game.player.transform.position);
 
+        //Chasing is not game breaking, but has a weird "taunt" bug
+
         if (!_canSeePlayer)
         {
             action = idle;
