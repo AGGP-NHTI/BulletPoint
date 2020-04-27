@@ -5,6 +5,7 @@ using ListUtils;
 
 public class MapGen : MonoBehaviour
 {
+	[Range(3,64)]
 	public int mapSize = 16;
 	public TileCollection tileset;
 	
@@ -79,12 +80,12 @@ public class MapGen : MonoBehaviour
 		}
 
 
-		(short x, short y) randPos = ((short)(mapSize / 2), (short)(mapSize / 2));
+		(short x, short y) startPos = ((short)(mapSize / 2), (short)(mapSize / 2));
 
-		map[randPos.x, randPos.y].Clear();
-		map[randPos.x, randPos.y].Add(tileset.RandomIndex());
+		map[startPos.x, startPos.y].Clear();
+		map[startPos.x, startPos.y].Add(0);
 
-		Collapse(randPos.x, randPos.y);
+		Collapse(startPos.x, startPos.y);
 		while (Resolve()) { }
 
 
@@ -277,8 +278,36 @@ public class MapGen : MonoBehaviour
 	{
 		if (map[x, y].Count != 0)
 		{
-			Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * 4, 0, y * 4), Quaternion.identity);
+			Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * tileset.tileSize, 0, y * tileset.tileSize), Quaternion.identity);
 		}
+		else
+		{
+			Debug.LogError($"Unable to spawn tile at ({x},{y})");
+		}
+	}
+
+	public void SpawnTile((short x, short y) pos)
+	{
+		SpawnTile(pos.x, pos.y);
+	}
+
+	public (short x, short y)? MapCoordinate(Vector3 worldPosition)
+	{
+		(short x, short y) pos;
+		pos = ((short)(worldPosition.x / tileset.tileSize), (short)(worldPosition.z / tileset.tileSize));
+		if (IsWithinBounds(pos))
+		{
+			return pos;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public bool IsWithinBounds((short x, short y) mapCoordinate)
+	{
+		return (mapCoordinate.x >= 0 && mapCoordinate.x < mapSize && mapCoordinate.y >= 0 && mapCoordinate.y < mapSize);
 	}
 
 	//Texture2D Render()

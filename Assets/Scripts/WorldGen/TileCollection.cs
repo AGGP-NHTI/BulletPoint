@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TileCollection : DataObject
 {
+	public float tileSize;
 	[SerializeField]
 	private TileData[] tiles;
 	private int[] weights = null;
