@@ -7,6 +7,7 @@ public class MapGen : MonoBehaviour
 {
 	[Range(3,64)]
 	public int mapSize = 16;
+	public bool useNoVoid = false;
 	public TileCollection tileset;
 	
 	
@@ -75,6 +76,21 @@ public class MapGen : MonoBehaviour
 					map[x, y].Clear();
 					map[x, y].Add(tileset.Length - 1);
 					Collapse(x, y);
+				}
+			}
+		}
+
+		if (useNoVoid)
+		{
+			for (short y = 0; y < mapSize; y++)
+			{
+				for (short x = 0; x < mapSize; x++)
+				{
+					if (map[x, y].Count > 1)
+					{
+						map[x, y].Remove(tileset.Length - 1);
+						Collapse(x, y);
+					}
 				}
 			}
 		}
