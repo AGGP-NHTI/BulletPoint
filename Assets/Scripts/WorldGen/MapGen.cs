@@ -6,13 +6,17 @@ using ListUtils;
 public class MapGen : MonoBehaviour
 {
 	public int mapSize = 16;
-	public Renderer ren;
-	public Sprite[] sprTiles;
+	public TileCollection tileset;
+	
+	
+	//public Renderer ren;
+	//public Sprite[] sprTiles;
+
 	// ======================
 
-	// stores adjacency rules for tiles
-	List<TileData> tileData;
-	List<int> tileWeight;
+	//// stores adjacency rules for tiles
+	//List<TileData> tileData;
+	//List<int> tileWeight;
 
 	// stores a list of tile indices at each position in the chunk
 	List<int>[,] map;
@@ -22,28 +26,28 @@ public class MapGen : MonoBehaviour
 
 	void Start()
 	{
-		// setup tile data
-		tileData = new List<TileData>();
+		//// setup tile data
+		//tileData = new List<TileData>();
 
-		foreach (Sprite spr in sprTiles)
-		{
-			tileData.Add(new TileData(
-				spr.texture.GetPixel((int)spr.rect.x + 1, (int)spr.rect.y + 3),
-				spr.texture.GetPixel((int)spr.rect.x + 2, (int)spr.rect.y + 3),
-				spr.texture.GetPixel((int)spr.rect.x, (int)spr.rect.y + 1),
-				spr.texture.GetPixel((int)spr.rect.x, (int)spr.rect.y + 2)
-				));
-		}
+		//foreach (Sprite spr in sprTiles)
+		//{
+		//	tileData.Add(new TileData(
+		//		spr.texture.GetPixel((int)spr.rect.x + 1, (int)spr.rect.y + 3),
+		//		spr.texture.GetPixel((int)spr.rect.x + 2, (int)spr.rect.y + 3),
+		//		spr.texture.GetPixel((int)spr.rect.x, (int)spr.rect.y + 1),
+		//		spr.texture.GetPixel((int)spr.rect.x, (int)spr.rect.y + 2)
+		//		));
+		//}
 
 		// setup tile weights
-		tileWeight = new List<int>();
+		//tileWeight = new List<int>();
 
-		foreach (Sprite spr in sprTiles)
-		{
-			tileWeight.Add(
-				(int)(spr.texture.GetPixel((int)spr.rect.x, (int)spr.rect.y + 3).r * 255)
-				);
-		}
+		//foreach (TileData tile in tileset)
+		//{
+		//	tileWeight.Add(tile.weight);
+		//}
+
+		visited = new bool[mapSize, mapSize];
 
 		// populate chunk
 		map = new List<int>[mapSize, mapSize];
@@ -53,41 +57,61 @@ public class MapGen : MonoBehaviour
 			for (int x = 0; x < mapSize; x++)
 			{
 				map[x, y] = new List<int>();
-				for (int i = 0; i < sprTiles.Length; i++)
+				for (int i = 0; i < tileset.Length; i++)
 				{
 					map[x, y].Add(i);
+				}
+				
+			}
+		}
+
+		for (short y = 0; y < mapSize; y++)
+		{
+			for (short x = 0; x < mapSize; x++)
+			{
+				if (x == 0 || y == 0 || x == mapSize - 1 || y == mapSize - 1)
+				{
+					map[x, y].Clear();
+					map[x, y].Add(tileset.Length - 1);
+					Collapse(x, y);
 				}
 			}
 		}
 
-		visited = new bool[mapSize, mapSize];
 
 		(short x, short y) randPos = ((short)(mapSize / 2), (short)(mapSize / 2));
 
 		map[randPos.x, randPos.y].Clear();
-		map[randPos.x, randPos.y].Add(tileData.RandomIndex(tileWeight));
+		map[randPos.x, randPos.y].Add(tileset.RandomIndex());
 
 		Collapse(randPos.x, randPos.y);
-		StartCoroutine(DoResolve());
+		while (Resolve()) { }
 
-		ren.material.mainTexture = Render();
-	}
 
-	IEnumerator DoResolve()
-	{
-		float t = 0;
-		while (Resolve())
+		for (short y = 0; y < mapSize; y++)
 		{
-			t += Time.deltaTime;
-			ren.material.mainTexture = Render();
-			if (t > .05f)
+			for (short x = 0; x < mapSize; x++)
 			{
-				t = 0;
-				yield return null;
+				SpawnTile(x, y);
 			}
-			
 		}
 	}
+
+	//IEnumerator DoResolve()
+	//{
+	//	float t = 0;
+	//	while (Resolve())
+	//	{
+	//		t += Time.deltaTime;
+	//		ren.material.mainTexture = Render();
+	//		if (t > .05f)
+	//		{
+	//			t = 0;
+	//			yield return null;
+	//		}
+			
+	//	}
+	//}
 
 	// eliminate conflicting possibilities around x,y, and propagate
 	void Collapse(short init_x, short init_y)
@@ -106,22 +130,20 @@ public class MapGen : MonoBehaviour
 			entropy = (short)map[pair.x, pair.y].Count;
 
 
-			List<Color> matches = new List<Color>();
+			List<int> matches = new List<int>();
 
 			// left
 			if (pair.x > 0)
 			{
 				foreach (int tileIndex in map[pair.x, pair.y])
 				{
-					Color c = tileData[tileIndex].left;
-
-					if (!matches.Contains(c))
+					if (!matches.Contains(tileset[tileIndex].left))
 					{
-						matches.Add(c);
+						matches.Add(tileset[tileIndex].left);
 					}
 				}
 
-				map[pair.x - 1, pair.y].RemoveAll(i => !matches.Contains(tileData[i].right));
+				map[pair.x - 1, pair.y].RemoveAll(i => !matches.Contains(tileset[i].right));
 			}
 
 			matches.Clear();
@@ -131,14 +153,13 @@ public class MapGen : MonoBehaviour
 			{
 				foreach (int tileIndex in map[pair.x, pair.y])
 				{
-					Color c = tileData[tileIndex].right;
-					if (!matches.Contains(c))
+					if (!matches.Contains(tileset[tileIndex].right))
 					{
-						matches.Add(c);
+						matches.Add(tileset[tileIndex].right);
 					}
 				}
 
-				map[pair.x + 1, pair.y].RemoveAll(i => !matches.Contains(tileData[i].left));
+				map[pair.x + 1, pair.y].RemoveAll(i => !matches.Contains(tileset[i].left));
 			}
 
 			matches.Clear();
@@ -148,14 +169,13 @@ public class MapGen : MonoBehaviour
 			{
 				foreach (int tileIndex in map[pair.x, pair.y])
 				{
-					Color c = tileData[tileIndex].down;
-					if (!matches.Contains(c))
+					if (!matches.Contains(tileset[tileIndex].down))
 					{
-						matches.Add(c);
+						matches.Add(tileset[tileIndex].down);
 					}
 				}
 
-				map[pair.x, pair.y - 1].RemoveAll(i => !matches.Contains(tileData[i].up));
+				map[pair.x, pair.y - 1].RemoveAll(i => !matches.Contains(tileset[i].up));
 			}
 
 			matches.Clear();
@@ -165,14 +185,13 @@ public class MapGen : MonoBehaviour
 			{
 				foreach (int tileIndex in map[pair.x, pair.y])
 				{
-					Color c = tileData[tileIndex].up;
-					if (!matches.Contains(c))
+					if (!matches.Contains(tileset[tileIndex].up))
 					{
-						matches.Add(c);
+						matches.Add(tileset[tileIndex].up);
 					}
 				}
 
-				map[pair.x, pair.y + 1].RemoveAll(i => !matches.Contains(tileData[i].down));
+				map[pair.x, pair.y + 1].RemoveAll(i => !matches.Contains(tileset[i].down));
 			}
 
 			if (entropy != (short)map[pair.x, pair.y].Count)
@@ -237,8 +256,7 @@ public class MapGen : MonoBehaviour
 
 			// resolve
 			(short x, short y) selectedPosition = lowEntropyPositions.RandomElement();
-
-			int resolution = map[selectedPosition.x, selectedPosition.y].RandomElement(tileWeight);
+			int resolution = map[selectedPosition.x, selectedPosition.y].RandomElement(tileset.Weights);
 
 			map[selectedPosition.x, selectedPosition.y].Clear();
 			map[selectedPosition.x, selectedPosition.y].Add(resolution);
@@ -255,58 +273,65 @@ public class MapGen : MonoBehaviour
 
 	}
 
-
-	Texture2D Render()
+	public void SpawnTile(short x, short y)
 	{
-		Texture2D tx = new Texture2D(mapSize * 3, mapSize * 3, TextureFormat.RGB24, false, false);
-		tx.filterMode = FilterMode.Point;
-
-		for (int y = 0; y < mapSize; y++)
+		if (map[x, y].Count != 0)
 		{
-			for (int x = 0; x < mapSize; x++)
-			{
+			Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * 4, 0, y * 4), Quaternion.identity);
+		}
+	}
 
-				if (map[x, y].Count == 1)
-				{
-					Sprite spr = sprTiles[map[x, y][0]];
+	//Texture2D Render()
+	//{
+	//	Texture2D tx = new Texture2D(mapSize * 3, mapSize * 3, TextureFormat.RGB24, false, false);
+	//	tx.filterMode = FilterMode.Point;
+
+	//	for (int y = 0; y < mapSize; y++)
+	//	{
+	//		for (int x = 0; x < mapSize; x++)
+	//		{
+
+	//			if (map[x, y].Count == 1)
+	//			{
+	//				Sprite spr = sprTiles[map[x, y][0]];
 					
-					Graphics.CopyTexture(
-						spr.texture, 0, 0,
-						(int)spr.rect.x + 1,
-						(int)spr.rect.y,
-						3, 3,
-						tx, 0, 0,
-						x * 3, y * 3
-						);
-				}
-				else
-				{
-					tx.SetPixel(x * 3 + 1, y * 3 + 1, Color.HSVToRGB(.333f, 1, map[x, y].Count / (float)sprTiles.Length));
-				}
-			}
-		}
+	//				Graphics.CopyTexture(
+	//					spr.texture, 0, 0,
+	//					(int)spr.rect.x + 1,
+	//					(int)spr.rect.y,
+	//					3, 3,
+	//					tx, 0, 0,
+	//					x * 3, y * 3
+	//					);
+	//			}
+	//			else
+	//			{
+	//				tx.SetPixel(x * 3 + 1, y * 3 + 1, Color.HSVToRGB(.333f, 1, map[x, y].Count / (float)sprTiles.Length));
+	//			}
+	//		}
+	//	}
 
-		tx.Apply();
+	//	tx.Apply();
 
-		return tx;
-	}
-
-
+	//	return tx;
+	//}
 
 
-	struct TileData
-	{
-		public Color up;
-		public Color right;
-		public Color down;
-		public Color left;
 
-		public TileData(Color up, Color right, Color down, Color left)
-		{
-			this.up = up;
-			this.right = right;
-			this.down = down;
-			this.left = left;
-		}
-	}
+
+	//struct TileData
+	//{
+	//	public Color up;
+	//	public Color right;
+	//	public Color down;
+	//	public Color left;
+
+	//	public TileData(Color up, Color right, Color down, Color left)
+	//	{
+	//		this.up = up;
+	//		this.right = right;
+	//		this.down = down;
+	//		this.left = left;
+	//	}
+	//}
 }
