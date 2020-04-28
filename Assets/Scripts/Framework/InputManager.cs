@@ -64,12 +64,14 @@ public class InputManager : MonoBehaviour
 
 	public static bool GetButtonPressed(GamepadButton btn)
 	{
-		return instance.gp[btn].wasPressedThisFrame;
+        
+
+        return instance.gp[btn].wasPressedThisFrame;
 	}
 
 	public static bool GetButtonPressed(GamepadButton btn, float bufferTime)
 	{
-		if (instance.buffer.ContainsKey(btn))
+        if (instance.buffer.ContainsKey(btn))
 		{
 			if (instance.buffer[btn].timePressed != -1)
 			{

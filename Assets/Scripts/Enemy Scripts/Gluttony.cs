@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-public class EnemyShooter : Enemy
+
+public class Gluttony : Enemy
 {
+
     public float ScareDistance = 8f;//when to flee
     public float fleeSpeed = 10f; //speed to flee
     public float fleeDistance = 25f; // how far to flee
-    
+
     private bool isFleeing = false;
 
     public float attackDistance = 15f;
@@ -35,11 +36,11 @@ public class EnemyShooter : Enemy
     {
 
         base.Update();
-        gizmoSpheres.Add((transform.position, ScareDistance,Color.black));
+        gizmoSpheres.Add((transform.position, ScareDistance, Color.black));
         gizmoSpheres.Add((transform.position, attackDistance, Color.red));
         gizmoSpheres.Add((transform.position, fleeDistance, Color.blue));
-        
-        LOG("Action is: "+action.Method.Name);
+
+        LOG("Action is: " + action.Method.Name);
 
         Debug.DrawRay(faces[0].transform.position, faces[0].transform.forward * sightDistance, Color.red);
         Debug.DrawRay(faces[1].transform.position, faces[1].transform.forward * sightDistance, Color.red);
@@ -136,7 +137,7 @@ public class EnemyShooter : Enemy
                 agent.SetDestination(moveDestination);
             }
             Debug.DrawLine(_transf.position, moveDestination, Color.magenta, 5f);
-            
+
         }
 
         if (!agent.pathPending && agent.remainingDistance < 1)
@@ -153,7 +154,7 @@ public class EnemyShooter : Enemy
         }
     }
 
-    
+
 
     protected override IEnumerator Think()
     {
