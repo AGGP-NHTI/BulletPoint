@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TileCollection : DataObject
 {
+	[Space(32)]
+	[Header("The last tile should be a void tile.")]
+	[Header("The first tile should be fully open.")]
+	
+	
+	public float tileSize;
 	[SerializeField]
 	private TileData[] tiles;
 	private int[] weights = null;

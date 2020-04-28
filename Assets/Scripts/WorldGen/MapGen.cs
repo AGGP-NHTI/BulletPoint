@@ -5,7 +5,9 @@ using ListUtils;
 
 public class MapGen : MonoBehaviour
 {
+	[Range(3,64)]
 	public int mapSize = 16;
+	public bool useNoVoid = false;
 	public TileCollection tileset;
 	
 	
@@ -78,13 +80,28 @@ public class MapGen : MonoBehaviour
 			}
 		}
 
+		if (useNoVoid)
+		{
+			for (short y = 0; y < mapSize; y++)
+			{
+				for (short x = 0; x < mapSize; x++)
+				{
+					if (map[x, y].Count > 1)
+					{
+						map[x, y].Remove(tileset.Length - 1);
+						Collapse(x, y);
+					}
+				}
+			}
+		}
 
-		(short x, short y) randPos = ((short)(mapSize / 2), (short)(mapSize / 2));
 
-		map[randPos.x, randPos.y].Clear();
-		map[randPos.x, randPos.y].Add(tileset.RandomIndex());
+		(short x, short y) startPos = ((short)(mapSize / 2), (short)(mapSize / 2));
 
-		Collapse(randPos.x, randPos.y);
+		map[startPos.x, startPos.y].Clear();
+		map[startPos.x, startPos.y].Add(0);
+
+		Collapse(startPos.x, startPos.y);
 		while (Resolve()) { }
 
 
@@ -277,8 +294,36 @@ public class MapGen : MonoBehaviour
 	{
 		if (map[x, y].Count != 0)
 		{
-			Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * 4, 0, y * 4), Quaternion.identity);
+			Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * tileset.tileSize, 0, y * tileset.tileSize), Quaternion.identity);
 		}
+		else
+		{
+			Debug.LogError($"Unable to spawn tile at ({x},{y})");
+		}
+	}
+
+	public void SpawnTile((short x, short y) pos)
+	{
+		SpawnTile(pos.x, pos.y);
+	}
+
+	public (short x, short y)? MapCoordinate(Vector3 worldPosition)
+	{
+		(short x, short y) pos;
+		pos = ((short)(worldPosition.x / tileset.tileSize), (short)(worldPosition.z / tileset.tileSize));
+		if (IsWithinBounds(pos))
+		{
+			return pos;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	public bool IsWithinBounds((short x, short y) mapCoordinate)
+	{
+		return (mapCoordinate.x >= 0 && mapCoordinate.x < mapSize && mapCoordinate.y >= 0 && mapCoordinate.y < mapSize);
 	}
 
 	//Texture2D Render()

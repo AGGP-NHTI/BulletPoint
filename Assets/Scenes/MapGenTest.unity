@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 1776349512}
   - component: {fileID: 1776349511}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MapGen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -325,7 +325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce84bbf6166efc045a40e557f66928f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 64
+  mapSize: 22
+  useNoVoid: 1
   tileset: {fileID: 5247744407423954152, guid: 0fcd3fdaf4a9b96408d28fe3a01e6aea, type: 3}
 --- !u!4 &1776349512
 Transform:
