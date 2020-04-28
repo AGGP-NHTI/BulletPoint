@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using ListUtils;
 
 public class MapGen : MonoBehaviour
 {
+	public NavMeshSurface navMeshSurface;
 	[Range(3,64)]
 	public int mapSize = 16;
 	public bool useNoVoid = false;
@@ -112,6 +114,8 @@ public class MapGen : MonoBehaviour
 				SpawnTile(x, y);
 			}
 		}
+
+		navMeshSurface.BuildNavMesh();
 	}
 
 	//IEnumerator DoResolve()
@@ -273,6 +277,12 @@ public class MapGen : MonoBehaviour
 
 			// resolve
 			(short x, short y) selectedPosition = lowEntropyPositions.RandomElement();
+			//if (map[selectedPosition.x, selectedPosition.y].Count == 1 && tileset[map[selectedPosition.x, selectedPosition.y][0]].weight == 0)
+			//{
+
+			//}
+
+
 			int resolution = map[selectedPosition.x, selectedPosition.y].RandomElement(tileset.Weights);
 
 			map[selectedPosition.x, selectedPosition.y].Clear();
@@ -294,7 +304,8 @@ public class MapGen : MonoBehaviour
 	{
 		if (map[x, y].Count != 0)
 		{
-			Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * tileset.tileSize, 0, y * tileset.tileSize), Quaternion.identity);
+			var t = Instantiate(tileset[map[x, y][0]].prefab, new Vector3(x * tileset.tileSize, 0, y * tileset.tileSize), Quaternion.identity, transform);
+			//t.isStatic = true;
 		}
 		else
 		{
