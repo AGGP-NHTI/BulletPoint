@@ -51,7 +51,7 @@ public class PlayerManager : Pawn
 
 
             
-        if (InputManager.GetButtonPressed(GamepadButton.South,0.5f) && canRoll)
+        if (canRoll && InputManager.GetButtonPressed(GamepadButton.South, true))
         {
             if (leftStickDir.sqrMagnitude == 0)
             {
