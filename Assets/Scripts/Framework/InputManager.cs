@@ -8,11 +8,13 @@ public class InputManager : MonoBehaviour
 {
 	class Buffer
 	{
+		public readonly float bufferTime;
 		public float timePressed;
 		public float timeReleased;
 
-		public Buffer()
+		public Buffer(float bufferTime)
 		{
+			this.bufferTime = bufferTime;
 			timePressed = -1;
 			timeReleased = -1;
 		}
@@ -23,10 +25,10 @@ public class InputManager : MonoBehaviour
 
 	Dictionary<GamepadButton, Buffer> buffer = new Dictionary<GamepadButton, Buffer>()
 	{
-		{GamepadButton.North,	new Buffer() },
-		{GamepadButton.East,	new Buffer() },
-		{GamepadButton.South,	new Buffer() },
-		{GamepadButton.West,	new Buffer() },
+		{GamepadButton.North,	new Buffer(0.5f) },
+		{GamepadButton.East,	new Buffer(0.5f) },
+		{GamepadButton.South,	new Buffer(0.5f) },
+		{GamepadButton.West,	new Buffer(0.5f) },
 	};
 	Gamepad gp;
 
@@ -59,23 +61,25 @@ public class InputManager : MonoBehaviour
 			{
 				entry.Value.timeReleased = Time.time;
 			}
+
+			if (entry.Value.timePressed != -1)
+			{
+				if ((Time.time - entry.Value.timePressed) > entry.Value.bufferTime)
+				{
+					entry.Value.timePressed = -1;
+				}
+			}
+			
 		}
 	}
 
-	public static bool GetButtonPressed(GamepadButton btn)
+	public static bool GetButtonPressed(GamepadButton btn, bool useBuffer = true)
 	{
-        
-
-        return instance.gp[btn].wasPressedThisFrame;
-	}
-
-	public static bool GetButtonPressed(GamepadButton btn, float bufferTime)
-	{
-        if (instance.buffer.ContainsKey(btn))
+		if (useBuffer)
 		{
-			if (instance.buffer[btn].timePressed != -1)
+			if (instance.buffer.ContainsKey(btn))
 			{
-				if ((Time.time - instance.buffer[btn].timePressed) < bufferTime)
+				if (instance.buffer[btn].timePressed != -1)
 				{
 					instance.buffer[btn].timePressed = -1;
 					return true;
@@ -87,14 +91,13 @@ public class InputManager : MonoBehaviour
 			}
 			else
 			{
-				return false;
+				throw new System.Exception("InputManager does not contain a buffer for button " + System.Enum.GetName(typeof(GamepadButton), btn));
 			}
 		}
-		else
+        else
 		{
-			throw new System.Exception("InputManager does not contain a buffer for button " + System.Enum.GetName(typeof(GamepadButton), btn));
+			return instance.gp[btn].wasPressedThisFrame;
 		}
-		
 	}
 
 	public static bool GetButtonReleased(GamepadButton btn)
