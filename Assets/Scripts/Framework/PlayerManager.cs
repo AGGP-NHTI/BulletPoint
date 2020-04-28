@@ -6,6 +6,9 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
+    public bool itemPickedUp = false;
+
+    public GameObject Hand_Node;
 
     public float moveSpeed = 10f;
     public float rollForce = 10f;
@@ -83,7 +86,6 @@ public class PlayerManager : Pawn
             
         }
     }
-
 
     IEnumerator rollCoolDown()
     {

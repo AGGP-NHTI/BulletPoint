@@ -10,7 +10,7 @@ public class EnemyOneController : Enemy
     protected override void Start()
     {
         base.Start();
-        runOnFrame = rotate;
+        runOnFrame = rotateAndShoot;
         action = idle;
         StartCoroutine(Think());
         
@@ -49,7 +49,7 @@ public class EnemyOneController : Enemy
 
     protected override void idle()
     {
-        runOnFrame = rotate;
+        runOnFrame = rotateAndShoot;
         
         
         

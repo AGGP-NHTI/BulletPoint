@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyShooter : Enemy
 {
+
+    public GameObject projectile;
+
     public float ScareDistance = 8f;//when to flee
     public float fleeSpeed = 10f; //speed to flee
     public float fleeDistance = 25f; // how far to flee
@@ -19,9 +22,6 @@ public class EnemyShooter : Enemy
 
     public GameObject[] faces;
 
-
-
-    float distanceFromPlayer;
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -38,8 +38,6 @@ public class EnemyShooter : Enemy
         gizmoSpheres.Add((transform.position, ScareDistance,Color.black));
         gizmoSpheres.Add((transform.position, attackDistance, Color.red));
         gizmoSpheres.Add((transform.position, fleeDistance, Color.blue));
-        
-        LOG("Action is: "+action.Method.Name);
 
         Debug.DrawRay(faces[0].transform.position, faces[0].transform.forward * sightDistance, Color.red);
         Debug.DrawRay(faces[1].transform.position, faces[1].transform.forward * sightDistance, Color.red);
@@ -47,7 +45,6 @@ public class EnemyShooter : Enemy
 
 
         runOnFrame?.Invoke();
-        distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
     }
 
     protected override void idle()
@@ -74,7 +71,7 @@ public class EnemyShooter : Enemy
 
     protected override void attack()
     {
-        runOnFrame = rotate;
+        runOnFrame = rotateAndShoot;
 
         LOG("ATTACKING");
         if (_canSeePlayer && distanceFromPlayer < ScareDistance)
@@ -185,15 +182,15 @@ public class EnemyShooter : Enemy
         }
     }
 
-    protected override void rotate()
+    protected override void rotateAndShoot()
     {
-        base.rotate();
+        base.rotateAndShoot();
 
         GameObject whoIs = inFaceFOV(faces[whichFace], faceFOV);
 
         if (whoIs)
         {
-            projectileShoot(whoIs, Game.player);
+            projectileShoot(whoIs, Game.player, projectile);
 
             whichFace++;
             if (whichFace == 3)

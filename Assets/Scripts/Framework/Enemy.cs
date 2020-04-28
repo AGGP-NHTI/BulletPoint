@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : Pawn
 {
 
-    public GameObject projectile;
+    
 
     protected List<(Vector3 Location, float magnitude, Color color)> gizmoSpheres = new List<(Vector3 Location, float magnitude, Color color)>();
     protected List<(Vector3 Location, Vector3 dimensions, Color color)> gizmoCubes = new List<(Vector3 Location, Vector3 dimensions, Color color)>();
@@ -24,6 +24,7 @@ public class Enemy : Pawn
     public float spinSpeed = 10f;
     public bool UseSight;
 
+    protected float distanceFromPlayer;
     protected Vector3? lastKnownPlayerLocation;
     protected bool _canSeePlayer;
     protected float distance;
@@ -42,6 +43,10 @@ public class Enemy : Pawn
         gizmoSpheres.Add((transform.position, sightDistance, Color.yellow));
         gizmoSpheres.Add((transform.position, minSightDistance, Color.green));
         StartCoroutine(clearGizmos());
+        distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
+
+
+        LOG(_obj.name + "'s action is " + action.Method.Name);
     }
     protected virtual void OnDrawGizmos()
     {
@@ -152,19 +157,19 @@ public class Enemy : Pawn
         return objectInWay;
     }
 
-    protected virtual void rotate()
+    protected virtual void rotateAndShoot()
     {
         _transf.Rotate(Vector3.up * -spinSpeed * Time.deltaTime, Space.World);
 
     }
 
-    protected void projectileShoot(GameObject origin)
+    protected void projectileShoot(GameObject origin, GameObject projectile)
     {
         GameObject bullet = Instantiate(projectile, origin.transform.position, origin.transform.rotation);
 
         bullet.GetComponent<bulletScript>().owner = this;
     }
-    protected void projectileShoot(GameObject origin, GameObject toward)
+    protected void projectileShoot(GameObject origin, GameObject toward, GameObject projectile)
     {
         Vector3 lookDir = toward.transform.position - origin.transform.position;
 
