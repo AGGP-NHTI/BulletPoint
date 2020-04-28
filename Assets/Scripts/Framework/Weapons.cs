@@ -46,4 +46,24 @@ public class Weapons : EntityController
             }
         }
     }
+
+    void use()
+    {
+        bool rightTrigger = InputManager.rightTrigger();
+
+        if (rightTrigger)
+        {
+            RaycastHit hit;
+            Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, 5f);
+            if (Physics.Raycast(_transf.position, _transf.forward, out hit, 100f))
+            {
+                Pawn enemy = hit.transform.GetComponent<Pawn>();
+                if (enemy)
+                {
+                    enemy.takeDamage(2, _obj);
+                }
+            }
+
+        }
+    }
 }
