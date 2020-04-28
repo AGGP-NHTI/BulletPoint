@@ -3,35 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
-public class Weapons : EntityController
+public abstract class Weapons : EntityController
 {
-
-    PlayerManager owner;
-
+    public int damage = 10;
+    public float coolDownDuration = 0.5f;
+    protected PlayerManager owner;
     GameObject parent;
 
-    
+    public bool takes_Continuous_Input;
+    public Collider trigger;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-     
-    }
+    protected bool coolingDown = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    public void setParent(PlayerManager whosCalling)
+    protected virtual void setParent(PlayerManager whosCalling)
     {
         _transf.SetPositionAndRotation(parent.transform.position, parent.transform.rotation);
         _transf.SetParent(parent.transform);
         owner = whosCalling;
     }
 
-    private void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         PlayerManager player = other.GetComponent<PlayerManager>();
 
@@ -43,27 +35,20 @@ public class Weapons : EntityController
                 setParent(player);
 
                 player.itemPickedUp = true;
+                player.weapon = this;
+                trigger.enabled = false;
             }
         }
     }
 
-    void use()
+    public abstract void Use();
+
+
+
+    protected IEnumerator coolDown(float coolDownTime)
     {
-        bool rightTrigger = InputManager.rightTrigger();
+        yield return new WaitForSeconds(coolDownTime);
 
-        if (rightTrigger)
-        {
-            RaycastHit hit;
-            Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, 5f);
-            if (Physics.Raycast(_transf.position, _transf.forward, out hit, 100f))
-            {
-                Pawn enemy = hit.transform.GetComponent<Pawn>();
-                if (enemy)
-                {
-                    enemy.takeDamage(2, _obj);
-                }
-            }
-
-        }
+        coolingDown = false;
     }
 }

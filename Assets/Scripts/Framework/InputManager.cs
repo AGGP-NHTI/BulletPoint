@@ -29,7 +29,8 @@ public class InputManager : MonoBehaviour
 		{GamepadButton.East,	new Buffer(0.5f) },
 		{GamepadButton.South,	new Buffer(0.5f) },
 		{GamepadButton.West,	new Buffer(0.5f) },
-	};
+        {GamepadButton.RightTrigger,    new Buffer(0.5f) },
+    };
 	Gamepad gp;
 
     void Awake()
@@ -130,6 +131,16 @@ public class InputManager : MonoBehaviour
     public static bool rightTrigger()
     {
         return instance.gp.rightTrigger.wasPressedThisFrame;
+    }
+
+    //xbox triggers and PS4 L1 and R1 Buttons
+    public static bool leftTriggerConstant()
+    {
+        return instance.gp.leftTrigger.isPressed;
+    }
+    public static bool rightTriggerConstant()
+    {
+        return instance.gp.rightTrigger.isPressed;
     }
 
     //xbox bumpers and PS4 L2 and R2 Buttons

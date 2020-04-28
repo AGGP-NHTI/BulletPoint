@@ -8,6 +8,8 @@ public class PlayerManager : Pawn
 {
     public bool itemPickedUp = false;
 
+    public Weapons weapon;
+
     public GameObject Hand_Node;
 
     public float moveSpeed = 10f;
@@ -20,8 +22,8 @@ public class PlayerManager : Pawn
     {
         moveAround();
         spinAround();
-        attack();
         roll();
+        attack();
     }
 
     void moveAround()
@@ -66,6 +68,21 @@ public class PlayerManager : Pawn
             StartCoroutine(rollCoolDown());
         }
     }
+
+    void attack()
+    {
+        if (weapon && weapon.takes_Continuous_Input)
+        {
+            if(InputManager.GetButtonPressed(GamepadButton.RightTrigger,true))
+            weapon.Use();
+        }
+        else if(weapon)
+        {
+            if (InputManager.rightTriggerConstant())
+                weapon.Use();
+        }
+    }
+
 
     IEnumerator rollCoolDown()
     {
