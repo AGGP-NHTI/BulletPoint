@@ -6,6 +6,7 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
+    
     public bool itemPickedUp = false;
 
     public Weapons weapon;
@@ -13,6 +14,7 @@ public class PlayerManager : Pawn
     public GameObject Hand_Node;
 
     public float moveSpeed = 10f;
+    public float currentSpeed;
     public float rollForce = 10f;
 
     bool canRoll = true;
@@ -24,11 +26,14 @@ public class PlayerManager : Pawn
         spinAround();
         roll();
         attack();
+
+        //LOG("The player is holding: " + weapon?.name);
     }
 
     void moveAround()
     {
         Vector2 leftStick = InputManager.getLeftJoyStick();
+        currentSpeed = leftStick.magnitude;
         _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed);
     }
 
@@ -71,13 +76,14 @@ public class PlayerManager : Pawn
 
     void attack()
     {
-        if (weapon && weapon.takes_Continuous_Input)
+        if (weapon && !weapon.takes_Continuous_Input)
         {
             if(InputManager.GetButtonPressed(GamepadButton.RightTrigger,true))
             weapon.Use();
         }
-        else if(weapon)
+        else if(weapon && weapon.takes_Continuous_Input)
         {
+           // LOG("CONTINUOUS");
             if (InputManager.rightTriggerConstant())
                 weapon.Use();
         }

@@ -10,12 +10,6 @@ public class Pawn : EntityController
     public int health = 10;
     protected int startingHealth;
 
-    void Awake()
-    {
-        _obj = gameObject;
-        _transf = gameObject.GetComponent<Transform>();
-        _rb = gameObject.GetComponent<Rigidbody>();
-    }
 
     // Start is called before the first frame update
     protected virtual void Start()

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyShooter : Enemy
 {
-
+    public bool isDummy;
     public GameObject projectile;
 
     public float ScareDistance = 8f;//when to flee
@@ -28,7 +28,8 @@ public class EnemyShooter : Enemy
         base.Start();
         action = idle;
         runOnFrame = null;
-        StartCoroutine(Think());
+        if(!isDummy)
+            StartCoroutine(Think());
     }
 
     public override void Update()
@@ -39,9 +40,9 @@ public class EnemyShooter : Enemy
         gizmoSpheres.Add((transform.position, attackDistance, Color.red));
         gizmoSpheres.Add((transform.position, fleeDistance, Color.blue));
 
-        Debug.DrawRay(faces[0].transform.position, faces[0].transform.forward * sightDistance, Color.red);
-        Debug.DrawRay(faces[1].transform.position, faces[1].transform.forward * sightDistance, Color.red);
-        Debug.DrawRay(faces[2].transform.position, faces[2].transform.forward * sightDistance, Color.red);
+        if (UseSight) Debug.DrawRay(faces[0].transform.position, faces[0].transform.forward * sightDistance, Color.red);
+        if (UseSight) Debug.DrawRay(faces[1].transform.position, faces[1].transform.forward * sightDistance, Color.red);
+        if (UseSight) Debug.DrawRay(faces[2].transform.position, faces[2].transform.forward * sightDistance, Color.red);
 
 
         runOnFrame?.Invoke();
@@ -161,7 +162,10 @@ public class EnemyShooter : Enemy
         action.Invoke();
 
         yield return new WaitForSeconds(Game.getlevelThreeAI());
-        StartCoroutine(Think());
+        if (!isDummy)
+        {
+            StartCoroutine(Think());
+        }
     }
 
     protected virtual GameObject inFaceFOV(GameObject GO, float FOVWanted)
@@ -190,7 +194,7 @@ public class EnemyShooter : Enemy
 
         if (whoIs)
         {
-            projectileShoot(whoIs, Game.player, projectile);
+            projectileShoot(whoIs, Game.player.gameObject, projectile);
 
             whichFace++;
             if (whichFace == 3)

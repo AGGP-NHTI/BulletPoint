@@ -45,6 +45,7 @@ public class Enemy : Pawn
         StartCoroutine(clearGizmos());
         distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
 
+        agent.speed = moveSpeed;
 
         LOG(_obj.name + "'s action is " + action.Method.Name);
     }
@@ -126,7 +127,9 @@ public class Enemy : Pawn
             Vector3 randomAddition = new Vector3(Random.Range(-1 * randomMoveFactor, 1 * randomMoveFactor), startingPos.y, Random.Range(-1 * randomMoveFactor, 1 * randomMoveFactor));
 
             Vector3 moveLocation = startingPos + randomAddition;
-            Debug.DrawLine(startingPos, moveLocation, Color.magenta, 5f);
+
+            if(UseSight) Debug.DrawLine(startingPos, moveLocation, Color.magenta, 5f);
+
             agent.SetDestination(moveLocation);
         }
     }
@@ -143,11 +146,11 @@ public class Enemy : Pawn
         playerDirection.Normalize();
 
 
-        Debug.DrawRay(_transf.position, playerDirection * sightDistance, Color.red, Game.getlevelThreeAI());
+        if (UseSight) Debug.DrawRay(_transf.position, playerDirection * sightDistance, Color.red, Game.getlevelThreeAI());
 
         if (Physics.Raycast(_transf.position, playerDirection * sightDistance, out hit))
         {
-            Debug.DrawLine(_transf.position, hit.transform.position, Color.green, Game.getlevelTwoAI());
+            if (UseSight) Debug.DrawLine(_transf.position, hit.transform.position, Color.green, Game.getlevelTwoAI());
             if (hit.transform.name == Game.player.name)
             {
                 objectInWay = false;

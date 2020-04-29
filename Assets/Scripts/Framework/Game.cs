@@ -6,8 +6,14 @@ public class Game : MonoBehaviour
 {
 
     public static Game game;
-    public GameObject Player_Object;
-    public static GameObject player;
+    public PlayerManager Player;
+    public static PlayerManager player;
+
+    public static int EnemyCount = 0;
+
+    public GameObject[] EnemyPrefabs;
+    public static int EnemyCap = 0;
+    public static GameObject[] enemyPrefabs;
 
     private static float levelOneAI = 0.1f; // time it takes to update system
     private static float levelTwoAI = 0.5f; // time it takes to update system
@@ -16,7 +22,10 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
-        player = Player_Object;
+        player = Player;
+
+        enemyPrefabs = EnemyPrefabs;
+
         if (!game)
         {
             game = this;
@@ -56,5 +65,17 @@ public class Game : MonoBehaviour
     public static float getlevelFourAI()
     {
         return levelFourAI;
+    }
+
+    public static bool SpawmEnemy(GameObject whatEnemy, Vector3 location)
+    {
+        GameObject enemy = null;
+
+        if (EnemyCount < EnemyCap)
+        {
+            enemy = Instantiate(whatEnemy, location, Quaternion.identity);
+        }
+        if (enemy) { EnemyCap++; }
+        return enemy;
     }
 }

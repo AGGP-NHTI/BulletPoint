@@ -13,25 +13,38 @@ public class Sniper : Weapons
         takes_Continuous_Input = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
     public override void Use()
     {
         if (!coolingDown)
         {
-            RaycastHit hit;
-            Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, 5f);
-            if (Physics.Raycast(_transf.position, _transf.forward, out hit, 100f))
+            RaycastHit[] hit = Physics.RaycastAll(_transf.position, _transf.forward);
+
+            sortEnemies(ref hit);
+
+            Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, coolDownDuration);
+            if (hit.Length > 0)
             {
-                Pawn enemy = hit.transform.GetComponent<Pawn>();
-                if (enemy)
+                
+                int damageLeft = damage;
+                for (int i = 0; i < hit.Length; i++)
                 {
-                    enemy.takeDamage(damage, Game.player);
+                    Enemy enemy = hit[i].collider.gameObject.GetComponent<Enemy>();
+                    if (enemy)
+                    {
+                        int damageDealing = damageLeft;
+                        damageLeft -= enemy.health;
+
+                        if (damageLeft <= 0) { break; }
+
+                        enemy.GetComponentInParent<Enemy>().takeDamage(damageDealing, Game.player.gameObject);
+                        //LOG("DAMAGE LEFT: " + damageLeft);
+                        //LOG(damageDealing + " damage dealt to: " + enemy.name);
+                    }
+                    else
+                    {
+                        i = hit.Length;
+                        break;
+                    }
                 }
             }
 
@@ -41,4 +54,23 @@ public class Sniper : Weapons
             StartCoroutine(coolDown(coolDownDuration));
         }
     }
+
+    void sortEnemies(ref RaycastHit[] hit)
+    {
+        int i, j;
+        for (i = 1; i <hit.Length; i++)
+        {
+            j = i;
+            while (j > 0 && hit[j - 1].distance > hit[j].distance)
+            {
+
+                RaycastHit temp = hit[j];
+                hit[j]=hit[j - 1];
+                hit[j - 1] = temp;
+
+                j--;
+            }
+        }
+    }
+
 }
