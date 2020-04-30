@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3868911951394686364
+--- !u!1 &2329465275080012700
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7702138649394512172}
-  - component: {fileID: 246952801733801879}
+  - component: {fileID: 7064180826595677982}
+  - component: {fileID: 95145082815044311}
   m_Layer: 0
-  m_Name: Room Collection
+  m_Name: Car tile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7702138649394512172
+--- !u!4 &7064180826595677982
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3868911951394686364}
+  m_GameObject: {fileID: 2329465275080012700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6367188, y: 3.2207031, z: -3.7890625}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &246952801733801879
+--- !u!114 &95145082815044311
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3868911951394686364}
+  m_GameObject: {fileID: 2329465275080012700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5612f410d60b0854e88c55ae5bce419e, type: 3}
+  m_Script: {fileID: 11500000, guid: 59643beebc22c6b47b4f63026ef6881c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSize: 5
-  tiles:
-  - {fileID: 4751751864723928345, guid: b7c5ceaee35a0a844a7f6868b8a93976, type: 3}
-  - {fileID: 7436567086729656499, guid: 059af88b336e9d2499950850da2e0878, type: 3}
-  - {fileID: 2493200104773499435, guid: 0deb2b57865671242b3eefef20141ff0, type: 3}
-  - {fileID: 95145082815044311, guid: a97096b6716cef1429348d80c56e1e25, type: 3}
-  - {fileID: 8982570376851002408, guid: 3178596e87fa4074ea0f52ee7f3729a1, type: 3}
+  prefab: {fileID: 2411289114609562662, guid: 1acf51944723d494286eaa885f5c9b1b, type: 3}
+  weight: 5
+  up: 0
+  right: 0
+  down: 1
+  left: 0

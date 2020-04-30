@@ -386,9 +386,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navMeshSurface: {fileID: 188296319}
-  mapSize: 19
+  mapSize: 10
   useNoVoid: 1
-  tileset: {fileID: 5247744407423954152, guid: 08ee7f90df35a7041980a0b5f3ec5f6b, type: 3}
+  tileset: {fileID: 246952801733801879, guid: ce2421bbab78afd42b12c2bd2030092f, type: 3}
 --- !u!4 &1776349512
 Transform:
   m_ObjectHideFlags: 0
