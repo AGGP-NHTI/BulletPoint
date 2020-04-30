@@ -20,7 +20,15 @@ public class PlayerManager : Pawn
     bool canRoll = true;
     Vector2 leftStick;
 
-    public override void Start()
+	Animator anim;
+
+	protected override void Awake()
+	{
+		base.Awake();
+		anim = GetComponent<Animator>();
+	}
+
+	public override void Start()
     {
         base.Start();
         weaponOwned = null;
@@ -46,6 +54,7 @@ public class PlayerManager : Pawn
     {
         currentSpeed = leftStick.magnitude;
         _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed);
+		anim.SetFloat("Movement", transform.InverseTransformDirection(_rb.velocity).z);
     }
 
     void spinAround()
@@ -87,16 +96,31 @@ public class PlayerManager : Pawn
 
     void attack()
     {
-        if (weaponOwned && !weaponOwned.takes_Continuous_Input)
-        {
-            if(InputManager.GetButtonPressed(GamepadButton.RightTrigger,true))
-            weaponOwned.Use();
+		if (weaponOwned && !weaponOwned.takes_Continuous_Input)
+		{
+			if (InputManager.GetButtonPressed(GamepadButton.RightTrigger, true))
+			{
+				weaponOwned.Use();
+				anim.SetBool("Attack", true);
+			}
+			else
+			{
+				anim.SetBool("Attack", true);
+			}
+            
         }
         else if(weaponOwned && weaponOwned.takes_Continuous_Input)
         {
            // LOG("CONTINUOUS");
             if (InputManager.rightTriggerConstant())
+			{
                 weaponOwned.Use();
+				anim.SetBool("Attack", true);
+			}
+			else
+			{
+				anim.SetBool("Attack", false);
+			}
         }
     }
 
