@@ -153,26 +153,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpitParticle
       objectReference: {fileID: 0}
-    - target: {fileID: 6914233812170642283, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: lengthInSec
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6914233812170642283, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: prewarm
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6914233812170642283, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: looping
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6914233812170642283, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8929196637290710358, guid: dc0d8a20ffe39c048994a166208b8cde,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -227,21 +207,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8929196637290710358, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8929196637290710358, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8929196637290710358, guid: dc0d8a20ffe39c048994a166208b8cde,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc0d8a20ffe39c048994a166208b8cde, type: 3}

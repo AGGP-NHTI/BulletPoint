@@ -175,4 +175,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   line: {fileID: 8605341828032331316}
-  lifetime: 25
+  lifetime: 0.1
