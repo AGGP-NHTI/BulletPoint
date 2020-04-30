@@ -12,8 +12,7 @@ public class Game : MonoBehaviour
     public static int EnemyCount = 0;
 
     public GameObject[] EnemyPrefabs;
-    public static int EnemyCap = 0;
-    public static GameObject[] enemyPrefabs;
+    public static int EnemyCap = 10;
 
     private static float levelOneAI = 0.1f; // time it takes to update system
     private static float levelTwoAI = 0.5f; // time it takes to update system
@@ -23,8 +22,6 @@ public class Game : MonoBehaviour
     void Awake()
     {
         player = Player;
-
-        enemyPrefabs = EnemyPrefabs;
 
         if (!game)
         {
@@ -46,7 +43,7 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Enemy Count: " + EnemyCount);
     }
 
     public static float getlevelOneAI()
@@ -67,15 +64,36 @@ public class Game : MonoBehaviour
         return levelFourAI;
     }
 
-    public static bool SpawmEnemy(GameObject whatEnemy, Vector3 location)
+    public static bool SpawmEnemy(int whatEnemy, Vector3 location)
+    {
+        GameObject enemy = null;
+
+        if (EnemyCount <= EnemyCap)
+        {
+            enemy = Instantiate(game.EnemyPrefabs[whatEnemy], location, Quaternion.identity);
+        }
+        if (enemy) { EnemyCount++; }
+        return enemy;
+    }
+
+    public static bool SpawmEnemy(string whatEnemy, Vector3 location)
     {
         GameObject enemy = null;
 
         if (EnemyCount < EnemyCap)
         {
-            enemy = Instantiate(whatEnemy, location, Quaternion.identity);
+            foreach(GameObject enemyObj in game.EnemyPrefabs)
+            {
+                if (enemyObj.tag == whatEnemy)
+                {
+                    enemy = Instantiate(enemyObj, location, Quaternion.identity);
+                }
+            }
         }
-        if (enemy) { EnemyCap++; }
+        {
+            Debug.Log("SPAWN CAP REACHED");
+        }
+        if (enemy) { EnemyCount++; }
         return enemy;
     }
 }

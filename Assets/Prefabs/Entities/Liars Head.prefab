@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  isDummy: 0
   agent: {fileID: 6312149268924019292}
   wantedFOV: 30
   sightDistance: 30

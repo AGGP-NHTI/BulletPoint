@@ -6,6 +6,7 @@ public class Pawn : EntityController
 {
 
     
+    
 
     public int health = 10;
     protected int startingHealth;
@@ -20,6 +21,10 @@ public class Pawn : EntityController
 
     protected virtual void dead()
     {
+        if ((Enemy)this)
+        {
+            Game.EnemyCount--;
+        }
         Destroy(_obj);
     }
 

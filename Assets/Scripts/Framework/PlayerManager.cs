@@ -18,6 +18,7 @@ public class PlayerManager : Pawn
     public float rollForce = 10f;
 
     bool canRoll = true;
+    Vector2 leftStick;
 
     public override void Start()
     {
@@ -28,7 +29,7 @@ public class PlayerManager : Pawn
     // Update is called once per frame
     void Update()
     {
-        moveAround();
+        leftStick = InputManager.getLeftJoyStick();
         spinAround();
         roll();
         attack();
@@ -36,9 +37,13 @@ public class PlayerManager : Pawn
         //LOG("The player is holding: " + weapon?.name);
     }
 
+    private void FixedUpdate()
+    {
+        moveAround();
+    }
+
     void moveAround()
     {
-        Vector2 leftStick = InputManager.getLeftJoyStick();
         currentSpeed = leftStick.magnitude;
         _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed);
     }

@@ -78,7 +78,7 @@ public class Gluttony : Enemy
         }
         //Game.SpawmEnemy(Game.enemyPrefabs[0], _transf.position);
 
-        Instantiate(liar, _transf.position, Quaternion.identity); 
+       Game.SpawmEnemy(1,_transf.position);
 
         yield return new WaitForSeconds(2);
         StartCoroutine(spawnLiars(howMany - 1, spawnSpeed));

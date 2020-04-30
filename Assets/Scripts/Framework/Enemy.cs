@@ -47,7 +47,7 @@ public class Enemy : Pawn
 
         agent.speed = moveSpeed;
 
-        if(!isDummy) LOG(_obj.name + "'s action is " + action.Method.Name);
+        //if(!isDummy) LOG(_obj.name + "'s action is " + action.Method.Name);
     }
     protected virtual void OnDrawGizmos()
     {
