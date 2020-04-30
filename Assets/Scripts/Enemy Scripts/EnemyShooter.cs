@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyShooter : Enemy
 {
-    public bool isDummy;
+    
     public GameObject projectile;
 
     public float ScareDistance = 8f;//when to flee
@@ -23,7 +23,7 @@ public class EnemyShooter : Enemy
     public GameObject[] faces;
 
     // Start is called before the first frame update
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         action = idle;

@@ -6,10 +6,10 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
-    
-    public bool itemPickedUp = false;
 
-    public Weapons weapon;
+    //public bool itemPickedUp = false;
+
+    public Weapons weaponOwned;
 
     public GameObject Hand_Node;
 
@@ -18,6 +18,12 @@ public class PlayerManager : Pawn
     public float rollForce = 10f;
 
     bool canRoll = true;
+
+    public override void Start()
+    {
+        base.Start();
+        weaponOwned = null;
+    }
 
     // Update is called once per frame
     void Update()
@@ -76,16 +82,16 @@ public class PlayerManager : Pawn
 
     void attack()
     {
-        if (weapon && !weapon.takes_Continuous_Input)
+        if (weaponOwned && !weaponOwned.takes_Continuous_Input)
         {
             if(InputManager.GetButtonPressed(GamepadButton.RightTrigger,true))
-            weapon.Use();
+            weaponOwned.Use();
         }
-        else if(weapon && weapon.takes_Continuous_Input)
+        else if(weaponOwned && weaponOwned.takes_Continuous_Input)
         {
            // LOG("CONTINUOUS");
             if (InputManager.rightTriggerConstant())
-                weapon.Use();
+                weaponOwned.Use();
         }
     }
 
@@ -95,4 +101,65 @@ public class PlayerManager : Pawn
         yield return new WaitForSeconds(0.5f);
         canRoll = true;
     }
+
+    public virtual void PickUp(Weapons weapon)
+    {
+        if (InputManager.GetButtonPressed(GamepadButton.West))
+        {
+           // LOG("TRYING TO PICK UP." + weapon.gameObject.transform.name);
+           // LOG("WEAPONOWNED == NULL: "+ weaponOwned);
+            if (!weaponOwned)
+            {
+                weaponOwned = weapon;
+                weapon.trigger.enabled = false;
+
+                weapon.transform.localScale = weapon.OwednScale;
+                weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
+                weapon.transform.parent = Hand_Node.transform;
+                
+
+
+               // LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
+            }
+            else
+            {
+                //LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
+                LOG("DROP YOUR CURRENT ITEM BEFORE PICKING UP ANOTHER");
+            }
+        }
+    }
+
+    public virtual void Drop(Weapons weapon)
+    {
+        if (InputManager.GetButtonPressed(GamepadButton.East))
+        {
+            //LOG("TRYING TO DROP" + weapon.gameObject.transform.name);
+
+            if (weaponOwned)
+            {
+
+                //LOG("SETTING PARENT NULL");
+                weapon.transform.parent = null;
+               // LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
+
+
+                weapon.transform.position = Game.player.transform.position;
+                weapon.transform.position = new Vector3(_transf.position.x, weapon.defaultHeight, weapon.transform.position.z);
+                weapon.transform.rotation = Quaternion.Euler(weapon.PlacedRotation);
+                weapon.transform.localScale = weapon.PlacedScale;
+
+                Game.player.weaponOwned = null;
+                //Game.player.itemPickedUp = false;
+                weapon.trigger.enabled = true;
+
+            }
+            else
+            {
+               // LOG("Parent of " + gameObject.transform.name + " is " + gameObject.transform.parent);
+                LOG("NO ITEM TO DROP" + gameObject.transform.name);
+            }
+        }
+    }
+
+
 }

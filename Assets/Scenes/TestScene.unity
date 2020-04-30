@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 635608499}
   - component: {fileID: 635608497}
   m_Layer: 0
-  m_Name: Rifle
+  m_Name: SnipeRifle
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -570,9 +570,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f900ec843657d4ca6d59d2910d2c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlacedRotation: {x: -90, y: 0, z: 0}
+  PlacedScale: {x: 2, y: 2, z: 2}
+  OwednScale: {x: 1, y: 1, z: 1}
+  defaultHeight: 2.5
   damage: 20
   coolDownDuration: 0.5
-  takes_Continuous_Input: 0
+  takes_Continuous_Input: 1
   trigger: {fileID: 635608499}
 --- !u!4 &635608498
 Transform:
@@ -583,7 +587,7 @@ Transform:
   m_GameObject: {fileID: 635608496}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 2.5, z: 10.24}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 1896467660}
   m_Father: {fileID: 0}
@@ -600,7 +604,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.39
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &653012677
 GameObject:
@@ -780,6 +784,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
+  isDummy: 1
   agent: {fileID: 927911113}
   wantedFOV: 30
   sightDistance: 10
@@ -1222,7 +1227,7 @@ GameObject:
   - component: {fileID: 1874131503}
   - component: {fileID: 1874131502}
   m_Layer: 0
-  m_Name: Rifle (1)
+  m_Name: AsaultRifle
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1240,6 +1245,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6198d903d852c8449bf16bee1060b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlacedRotation: {x: -90, y: 0, z: 0}
+  PlacedScale: {x: 2, y: 2, z: 2}
+  OwednScale: {x: 1, y: 1, z: 1}
+  defaultHeight: 2.5
   damage: 1
   coolDownDuration: 0.05
   takes_Continuous_Input: 1
@@ -1257,7 +1266,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.39
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1874131504
 Transform:
@@ -1268,7 +1277,7 @@ Transform:
   m_GameObject: {fileID: 1874131501}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -9.84, y: 2.5, z: 10.24}
-  m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000002}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 955618533}
   m_Father: {fileID: 0}

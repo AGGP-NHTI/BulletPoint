@@ -39,7 +39,7 @@ public class AssaultRifle : Weapons
             Quaternion rot = Quaternion.LookRotation(Vector3.forward * 100 + deviation3D);
             Vector3 shootDir = _transf.rotation * rot * Vector3.forward;
 
-
+            bulletTrail(_transf.position,shootDir, 100f);
             
             //LOG("SHOOT DIR: " + shootDir);
             if (Physics.Raycast(_transf.position, shootDir, out hit))

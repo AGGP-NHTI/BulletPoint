@@ -12,10 +12,10 @@ public class Pawn : EntityController
 
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    public virtual void Start()
     {
         startingHealth = health;
-        LOG("Starting Health: " + startingHealth);
+        //LOG("Starting Health: " + startingHealth);
     }
 
     protected virtual void dead()
@@ -27,7 +27,7 @@ public class Pawn : EntityController
     {
 
         health -= howMuch;
-        LOG(_obj.name + " has " + health + " health");
+        //LOG(_obj.name + " has " + health + " health");
 
         if (health <= 0)
         {
@@ -39,8 +39,8 @@ public class Pawn : EntityController
     {
 
         health -= howMuch;
-        LOG(source.name + " dealth "+ howMuch + " damage to" + _obj.name);
-        LOG(_obj.name + " now has " + health + " health");
+        //LOG(source.name + " dealth "+ howMuch + " damage to" + _obj.name);
+        //LOG(_obj.name + " now has " + health + " health");
 
         if (health <= 0)
         {

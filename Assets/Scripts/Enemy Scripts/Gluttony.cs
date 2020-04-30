@@ -10,12 +10,12 @@ public class Gluttony : Enemy
     public int idleCount = 0;
     public bool StartedSpawning = false;
     // Start is called before the first frame update
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         action = idle;
         runOnFrame = null;
-        StartCoroutine(Think());
+        if (!isDummy) { StartCoroutine(Think()); }
     }
 
     public override void Update()
@@ -61,7 +61,7 @@ public class Gluttony : Enemy
 
 
 
-        action.Invoke();
+        if (!isDummy) { action.Invoke(); }
 
         yield return new WaitForSeconds(Game.getlevelThreeAI());
         StartCoroutine(Think());

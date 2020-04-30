@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class Enemy : Pawn
 {
+    public bool isDummy;
 
-    
 
     protected List<(Vector3 Location, float magnitude, Color color)> gizmoSpheres = new List<(Vector3 Location, float magnitude, Color color)>();
     protected List<(Vector3 Location, Vector3 dimensions, Color color)> gizmoCubes = new List<(Vector3 Location, Vector3 dimensions, Color color)>();
@@ -31,7 +31,7 @@ public class Enemy : Pawn
 
     
     // Start is called before the first frame update
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
 
@@ -47,7 +47,7 @@ public class Enemy : Pawn
 
         agent.speed = moveSpeed;
 
-        LOG(_obj.name + "'s action is " + action.Method.Name);
+        if(!isDummy) LOG(_obj.name + "'s action is " + action.Method.Name);
     }
     protected virtual void OnDrawGizmos()
     {

@@ -7,7 +7,7 @@ public class EnemyOneController : Enemy
 {
  
     // Start is called before the first frame update
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         runOnFrame = rotateAndShoot;

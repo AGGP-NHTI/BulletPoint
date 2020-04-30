@@ -22,23 +22,23 @@ public class Sniper : Weapons
             sortEnemies(ref hit);
 
             Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, coolDownDuration);
+            bulletTrail(_transf.position,_transf.forward,100f);
             if (hit.Length > 0)
             {
                 
                 int damageLeft = damage;
                 for (int i = 0; i < hit.Length; i++)
                 {
+                    //LOG("("+ i + ") ENEMY HIT: " + hit[i].collider.name);
                     Enemy enemy = hit[i].collider.gameObject.GetComponent<Enemy>();
                     if (enemy)
                     {
                         int damageDealing = damageLeft;
                         damageLeft -= enemy.health;
 
-                        if (damageLeft <= 0) { break; }
-
+                        if (damageLeft <= 0 && i > 0) { break; }
+                        //LOG("DAMAGE LEFT: "+ damageLeft);
                         enemy.GetComponentInParent<Enemy>().takeDamage(damageDealing, Game.player.gameObject);
-                        //LOG("DAMAGE LEFT: " + damageLeft);
-                        //LOG(damageDealing + " damage dealt to: " + enemy.name);
                     }
                     else
                     {

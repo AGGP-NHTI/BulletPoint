@@ -5,9 +5,10 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public abstract class Weapons : EntityController
 {
-    Vector3 defaultRotation;
-
-    private float defaultHeight = 2.5f;
+    public Vector3 PlacedRotation;
+    public Vector3 PlacedScale;
+    public Vector3 OwednScale;
+    public float defaultHeight = 2.5f;
 
     public int damage = 10;
     public float coolDownDuration = 0.5f;
@@ -19,59 +20,14 @@ public abstract class Weapons : EntityController
 
     protected bool coolingDown = false;
 
-    private void Start()
-    {
-        
-        defaultRotation = _transf.rotation.eulerAngles;
-    }
 
-    protected virtual void PickUp()
-    {
-        if (!Game.player.itemPickedUp)
-        {
-            parent = Game.player.Hand_Node;
-
-
-            Game.player.itemPickedUp = true;
-            Game.player.weapon = this;
-            trigger.enabled = true;
-
-            _transf.SetPositionAndRotation(parent.transform.position, parent.transform.rotation);
-            _transf.SetParent(parent.transform);
-        }
-        else
-        {
-            LOG("DROP YOUR CURRENT ITEM BEFORE PICKING UP ANOTHER");
-        }
-    }
-
-    protected virtual void Drop()
-    {
-        if (Game.player.itemPickedUp)
-        {
-            parent = null;
-
-            Game.player.weapon = null;
-            Game.player.itemPickedUp = false;
-            trigger.enabled = true;
-
-            LOG("SETTING PARENT NULL");
-            _transf.SetParent(null);
-            _transf.position = Game.player.transform.position;
-            _transf.position = new Vector3(_transf.position.x, defaultHeight, _transf.position.z);
-        }
-        else
-        {
-            LOG("NO ITEM TO DROP");
-        }
-    }
+    
 
     private void Update()
     {
-       if (InputManager.GetButtonPressed(GamepadButton.East))
+        if (Game.player.weaponOwned == this)
         {
-            LOG("TRYING TO DROP");
-            Drop();
+            Game.player.Drop(this);
         }
     }
 
@@ -81,11 +37,7 @@ public abstract class Weapons : EntityController
 
         if (player)
         {
-            if (InputManager.GetButtonPressed(GamepadButton.West))
-            {
-                LOG("TRYING TO PICK UP.");
-                PickUp();
-            }
+            Game.player.PickUp(this);
         }
     }
 
@@ -99,4 +51,13 @@ public abstract class Weapons : EntityController
 
         coolingDown = false;
     }
+
+    protected void bulletTrail(Vector3 origin,Vector3 direction, float magnitude)
+    {
+        Vector3 endPoint = origin + (direction.normalized * magnitude);
+
+
+
+    }
+
 }
