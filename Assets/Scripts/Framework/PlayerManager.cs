@@ -118,7 +118,7 @@ public class PlayerManager : Pawn
                 weaponOwned = weapon;
                 weapon.trigger.enabled = false;
 
-                weapon.transform.localScale = weapon.OwednScale;
+                weapon.transform.localScale = weapon.OwnedScale;
                 weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
                 weapon.transform.parent = Hand_Node.transform;
                 
