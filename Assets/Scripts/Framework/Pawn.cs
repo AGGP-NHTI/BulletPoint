@@ -21,9 +21,13 @@ public class Pawn : EntityController
 
     protected virtual void dead()
     {
-        if ((Enemy)this)
+        if (this is Enemy)
         {
             Game.EnemyCount--;
+        }
+        else
+        {
+            LOG(gameObject.name + " is dieing");
         }
         Destroy(_obj);
     }

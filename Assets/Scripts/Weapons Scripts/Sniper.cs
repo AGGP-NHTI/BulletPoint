@@ -17,7 +17,7 @@ public class Sniper : Weapons
     {
         if (!coolingDown)
         {
-            RaycastHit[] hit = Physics.RaycastAll(_transf.position, _transf.forward);
+            RaycastHit[] hit = Physics.RaycastAll(_transf.position, _transf.forward, ~(1 << 9));
 
             sortEnemies(ref hit);
 

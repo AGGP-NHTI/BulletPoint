@@ -42,7 +42,7 @@ public class AssaultRifle : Weapons
             bulletTrail(_transf.position,shootDir, 100f);
             
             //LOG("SHOOT DIR: " + shootDir);
-            if (Physics.Raycast(_transf.position, shootDir, out hit))
+            if (Physics.Raycast(_transf.position, shootDir, out hit, 100f, ~(1 << 9)))
             {
                 Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
 

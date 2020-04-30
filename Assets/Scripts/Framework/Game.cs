@@ -43,7 +43,7 @@ public class Game : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Enemy Count: " + EnemyCount);
+       // Debug.Log("Enemy Count: " + EnemyCount);
     }
 
     public static float getlevelOneAI()
@@ -68,7 +68,7 @@ public class Game : MonoBehaviour
     {
         GameObject enemy = null;
 
-        if (EnemyCount <= EnemyCap)
+        if (EnemyCount < EnemyCap)
         {
             enemy = Instantiate(game.EnemyPrefabs[whatEnemy], location, Quaternion.identity);
         }

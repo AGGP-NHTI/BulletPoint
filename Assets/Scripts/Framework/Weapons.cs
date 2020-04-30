@@ -34,7 +34,6 @@ public abstract class Weapons : EntityController
     protected virtual void OnTriggerStay(Collider other)
     {
         PlayerManager player = other.GetComponent<PlayerManager>();
-        //LOG("SOMETHING INSIDE" + player.name);
         if (player)
         {
             Game.player.PickUp(this);

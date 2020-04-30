@@ -746,7 +746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &670386363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -759,10 +759,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b885ff99c0ce2be479db566979f93b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Spawn_Distance: 10
   Continue_Spawning: 0
   Amount_To_Spawn: 10
-  Enemys_To_Spawn: 01000000
-  Spawn_Rate: 1
+  Enemys_To_Spawn: 0100000001000000
+  Spawn_Rate: 0.5
   LocationReference: {fileID: 499156367}
 --- !u!4 &670386364
 Transform:
@@ -772,7 +773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670386362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8.56}
+  m_LocalPosition: {x: -7.22, y: 0, z: -38.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 499156371}
@@ -1385,7 +1386,7 @@ MonoBehaviour:
   PlacedScale: {x: 2, y: 2, z: 2}
   OwednScale: {x: 1, y: 1, z: 1}
   defaultHeight: 2.5
-  damage: 1
+  damage: 2
   coolDownDuration: 0.05
   takes_Continuous_Input: 1
   trigger: {fileID: 1874131503}
@@ -1435,7 +1436,7 @@ PrefabInstance:
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.13
+      value: 9.82
       objectReference: {fileID: 0}
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
@@ -1445,7 +1446,7 @@ PrefabInstance:
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 6.32
       objectReference: {fileID: 0}
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
@@ -1486,6 +1487,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1745725207264071353, guid: f04759c6715d61e49b942add4b2febe9,
+        type: 3}
+      propertyPath: health
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1745725207264071354, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
