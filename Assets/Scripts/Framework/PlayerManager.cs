@@ -54,7 +54,7 @@ public class PlayerManager : Pawn
     {
         currentSpeed = leftStick.magnitude;
         _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed);
-		anim.SetFloat("Movement", transform.InverseTransformDirection(_rb.velocity).z);
+		if (anim) anim.SetFloat("Movement", transform.InverseTransformDirection(_rb.velocity).z);
     }
 
     void spinAround()
@@ -101,11 +101,11 @@ public class PlayerManager : Pawn
 			if (InputManager.GetButtonPressed(GamepadButton.RightTrigger, true))
 			{
 				weaponOwned.Use();
-				anim.SetBool("Attack", true);
+				if (anim) anim.SetBool("Attack", true);
 			}
 			else
 			{
-				anim.SetBool("Attack", true);
+				if (anim) anim.SetBool("Attack", true);
 			}
             
         }
@@ -115,11 +115,11 @@ public class PlayerManager : Pawn
             if (InputManager.rightTriggerConstant())
 			{
                 weaponOwned.Use();
-				anim.SetBool("Attack", true);
+				if (anim) anim.SetBool("Attack", true);
 			}
 			else
 			{
-				anim.SetBool("Attack", false);
+				if (anim) anim.SetBool("Attack", false);
 			}
         }
     }
