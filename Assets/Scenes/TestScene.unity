@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 91140932}
   - component: {fileID: 91140934}
   - component: {fileID: 91140933}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 157709135}
   - component: {fileID: 157709134}
   - component: {fileID: 157709133}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ GameObject:
   - component: {fileID: 237610420}
   - component: {fileID: 237610422}
   - component: {fileID: 237610421}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,10 +665,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlacedRotation: {x: -90, y: 0, z: 0}
   PlacedScale: {x: 2, y: 2, z: 2}
-  OwednScale: {x: 1, y: 1, z: 1}
+  OwnedScale: {x: 1, y: 1, z: 1}
   defaultHeight: 2.5
   damage: 20
   coolDownDuration: 0.5
+  tracerPrefab: {fileID: 3804833174766833709, guid: b90a534016bd32a4eb4ead99dcff9364,
+    type: 3}
   takes_Continuous_Input: 1
   trigger: {fileID: 635608499}
 --- !u!4 &635608498
@@ -885,7 +887,7 @@ GameObject:
   - component: {fileID: 927911114}
   - component: {fileID: 927911113}
   - component: {fileID: 927911117}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gluttony
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -1058,7 +1060,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1247737157}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1187,7 +1189,7 @@ GameObject:
   - component: {fileID: 1396759233}
   - component: {fileID: 1396759235}
   - component: {fileID: 1396759234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1384,10 +1386,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlacedRotation: {x: -90, y: 0, z: 0}
   PlacedScale: {x: 2, y: 2, z: 2}
-  OwednScale: {x: 1, y: 1, z: 1}
+  OwnedScale: {x: 1, y: 1, z: 1}
   defaultHeight: 2.5
   damage: 2
   coolDownDuration: 0.05
+  tracerPrefab: {fileID: 3804833174766833709, guid: b90a534016bd32a4eb4ead99dcff9364,
+    type: 3}
   takes_Continuous_Input: 1
   trigger: {fileID: 1874131503}
   standingBulletSpread: 10
@@ -1436,7 +1440,7 @@ PrefabInstance:
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.82
+      value: -11.43
       objectReference: {fileID: 0}
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
@@ -1446,7 +1450,7 @@ PrefabInstance:
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.32
+      value: -28.1
       objectReference: {fileID: 0}
     - target: {fileID: 1745725207264071352, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}

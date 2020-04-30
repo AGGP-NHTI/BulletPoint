@@ -29,7 +29,7 @@ public class Sniper : Weapons
                 int damageLeft = damage;
                 for (int i = 0; i < hit.Length; i++)
                 {
-                    //LOG("("+ i + ") ENEMY HIT: " + hit[i].collider.name);
+                    LOG("("+ i + ") ENEMY HIT: " + hit[i].collider.name);
                     Enemy enemy = hit[i].collider.gameObject.GetComponent<Enemy>();
                     if (enemy)
                     {
@@ -37,7 +37,7 @@ public class Sniper : Weapons
                         damageLeft -= enemy.health;
 
                         if (damageLeft <= 0 && i > 0) { break; }
-                        //LOG("DAMAGE LEFT: "+ damageLeft);
+                        LOG("DAMAGE LEFT: "+ damageLeft);
                         enemy.GetComponentInParent<Enemy>().takeDamage(damageDealing, Game.player.gameObject);
                     }
                     else
