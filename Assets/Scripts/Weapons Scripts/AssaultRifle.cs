@@ -5,8 +5,9 @@ using UnityEngine;
 public class AssaultRifle : Weapons
 {
 
-    private float bulletSpreadMagnitude = 0;
-    public float standingBulletSpread = 0;
+    private float bulletSpreadMagnitude = 0f;
+    public float standingBulletSpread = 0f;
+    public float walkingBulletSpread = 0f;
     public float BulletSpread = 100f;
     private void Start()
     {
@@ -29,7 +30,7 @@ public class AssaultRifle : Weapons
             }
             else
             {
-                bulletSpreadMagnitude *= Game.player.currentSpeed;
+                bulletSpreadMagnitude *= Game.player.currentSpeed * walkingBulletSpread /10f;
             }
             bulletSpreadMagnitude *= BulletSpread;
 
@@ -38,12 +39,13 @@ public class AssaultRifle : Weapons
             Vector3 deviation3D = Random.insideUnitCircle * bulletSpreadMagnitude;
             Quaternion rot = Quaternion.LookRotation(Vector3.forward * 100 + deviation3D);
             Vector3 shootDir = _transf.rotation * rot * Vector3.forward;
-
-            bulletTrail(_transf.position,shootDir, 100f);
+            shootDir.y = 0;
+            
             
             //LOG("SHOOT DIR: " + shootDir);
             if (Physics.Raycast(_transf.position, shootDir, out hit, 100f, ~(1 << 9)))
             {
+                bulletTrail(_transf.position, shootDir, hit.distance);
                 Enemy enemy = hit.collider.gameObject.GetComponent<Enemy>();
 
                 if (enemy)
@@ -55,6 +57,7 @@ public class AssaultRifle : Weapons
             }
             else
             {
+                bulletTrail(_transf.position, shootDir, 100f);
                 Debug.DrawRay(_transf.position, shootDir * 100f, Color.blue, coolDownDuration*3);
             }
 

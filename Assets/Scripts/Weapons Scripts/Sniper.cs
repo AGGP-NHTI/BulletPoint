@@ -17,38 +17,53 @@ public class Sniper : Weapons
     {
         if (!coolingDown)
         {
-            RaycastHit[] hit = Physics.RaycastAll(_transf.position, _transf.forward, ~(1 << 9));
+            RaycastHit[] hit = Physics.RaycastAll(_transf.position, _transf.forward);
 
             sortEnemies(ref hit);
 
             Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, coolDownDuration);
-            bulletTrail(_transf.position,_transf.forward,100f);
+
             if (hit.Length > 0)
-            {
-                
+            { 
                 int damageLeft = damage;
-                for (int i = 0; i < hit.Length; i++)
+
+                if (hit.Length == 1)
                 {
-                    LOG("("+ i + ") ENEMY HIT: " + hit[i].collider.name);
-                    Enemy enemy = hit[i].collider.gameObject.GetComponent<Enemy>();
+                    Enemy enemy = hit[0].collider.gameObject.GetComponentInParent<Enemy>();
                     if (enemy)
                     {
-                        int damageDealing = damageLeft;
-                        damageLeft -= enemy.health;
-
-                        if (damageLeft <= 0 && i > 0) { break; }
-                        LOG("DAMAGE LEFT: "+ damageLeft);
-                        enemy.GetComponentInParent<Enemy>().takeDamage(damageDealing, Game.player.gameObject);
+                        enemy.takeDamage(damage, Game.player.gameObject);
+                        bulletTrail(_transf.position, _transf.forward, hit[0].distance);
                     }
-                    else
+                }
+                else
+                {
+                    for (int i = 0; i < hit.Length; i++)
                     {
-                        i = hit.Length;
-                        break;
+                        LOG("(" + i + ") ENEMY HIT: " + hit[i].collider.name);
+
+                        Enemy enemy = hit[i].collider.gameObject.GetComponentInParent<Enemy>();
+
+                        if (enemy)
+                        {
+                            int enemyHealth = enemy.health;
+                            enemy.takeDamage(damageLeft, Game.player.gameObject);
+
+                            damageLeft -= enemyHealth;
+                            LOG("BASE DAMAGE: " + damage);
+                        }
+
+                        if (damageLeft <= 0)
+                        {
+                            bulletTrail(_transf.position, _transf.forward, hit[i].distance);
+                        }
                     }
                 }
             }
-
-
+            else
+            {
+                bulletTrail(_transf.position, _transf.forward, 100f);
+            }
 
             coolingDown = true;
             StartCoroutine(coolDown(coolDownDuration));

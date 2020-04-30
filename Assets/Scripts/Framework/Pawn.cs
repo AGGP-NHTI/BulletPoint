@@ -47,7 +47,10 @@ public class Pawn : EntityController
     public void takeDamage(int howMuch, GameObject source)
     {
 
-        health -= howMuch;
+        if (howMuch >= 0)
+        {
+            health -= howMuch;
+        }
         //LOG(source.name + " dealth "+ howMuch + " damage to" + _obj.name);
         //LOG(_obj.name + " now has " + health + " health");
 
