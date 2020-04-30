@@ -72,28 +72,14 @@ public class Game : MonoBehaviour
         {
             enemy = Instantiate(game.EnemyPrefabs[whatEnemy], location, Quaternion.identity);
         }
-        if (enemy) { EnemyCount++; }
-        return enemy;
-    }
-
-    public static bool SpawmEnemy(string whatEnemy, Vector3 location)
-    {
-        GameObject enemy = null;
-
-        if (EnemyCount < EnemyCap)
+        if (enemy)
         {
-            foreach(GameObject enemyObj in game.EnemyPrefabs)
-            {
-                if (enemyObj.tag == whatEnemy)
-                {
-                    enemy = Instantiate(enemyObj, location, Quaternion.identity);
-                }
-            }
+            EnemyCount++;
+            return true;
         }
+        else
         {
-            Debug.Log("SPAWN CAP REACHED");
+            return false;
         }
-        if (enemy) { EnemyCount++; }
-        return enemy;
     }
 }
