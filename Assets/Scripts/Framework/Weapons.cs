@@ -38,7 +38,7 @@ public abstract class Weapons : EntityController
         {
             Game.player.PickUp(this);
         }
-    }
+    
 
 		if (player)
 		{
