@@ -30,6 +30,8 @@ public class PlayerManager : Pawn
     Vector2 rightStick;
     public Animator anim;
 
+	Vector3 lastPos;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -65,13 +67,15 @@ public class PlayerManager : Pawn
 
     Vector2 moveDirection()
     {
-        Vector2 dir = Vector2.zero;
+        Vector3 dir = transform.InverseTransformDirection(transform.position - lastPos);
 
-        return dir;
+        return new Vector2(dir.x, dir.z).normalized;
     }
 
     void moveAround()
     {
+		lastPos = transform.position;
+
         if (rightStick.magnitude <= 0)
         {
             float deltaX = leftStick.x;
