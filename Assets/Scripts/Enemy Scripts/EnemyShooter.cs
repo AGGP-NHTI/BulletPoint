@@ -8,10 +8,6 @@ public class EnemyShooter : Enemy
     public GameObject projectile;
 
     public float ScareDistance = 8f;//when to flee
-    public float fleeSpeed = 10f; //speed to flee
-    public float fleeDistance = 25f; // how far to flee
-    
-    private bool isFleeing = false;
 
     public float attackDistance = 15f;
 
@@ -86,11 +82,11 @@ public class EnemyShooter : Enemy
         }
     }
 
-    private void chase()
+    protected override void chase()
     {
         runOnFrame = null;
 
-        agent.SetDestination(Game.player.transform.position);
+        base.chase();
 
         if (!_canSeePlayer)
         {
@@ -114,37 +110,10 @@ public class EnemyShooter : Enemy
     {
         runOnFrame = null;
 
-        LOG("IS FLEEING: " + isFleeing);
-        if (!isFleeing)
-        {
-            LOG("IN FLEE___________________________________________________________________________________________________________");
-            isFleeing = true;
-            LOG("FLEE");
-
-            agent.speed = fleeSpeed;
-            Vector3 fleeDir = (_transf.position - Game.player.transform.position).normalized;
-            Vector3 moveDestination = _transf.position + fleeDir * fleeDistance;
-            moveDestination.y = _transf.position.y;
-
-            if (!agent.SetDestination(moveDestination))
-            {
-                fleeDir *= -1;
-                moveDestination = _transf.position + fleeDir * fleeDistance;
-                moveDestination.y = _transf.position.y;
-                agent.SetDestination(moveDestination);
-            }
-            Debug.DrawLine(_transf.position, moveDestination, Color.magenta, 5f);
-            
-        }
-
-        if (!agent.pathPending && agent.remainingDistance < 1)
-        {
-            isFleeing = false;
-        }
+        base.flee();
 
         if (distanceFromPlayer > fleeDistance)
         {
-            LOG("LEAVING FLEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
             agent.speed = moveSpeed;
             isFleeing = false;
             action = chase;

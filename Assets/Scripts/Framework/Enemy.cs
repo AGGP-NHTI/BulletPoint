@@ -15,7 +15,8 @@ public class Enemy : Pawn
     protected System.Action runOnFrame;
 
     public NavMeshAgent agent;
-
+    
+    public float damage = 10f;
     public float wantedFOV = 30f;
     public float sightDistance = 10f;
     public float minSightDistance = 2f;
@@ -23,17 +24,20 @@ public class Enemy : Pawn
     public float randomMoveFactor = 10f;
     public float spinSpeed = 10f;
     public bool UseSight;
+    public float fleeSpeed = 10f; //speed to flee
+    public float fleeDistance = 25f; // how far to flee
 
-    protected float distanceFromPlayer;
+    public float distanceFromPlayer;
     protected Vector3? lastKnownPlayerLocation;
     protected bool _canSeePlayer;
     protected float distance;
 
-    
+    protected bool isFleeing = false;
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
+        agent.speed = moveSpeed;
 
     }
 
@@ -43,9 +47,13 @@ public class Enemy : Pawn
         gizmoSpheres.Add((transform.position, sightDistance, Color.yellow));
         gizmoSpheres.Add((transform.position, minSightDistance, Color.green));
         StartCoroutine(clearGizmos());
+
+
+
+
         distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
 
-        agent.speed = moveSpeed;
+        
 
         //if(!isDummy) LOG(_obj.name + "'s action is " + action.Method.Name);
     }
@@ -86,7 +94,40 @@ public class Enemy : Pawn
 
     protected virtual void flee()
     {
+        runOnFrame = null;
 
+        //LOG("IS FLEEING: " + isFleeing);
+        if (!isFleeing)
+        {
+            //LOG("IN FLEE___________________________________________________________________________________________________________");
+            isFleeing = true;
+            //LOG("FLEE");
+
+            agent.speed = fleeSpeed;
+            Vector3 fleeDir = (_transf.position - Game.player.transform.position).normalized;
+            Vector3 moveDestination = _transf.position + fleeDir * fleeDistance;
+            moveDestination.y = _transf.position.y;
+
+            if (!agent.SetDestination(moveDestination))
+            {
+                fleeDir *= -1;
+                moveDestination = _transf.position + fleeDir * fleeDistance;
+                moveDestination.y = _transf.position.y;
+                agent.SetDestination(moveDestination);
+            }
+            Debug.DrawLine(_transf.position, moveDestination, Color.magenta, 5f);
+
+        }
+
+        if (!agent.pathPending && agent.remainingDistance < 1)
+        {
+            isFleeing = false;
+        }
+    }
+
+    protected virtual void chase()
+    {
+        agent.SetDestination(Game.player.transform.position);
     }
 
     protected virtual IEnumerator Think()
