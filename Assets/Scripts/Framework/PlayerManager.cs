@@ -8,7 +8,7 @@ public class PlayerManager : Pawn
 {
 
     //public bool itemPickedUp = false;
-
+    public GameObject Player_Model;
     public Weapons weaponOwned;
 
     public GameObject Hand_Node;
