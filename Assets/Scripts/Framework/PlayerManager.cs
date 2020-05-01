@@ -53,7 +53,7 @@ public class PlayerManager : Pawn
     void moveAround()
     {
         currentSpeed = leftStick.magnitude;
-        _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed);
+        _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed *Time.deltaTime);
 		if (anim) anim.SetFloat("Movement", transform.InverseTransformDirection(_rb.velocity).z);
     }
 
