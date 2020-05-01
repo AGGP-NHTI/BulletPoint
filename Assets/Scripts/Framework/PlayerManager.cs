@@ -6,11 +6,13 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
+    protected System.Action runOnFrame;
+
 
     //public bool itemPickedUp = false;
     public GameObject Player_Model;
     public Weapons weaponOwned;
-
+    public CharacterController charController;
     public GameObject Hand_Node;
 
     public float moveSpeed = 10f;
@@ -18,14 +20,14 @@ public class PlayerManager : Pawn
     public float rollForce = 10f;
 
     bool canRoll = true;
-    Vector2 leftStick;
 
-	Animator anim;
+    Vector2 leftStick;
+	public Animator anim;
 
 	protected override void Awake()
 	{
 		base.Awake();
-		anim = GetComponent<Animator>();
+		
 	}
 
 	public override void Start()
@@ -41,7 +43,6 @@ public class PlayerManager : Pawn
         spinAround();
         roll();
         attack();
-
         //LOG("The player is holding: " + weapon?.name);
     }
 
@@ -53,18 +54,24 @@ public class PlayerManager : Pawn
     void moveAround()
     {
         currentSpeed = leftStick.magnitude;
-        _rb.AddForce(new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed);
-		if (anim) anim.SetFloat("Movement", transform.InverseTransformDirection(_rb.velocity).z);
+       
+        charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
+        if (anim) anim.SetFloat("Movement", currentSpeed);
     }
 
     void spinAround()
     {
         Vector2 rightStick = InputManager.getRightJoyStick();
+        LOG("RIGHT STICK " + rightStick);
+        float deltaX = rightStick.x;
+        float deltaY = rightStick.y;
+        float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
+        
 
-        Vector3 lookDir = new Vector3((rightStick.x + rightStick.y) / 2, 0 , (rightStick.y - rightStick.x) / 2) + _transf.position;
-        //lookDir = lookDir.normalized;
+        transform.eulerAngles = new Vector3(0, joypos + 90, 0);
 
-        _transf.LookAt(lookDir);
+
+        Player_Model.transform.eulerAngles = transform.rotation.eulerAngles;
     }
 
     void roll()
@@ -111,7 +118,6 @@ public class PlayerManager : Pawn
         }
         else if(weaponOwned && weaponOwned.takes_Continuous_Input)
         {
-           // LOG("CONTINUOUS");
             if (InputManager.rightTriggerConstant())
 			{
                 weaponOwned.Use();
