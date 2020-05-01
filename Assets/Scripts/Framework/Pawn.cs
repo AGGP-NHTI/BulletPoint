@@ -29,7 +29,7 @@ public class Pawn : EntityController
         {
             LOG(gameObject.name + " is dieing");
         }
-        Destroy(_obj);
+        Destroy(_obj,2f);
     }
 
     public void takeDamage(int howMuch)
