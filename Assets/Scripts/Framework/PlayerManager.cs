@@ -68,7 +68,9 @@ public class PlayerManager : Pawn
     private void FixedUpdate()
     {
         animationDirection = moveDirection();
-        moveAround();
+		anim.SetFloat("ForwardMovement", animationDirection.y);
+		anim.SetFloat("RightMovement", animationDirection.x);
+		moveAround();
     }
 
     Vector2 moveDirection()

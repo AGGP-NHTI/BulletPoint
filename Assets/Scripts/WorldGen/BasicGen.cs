@@ -10,7 +10,9 @@ public class BasicGen : MonoBehaviour
 	[Range(3,64)]
 	public int mapSize = 16;
 	public TileCollection tileset;
-	
+
+	public StaticTile[] staticTiles;
+
 	int?[,] map;
 
 	void Start()
@@ -27,6 +29,11 @@ public class BasicGen : MonoBehaviour
 					map[x, y] = tileset.Length - 1;
 				}
 			}
+		}
+
+		foreach (StaticTile tile in staticTiles)
+		{
+			map[(int)Mathf.Repeat(tile.x, mapSize), (int)Mathf.Repeat(tile.y, mapSize)] = tile.tileIndex;
 		}
 		
 		// select tiles
@@ -101,5 +108,13 @@ public class BasicGen : MonoBehaviour
 	public bool IsWithinBounds((short x, short y) mapCoordinate)
 	{
 		return (mapCoordinate.x >= 0 && mapCoordinate.x < mapSize && mapCoordinate.y >= 0 && mapCoordinate.y < mapSize);
+	}
+	
+	[System.Serializable]
+	public struct StaticTile
+	{
+		public int tileIndex;
+		public short x;
+		public short y;
 	}
 }
