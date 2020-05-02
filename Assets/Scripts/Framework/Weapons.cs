@@ -8,6 +8,7 @@ public abstract class Weapons : EntityController
 	public Vector3 PlacedRotation;
 	public Vector3 PlacedScale;
 	public Vector3 OwnedScale;
+    public GameObject Shoot_Node;
 	public float defaultHeight = 2.5f;
 
 	public int damage = 10;

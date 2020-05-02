@@ -40,7 +40,7 @@ public class MeleeDemon : Enemy
     protected override void attack()
     {
         
-        Game.player.takeDamage((int)damage);
+        Game.player.takeDamage(damage);
         action = flee;
 
     }

@@ -17,11 +17,18 @@ public class Sniper : Weapons
     {
         if (!coolingDown)
         {
-            RaycastHit[] hit = Physics.RaycastAll(_transf.position, _transf.forward);
+            
+            float tracerLength = 100f;
+            Vector3 shootDir = Shoot_Node.transform.forward;
+            Vector3 origin = Shoot_Node.transform.position;
+
+
+            RaycastHit[] hit = Physics.RaycastAll(origin, shootDir);
+
 
             sortEnemies(ref hit);
 
-            Debug.DrawRay(_transf.position, _transf.forward * 100f, Color.blue, coolDownDuration);
+            Debug.DrawRay(origin, shootDir * 100f, Color.blue, coolDownDuration);
 
             if (hit.Length > 0)
             { 
@@ -33,14 +40,13 @@ public class Sniper : Weapons
                     if (enemy)
                     {
                         enemy.takeDamage(damage, Game.player.gameObject);
-                        bulletTrail(_transf.position, _transf.forward, hit[0].distance);
+                        tracerLength = hit[0].distance;
                     }
                 }
                 else
                 {
                     for (int i = 0; i < hit.Length; i++)
                     {
-                        LOG("(" + i + ") ENEMY HIT: " + hit[i].collider.name);
 
                         Enemy enemy = hit[i].collider.gameObject.GetComponentInParent<Enemy>();
 
@@ -55,16 +61,14 @@ public class Sniper : Weapons
 
                         if (damageLeft <= 0)
                         {
-                            bulletTrail(_transf.position, _transf.forward, hit[i].distance);
+                            tracerLength = hit[i].distance;
                         }
                     }
                 }
             }
-            else
-            {
-                bulletTrail(_transf.position, _transf.forward, 100f);
-            }
+       
 
+            bulletTrail(origin, shootDir, tracerLength);
             coolingDown = true;
             StartCoroutine(coolDown(coolDownDuration));
         }

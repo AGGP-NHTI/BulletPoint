@@ -16,7 +16,7 @@ public class Enemy : Pawn
 
     public NavMeshAgent agent;
     
-    public float damage = 10f;
+    public int damage = 10;
     public float wantedFOV = 30f;
     public float sightDistance = 10f;
     public float minSightDistance = 2f;

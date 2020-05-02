@@ -6,6 +6,11 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
+    public Animator Default_Anim;
+    //public Animator Hands_Free;
+    public RuntimeAnimatorController Gun_Animator;
+    public RuntimeAnimatorController Two_Handed_Animator;
+    public RuntimeAnimatorController One_Handed_Animator;
 
     public Vector2 animationDirection;
 
@@ -28,7 +33,7 @@ public class PlayerManager : Pawn
 
     Vector2 leftStick;
     Vector2 rightStick;
-    public Animator anim;
+    
 
 	Vector3 lastPos;
 
@@ -41,6 +46,7 @@ public class PlayerManager : Pawn
 	public override void Start()
     {    
         base.Start();
+        Default_Anim.runtimeAnimatorController = One_Handed_Animator;
         weaponOwned = null;
     }
 
@@ -89,7 +95,7 @@ public class PlayerManager : Pawn
 
         charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
         
-        if (anim) anim.SetFloat("Movement", currentSpeed);
+        if (Default_Anim) Default_Anim.SetFloat("Movement", currentSpeed);
 
 
 
@@ -127,11 +133,11 @@ public class PlayerManager : Pawn
 			if (InputManager.GetButtonPressed(GamepadButton.RightTrigger, true))
 			{
 				weaponOwned.Use();
-				if (anim) anim.SetBool("Attack", true);
+				if (Default_Anim) Default_Anim.SetBool("Attack", true);
 			}
 			else
 			{
-				if (anim) anim.SetBool("Attack", true);
+				if (Default_Anim) Default_Anim.SetBool("Attack", true);
 			}
             
         }
@@ -140,11 +146,11 @@ public class PlayerManager : Pawn
             if (InputManager.rightTriggerConstant())
 			{
                 weaponOwned.Use();
-				if (anim) anim.SetBool("Attack", true);
+				if (Default_Anim) Default_Anim.SetBool("Attack", true);
 			}
 			else
 			{
-				if (anim) anim.SetBool("Attack", false);
+				if (Default_Anim) Default_Anim.SetBool("Attack", false);
 			}
         }
     }
@@ -164,8 +170,6 @@ public class PlayerManager : Pawn
     {
         if (InputManager.GetButtonPressed(GamepadButton.West))
         {
-           // LOG("TRYING TO PICK UP." + weapon.gameObject.transform.name);
-           // LOG("WEAPONOWNED == NULL: "+ weaponOwned);
             if (!weaponOwned)
             {
                 weaponOwned = weapon;
@@ -174,14 +178,24 @@ public class PlayerManager : Pawn
                 weapon.transform.localScale = weapon.OwnedScale;
                 weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
                 weapon.transform.parent = Hand_Node.transform;
+
                 
+                if (weaponOwned is AssaultRifle || weaponOwned is Sniper)
+                {
+                    Default_Anim.runtimeAnimatorController = Gun_Animator;
+                }
+                else if (true)//SWORD
+                {
 
 
-               // LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
-            }
+                 }
+                    //else if (true)// Hammer
+                    //{
+
+                    //}
+                }
             else
             {
-                //LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
                 LOG("DROP YOUR CURRENT ITEM BEFORE PICKING UP ANOTHER");
             }
         }
@@ -209,7 +223,7 @@ public class PlayerManager : Pawn
                 Game.player.weaponOwned = null;
                 //Game.player.itemPickedUp = false;
                 weapon.trigger.enabled = true;
-
+                Default_Anim.runtimeAnimatorController = One_Handed_Animator;
             }
             else
             {
