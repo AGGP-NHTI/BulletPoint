@@ -7,6 +7,7 @@ public class Game : MonoBehaviour
 
     public static Game game;
     public static PlayerManager player;
+    public static Vector3 Player_Starting_Location;
 
     public static int EnemyCount = 0;
 
@@ -37,7 +38,7 @@ public class Game : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        player.transform.position = Player_Starting_Location;
     }
 
     // Update is called once per frame

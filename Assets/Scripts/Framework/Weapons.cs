@@ -24,7 +24,8 @@ public abstract class Weapons : EntityController
 	GameObject parent;
 
 
-	private void Update()
+
+    private void Update()
 	{
 		if (Game.player.weaponOwned == this)
 		{

@@ -36,9 +36,9 @@ public class PlayerManager : Pawn
 
     Vector2 leftStick;
     Vector2 rightStick;
-    
 
-	Vector3 lastPos;
+    public float Player_Starting_Y;
+    Vector3 lastPos;
 
 	protected override void Awake()
 	{
@@ -52,6 +52,8 @@ public class PlayerManager : Pawn
         base.Start();
         Default_Anim.runtimeAnimatorController = One_Handed_Animator;
         weaponOwned = null;
+
+        Player_Starting_Y = _transf.position.y;
     }
 
     // Update is called once per frame
@@ -59,18 +61,13 @@ public class PlayerManager : Pawn
     {
         rightStick = InputManager.getRightJoyStick();
         leftStick = InputManager.getLeftJoyStick();
-        
-        //if (InputManager.GetButtonPressed(GamepadButton.South())
-        //{
-
-        //}
         spinAround();
         attack();
-        //LOG("The player is holding: " + weapon?.name);
     }
 
     private void FixedUpdate()
     {
+        //goToGround();
         animationDirection = moveDirection();
         Default_Anim.SetFloat("ForwardMovement", animationDirection.y);
         Default_Anim.SetFloat("RightMovement", animationDirection.x);
@@ -240,14 +237,6 @@ public class PlayerManager : Pawn
     }
 
 
-    //Vector2 getMoveDirection()
-    //{
-        
-
-
-
-    //}
-
-    
+  
 
 }
