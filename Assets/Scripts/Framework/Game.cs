@@ -6,7 +6,6 @@ public class Game : MonoBehaviour
 {
 
     public static Game game;
-    public PlayerManager Player;
     public static PlayerManager player;
 
     public static int EnemyCount = 0;
@@ -21,8 +20,6 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
-        player = Player;
-
         if (!game)
         {
             game = this;
@@ -31,6 +28,9 @@ public class Game : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
+       
     }
 
 

@@ -6,6 +6,9 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
+
+
+
     public Animator Default_Anim;
     //public Animator Hands_Free;
     public RuntimeAnimatorController Gun_Animator;
@@ -39,8 +42,9 @@ public class PlayerManager : Pawn
 
 	protected override void Awake()
 	{
-		base.Awake();
-		
+        Game.player = gameObject.GetComponent<PlayerManager>();
+        base.Awake();
+        
 	}
 
 	public override void Start()

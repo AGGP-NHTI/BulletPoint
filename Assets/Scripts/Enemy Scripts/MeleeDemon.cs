@@ -29,9 +29,13 @@ public class MeleeDemon : Enemy
     {
 
         base.Update();
+
+
         gizmoSpheres.Add((transform.position, minSightDistance, Color.blue));
 
         runOnFrame?.Invoke();
+
+
         if (!isDummy) LOG(_obj?.name + "'s action is " + action?.Method.Name);
 
 
@@ -69,6 +73,7 @@ public class MeleeDemon : Enemy
         {
             isFleeing = false;
             action = null;
+            destinationCount = 0;
             runOnFrame = circle;
         }
     }
@@ -116,8 +121,8 @@ public class MeleeDemon : Enemy
 
         if (destinationCount > Circle_Precision)
         {
-            //runOnFrame = null;
-            action = attack;
+            runOnFrame = null;
+            action = chase;
         }
 
 
@@ -129,7 +134,7 @@ public class MeleeDemon : Enemy
 
         if (!isDummy) action?.Invoke();
 
-        yield return new WaitForSeconds(Game.getlevelFourAI());
+        yield return new WaitForSeconds(Game.getlevelOneAI());
 
 
         if (!isDummy) StartCoroutine(think());
