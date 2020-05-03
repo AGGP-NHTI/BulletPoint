@@ -20,7 +20,6 @@ public class Enemy : Pawn
     public float wantedFOV = 30f;
     public float sightDistance = 10f;
     public float minSightDistance = 2f;
-    public float moveSpeed = 5f;
     public float randomMoveFactor = 10f;
     public float spinSpeed = 10f;
     public bool UseSight;
@@ -28,6 +27,7 @@ public class Enemy : Pawn
     public float fleeDistance = 25f; // how far to flee
 
     public float distanceFromPlayer;
+    protected float startingMoveSpeed;
     protected Vector3? lastKnownPlayerLocation;
     protected bool _canSeePlayer;
     protected float distance;
@@ -37,8 +37,7 @@ public class Enemy : Pawn
     public override void Start()
     {
         base.Start();
-        agent.speed = moveSpeed;
-
+        startingMoveSpeed = agent.speed;
     }
 
     // Update is called once per frame

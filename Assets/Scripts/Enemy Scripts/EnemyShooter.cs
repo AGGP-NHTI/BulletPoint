@@ -114,7 +114,6 @@ public class EnemyShooter : Enemy
 
         if (distanceFromPlayer > fleeDistance)
         {
-            agent.speed = moveSpeed;
             isFleeing = false;
             action = chase;
         }

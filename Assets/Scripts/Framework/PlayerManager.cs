@@ -68,8 +68,8 @@ public class PlayerManager : Pawn
     private void FixedUpdate()
     {
         animationDirection = moveDirection();
-		anim.SetFloat("ForwardMovement", animationDirection.y);
-		anim.SetFloat("RightMovement", animationDirection.x);
+        Default_Anim.SetFloat("ForwardMovement", animationDirection.y);
+        Default_Anim.SetFloat("RightMovement", animationDirection.x);
 		moveAround();
     }
 
@@ -90,7 +90,7 @@ public class PlayerManager : Pawn
             float deltaY = leftStick.y;
             float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
 
-            transform.eulerAngles = new Vector3(0, joypos + 90, 0);
+            transform.eulerAngles = new Vector3(0, joypos + 45, 0);
             Player_Model.transform.eulerAngles = transform.rotation.eulerAngles;
         }
         

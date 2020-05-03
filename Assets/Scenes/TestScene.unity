@@ -915,7 +915,6 @@ MonoBehaviour:
   wantedFOV: 30
   sightDistance: 10
   minSightDistance: 2
-  moveSpeed: 10
   randomMoveFactor: 10
   spinSpeed: 10
   UseSight: 0
@@ -1467,6 +1466,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1396759232}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!95 &1397525612 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8251042812693875856, guid: 0242e2230845cd543b96d5bbade742a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 100482401}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1540460916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6464530741800057252, guid: 0bbf7ad1232f58e42901f9f0e5217e02,
@@ -1711,7 +1716,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -1742,13 +1747,15 @@ MonoBehaviour:
   wantedFOV: 30
   sightDistance: 0
   minSightDistance: 7
-  moveSpeed: 15
   randomMoveFactor: 10
   spinSpeed: 10
   UseSight: 1
   fleeSpeed: 20
   fleeDistance: 30
   distanceFromPlayer: 0
+  anim_controller: {fileID: 1397525612}
+  Circle_Precision: 100
+  Circle_Distance: 10
 --- !u!4 &1688656641
 Transform:
   m_ObjectHideFlags: 0
@@ -2265,7 +2272,7 @@ PrefabInstance:
     - target: {fileID: 3230090007496856115, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -22.13
       objectReference: {fileID: 0}
     - target: {fileID: 3230090007496856115, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
@@ -2275,7 +2282,7 @@ PrefabInstance:
     - target: {fileID: 3230090007496856115, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 21.44
       objectReference: {fileID: 0}
     - target: {fileID: 3230090007496856115, guid: f04759c6715d61e49b942add4b2febe9,
         type: 3}

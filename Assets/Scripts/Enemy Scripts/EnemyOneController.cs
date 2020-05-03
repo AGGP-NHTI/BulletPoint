@@ -63,7 +63,6 @@ public class EnemyOneController : Enemy
     protected override void attack()
     {
         runOnFrame = null;
-        agent.speed = moveSpeed;
         agent.SetDestination(Game.player.transform.position);
 
         if (!_canSeePlayer)
