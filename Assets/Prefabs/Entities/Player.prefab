@@ -46,8 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1000
-  playerAnimator: {fileID: 2878659861261643084, guid: f92985a20c4a1ad4097b3b72d088a7c1,
-    type: 3}
+  playerAnimator: {fileID: 5351097544208234839}
   gunAnimator: {fileID: 9100000, guid: b7922e77021d3a54ebbe11fb3b634dc7, type: 2}
   twoHandedAnimator: {fileID: 9100000, guid: c68ae3608ed24c7478ec1092270260d3, type: 2}
   oneHandedAnimator: {fileID: 9100000, guid: fdb699649f05e214884f9b1cb06fc334, type: 2}
@@ -604,6 +603,12 @@ PrefabInstance:
 --- !u!4 &2650624690781656109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5294278393149800502, guid: f92985a20c4a1ad4097b3b72d088a7c1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7904353053603779611}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5351097544208234839 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2878659861261643084, guid: f92985a20c4a1ad4097b3b72d088a7c1,
     type: 3}
   m_PrefabInstance: {fileID: 7904353053603779611}
   m_PrefabAsset: {fileID: 0}
