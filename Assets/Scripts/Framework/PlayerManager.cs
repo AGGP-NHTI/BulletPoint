@@ -38,9 +38,20 @@ public class PlayerManager : Pawn
     [Header("Control")]
     public float playerStartingY;
 
+    public static PlayerManager player;
+
 
     protected override void Awake()
 	{
+        if (!player)
+        {
+            player = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         Game.player = gameObject.GetComponent<PlayerManager>();
         base.Awake();
         

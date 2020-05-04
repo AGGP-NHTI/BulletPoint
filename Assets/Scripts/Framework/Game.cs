@@ -15,7 +15,6 @@ public class Game : MonoBehaviour
     private static float levelTwoAI = 0.5f; // time it takes to update system
     private static float levelThreeAI = 0.25f; // time it takes to update system
     private static float levelFourAI = 0.1f; // time it takes to update system
-    List<int> numbers = new List<int>();
 
     public List<Spawner> spawners = new List<Spawner>();
 
