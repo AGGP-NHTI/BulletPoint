@@ -4,52 +4,56 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyShooter : Enemy
 {
-    
-    public GameObject projectile;
+    //private variables
+    int whichFace = 0;
 
-    public float ScareDistance = 8f;//when to flee
-
-    public float attackDistance = 15f;
-
-    public float faceFOV = 10f;
-
-
-    public int whichFace = 0;
-
+    //public variables
+    [Header("Liar's Head")]
+    public GameObject SpitProjectile;
     public GameObject[] faces;
 
-    // Start is called before the first frame update
+    public float ScareDistance = 8f;
+    public float attackDistance = 15f;
+    public float faceFOV = 10f;
+    public float spinSpeed = 10f;
+
     public override void Start()
     {
+        //Setup the first state of the enemy
         base.Start();
         action = idle;
         runOnFrame = null;
-        if(!isDummy)
-            StartCoroutine(Think());
+
+        //Debugging Purposes
+        if(!IsDummy) StartCoroutine(Think());
     }
 
     public override void Update()
     {
 
         base.Update();
+
+        //Debugging
         gizmoSpheres.Add((transform.position, ScareDistance,Color.black));
         gizmoSpheres.Add((transform.position, attackDistance, Color.red));
         gizmoSpheres.Add((transform.position, fleeDistance, Color.blue));
-
         if (UseSight) Debug.DrawRay(faces[0].transform.position, faces[0].transform.forward * sightDistance, Color.red);
         if (UseSight) Debug.DrawRay(faces[1].transform.position, faces[1].transform.forward * sightDistance, Color.red);
         if (UseSight) Debug.DrawRay(faces[2].transform.position, faces[2].transform.forward * sightDistance, Color.red);
 
-
+        //Use run on frame for actions that are not based on decision making
         runOnFrame?.Invoke();
     }
 
+    //Moves in a random direction - Defined in the enemy class, selects which state to change to
     protected override void idle()
     {
         runOnFrame = null;
 
         MoveRandomly();
 
+
+        //Conditions to switch states
         if (_canSeePlayer && distanceFromPlayer > attackDistance)
         {
             action = chase;
@@ -66,11 +70,12 @@ public class EnemyShooter : Enemy
         }
     }
 
+    //rotates and shoots when a face is looking at the player
     protected override void attack()
     {
         runOnFrame = rotateAndShoot;
 
-        LOG("ATTACKING");
+        //Conditions to switch states
         if (_canSeePlayer && distanceFromPlayer < ScareDistance)
         {
             isFleeing = false;
@@ -82,12 +87,15 @@ public class EnemyShooter : Enemy
         }
     }
 
+    //chases the player, defined in enemy class
     protected override void chase()
     {
         runOnFrame = null;
 
         base.chase();
 
+
+        //Conditions to switch states
         if (!_canSeePlayer)
         {
             action = idle;
@@ -106,12 +114,14 @@ public class EnemyShooter : Enemy
 
     }
 
+    //defined in enemy class
     protected override void flee()
     {
         runOnFrame = null;
 
         base.flee();
 
+        //Conditions to switch states
         if (distanceFromPlayer > fleeDistance)
         {
             isFleeing = false;
@@ -119,30 +129,11 @@ public class EnemyShooter : Enemy
         }
     }
 
-    
-
-    protected override IEnumerator Think()
-    {
-        _canSeePlayer = inSightRange() && !ObjectBlockingView();
-
-
-
-        action.Invoke();
-
-        yield return new WaitForSeconds(Game.getlevelThreeAI());
-        if (!isDummy)
-        {
-            StartCoroutine(Think());
-        }
-    }
-
+    //returns the inputted object if the player is in its field of view
     protected virtual GameObject inFaceFOV(GameObject GO, float FOVWanted)
-    {
-        Vector3 targetDir; // = player.transform.position - _transf.position;
-        float angle; // = Vector3.Angle(targetDir, _transf.forward);
-
-        targetDir = Game.player.transform.position - GO.transform.position;
-        angle = Vector3.Angle(targetDir, GO.transform.forward);
+    { 
+        Vector3  targetDir = Game.player.transform.position - GO.transform.position;
+        float angle = Vector3.Angle(targetDir, GO.transform.forward);
 
         if (angle < FOVWanted)
         {
@@ -154,16 +145,19 @@ public class EnemyShooter : Enemy
         }
     }
 
-    protected override void rotateAndShoot()
+    //rotates, every 120 degrees, shoots a projectile
+    void rotateAndShoot()
     {
-        base.rotateAndShoot();
-
+        //rotates the faces
+        _transf.Rotate(Vector3.up * -spinSpeed * Time.deltaTime, Space.World);
         GameObject whoIs = inFaceFOV(faces[whichFace], faceFOV);
 
         if (whoIs)
         {
-            projectileShoot(whoIs, Game.player.gameObject, projectile);
+            //function  defined in enemy class
+            projectileShoot(whoIs, Game.player.gameObject, SpitProjectile);
 
+            //cycles through which face is shooting
             whichFace++;
             if (whichFace == 3)
             {
@@ -172,5 +166,21 @@ public class EnemyShooter : Enemy
         }
     }
 
+    //defined in enemy class
+    protected override IEnumerator Think()
+    {
+        //determines if the player is visible
+        _canSeePlayer = inSightRange() && !ObjectBlockingView();
+
+
+
+        action.Invoke();
+
+        yield return new WaitForSeconds(Game.getlevelThreeAI());
+        if (!IsDummy)
+        {
+            StartCoroutine(Think());
+        }
+    }
 
 }

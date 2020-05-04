@@ -29,22 +29,11 @@ public class Game : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-
-       
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         player.transform.position = Player_Starting_Location;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       // Debug.Log("Enemy Count: " + EnemyCount);
     }
 
     public static float getlevelOneAI()
@@ -69,10 +58,14 @@ public class Game : MonoBehaviour
     {
         GameObject enemy = null;
 
+
+        //Test if enemy cap reached
         if (EnemyCount < EnemyCap)
         {
             enemy = Instantiate(game.EnemyPrefabs[whatEnemy], location, Quaternion.identity);
         }
+
+        //returns true if an enemy was spawned
         if (enemy)
         {
             EnemyCount++;

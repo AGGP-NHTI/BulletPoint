@@ -6,41 +6,40 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PlayerManager : Pawn
 {
-
-
-
-    public Animator Default_Anim;
-    //public Animator Hands_Free;
-    public RuntimeAnimatorController Gun_Animator;
-    public RuntimeAnimatorController Two_Handed_Animator;
-    public RuntimeAnimatorController One_Handed_Animator;
-
-    public Vector2 animationDirection;
-
-    protected System.Action runOnFrame;
+    //private variables
     float mass = 3.0f; // defines the character mass
     Vector3 impact = Vector3.zero;
-
-    //public bool itemPickedUp = false;
-    public GameObject Player_Model;
-    public Weapons weaponOwned;
-    public CharacterController charController;
-    public GameObject Hand_Node;
-
-    public float moveSpeed = 10f;
-    public float currentSpeed;
-    public float rollSpeed = 20f;
-
-
-    public bool canRoll = true;
-
     Vector2 leftStick;
     Vector2 rightStick;
-
-    public float Player_Starting_Y;
+    
     Vector3 lastPos;
 
-	protected override void Awake()
+    //public variables
+    [Header("Animation Controll")]
+    public Animator playerAnimator;
+    public RuntimeAnimatorController gunAnimator;
+    public RuntimeAnimatorController twoHandedAnimator;
+    public RuntimeAnimatorController oneHandedAnimator;
+    public Vector2 animationInputs;
+    public GameObject playerModel;
+
+    [Header("Attacking")]
+    public Weapons weaponOwned;
+    public GameObject Hand_Node;
+
+    [Header("Movement")]
+    public CharacterController charController;
+
+    public float moveSpeed = 10f;
+    public float moveMagnitude;
+    public bool canRoll = true;
+    public float rollSpeed = 20f;
+    
+    [Header("Control")]
+    public float playerStartingY;
+
+
+    protected override void Awake()
 	{
         Game.player = gameObject.GetComponent<PlayerManager>();
         base.Awake();
@@ -50,10 +49,8 @@ public class PlayerManager : Pawn
 	public override void Start()
     {    
         base.Start();
-        Default_Anim.runtimeAnimatorController = One_Handed_Animator;
+        playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         weaponOwned = null;
-
-        Player_Starting_Y = _transf.position.y;
     }
 
     // Update is called once per frame
@@ -68,12 +65,14 @@ public class PlayerManager : Pawn
     private void FixedUpdate()
     {
         //goToGround();
-        animationDirection = moveDirection();
-        Default_Anim.SetFloat("ForwardMovement", animationDirection.y);
-        Default_Anim.SetFloat("RightMovement", animationDirection.x);
+        animationInputs = moveDirection();
+        playerAnimator.SetFloat("ForwardMovement", animationInputs.y);
+        playerAnimator.SetFloat("RightMovement", animationInputs.x);
 		moveAround();
     }
 
+
+    //Returns a Vector2 for Animation control
     Vector2 moveDirection()
     {
         Vector3 dir = transform.InverseTransformDirection(transform.position - lastPos);
@@ -81,10 +80,15 @@ public class PlayerManager : Pawn
         return new Vector2(dir.x, dir.z).normalized;
     }
 
+
+    //if no right stick input is detected look in the direction of the player, then move that way
+    //if right stick input is detected move based off of x and z axis
     void moveAround()
     {
+        //last position for animations
 		lastPos = transform.position;
 
+        //look direction for when no right stick input
         if (rightStick.magnitude <= 0)
         {
             float deltaX = leftStick.x;
@@ -92,19 +96,21 @@ public class PlayerManager : Pawn
             float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
 
             transform.eulerAngles = new Vector3(0, joypos + 45, 0);
-            Player_Model.transform.eulerAngles = transform.rotation.eulerAngles;
+            playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
         }
         
-
+        //move
         charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
         
-        if (Default_Anim) Default_Anim.SetFloat("Movement", currentSpeed);
+        //set animations
+        if (playerAnimator) playerAnimator.SetFloat("Movement", moveMagnitude);
 
 
-
-        currentSpeed = leftStick.magnitude;
+        //set moveMagnitude to see how much input is from the left stick.
+        moveMagnitude = leftStick.magnitude;
     }
 
+    //look in the direction of the right stick
     void spinAround()
     {
         if (rightStick.magnitude > 0)
@@ -118,17 +124,11 @@ public class PlayerManager : Pawn
             transform.eulerAngles = new Vector3(0, joypos + 90, 0);
 
 
-            Player_Model.transform.eulerAngles = transform.rotation.eulerAngles;
+            playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
         }
     }
 
-    void AddImpact(Vector3 dir,float force)
-    {
-        dir.Normalize();
-        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
-        impact += dir.normalized * force / mass;
-    }
-
+    //attacks with the weapon that is owned
     void attack()
     {
 		if (weaponOwned && !weaponOwned.takes_Continuous_Input)
@@ -136,11 +136,11 @@ public class PlayerManager : Pawn
 			if (InputManager.GetButtonPressed(GamepadButton.RightTrigger, true))
 			{
 				weaponOwned.Use();
-				if (Default_Anim) Default_Anim.SetBool("Attack", true);
+				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
 			else
 			{
-				if (Default_Anim) Default_Anim.SetBool("Attack", true);
+				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
             
         }
@@ -149,11 +149,11 @@ public class PlayerManager : Pawn
             if (InputManager.rightTriggerConstant())
 			{
                 weaponOwned.Use();
-				if (Default_Anim) Default_Anim.SetBool("Attack", true);
+				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
 			else
 			{
-				if (Default_Anim) Default_Anim.SetBool("Attack", false);
+				if (playerAnimator) playerAnimator.SetBool("Attack", false);
 			}
         }
     }
@@ -163,11 +163,8 @@ public class PlayerManager : Pawn
         
     }
 
-    IEnumerator rollCoolDown(float input)
-    {
-        yield return new WaitForSeconds(input);
-        canRoll = true;
-    }
+
+    
 
     public virtual void PickUp(Weapons weapon)
     {
@@ -185,7 +182,7 @@ public class PlayerManager : Pawn
                 
                 if (weaponOwned is AssaultRifle || weaponOwned is Sniper)
                 {
-                    Default_Anim.runtimeAnimatorController = Gun_Animator;
+                    playerAnimator.runtimeAnimatorController = gunAnimator;
                 }
                 else if (true)//SWORD
                 {
@@ -226,7 +223,7 @@ public class PlayerManager : Pawn
                 Game.player.weaponOwned = null;
                 //Game.player.itemPickedUp = false;
                 weapon.trigger.enabled = true;
-                Default_Anim.runtimeAnimatorController = One_Handed_Animator;
+                playerAnimator.runtimeAnimatorController = oneHandedAnimator;
             }
             else
             {
@@ -237,6 +234,10 @@ public class PlayerManager : Pawn
     }
 
 
-  
 
+    IEnumerator rollCoolDown(float input)
+    {
+        yield return new WaitForSeconds(input);
+        canRoll = true;
+    }
 }

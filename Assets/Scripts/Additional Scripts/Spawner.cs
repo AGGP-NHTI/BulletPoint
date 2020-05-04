@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class Spawner : EntityController
 {
-
-    public float Spawn_Distance = 10f;
-
-    public bool Continue_Spawning = false;
-    public int Amount_To_Spawn = 10;
-
-    int Amount_Spawned = 0;
-
-    public int[] Enemys_To_Spawn;
-    public float Spawn_Rate = 1f;
-    public GameObject LocationReference;
-
-    private int nextEnemyToSpawn = 0;
+    //private variables
     float timeTracker = 0;
     bool spawnerTriggered = false;
+    int Amount_Spawned = 0;
+    private int nextEnemyToSpawn = 0;
+    float distanceFromPlayer;
 
-    protected float distanceFromPlayer;
-    // Start is called before the first frame update
+    //public variables
+    [Header("Behavior")]
+    public bool SpawnForever = false;
+    public float spawnDistance = 10f;
+    public int amountToSpawn = 10;
+    public float spawnRate = 1f;
+
+    [Header("Control")]
+    public int[] Enemys_To_Spawn;
+    
+    [Header("Design")]
+    public GameObject LocationReference;
+
     void Start()
     {
         if(LocationReference)
@@ -32,28 +34,37 @@ public class Spawner : EntityController
 
     private void FixedUpdate()
     {
+        //calculations
         distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
-        timeTracker += Time.fixedDeltaTime;
 
-        if (timeTracker > Spawn_Rate)
+        //counts to the amount of spawn rate, calls a function and then resets to zero
+        timeTracker += Time.fixedDeltaTime;
+        if (timeTracker > spawnRate)
         {
             spawn();
             timeTracker = 0f;
         }
     }
 
+    //Spawns an enemy if the spawner is triggered
     public void spawn()
     {
-        if (distanceFromPlayer <= Spawn_Distance)
+        //sets the spawner to triggered
+        if (distanceFromPlayer <= spawnDistance)
         {
             spawnerTriggered = true;
         }
+
+        //Spawns the enemy requested
         if (Enemys_To_Spawn.Length > 0 && spawnerTriggered)
         {
             if (Game.SpawmEnemy(Enemys_To_Spawn[nextEnemyToSpawn], _transf.position))
             {
+                //increas the amount spawned by 1
                 Amount_Spawned++;
-                if (Amount_Spawned >= Amount_To_Spawn)
+
+                //if reached spawn cap delete this object
+                if (Amount_Spawned >= amountToSpawn)
                 {
                     Destroy(gameObject);
                 }

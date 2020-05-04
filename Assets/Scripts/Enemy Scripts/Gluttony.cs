@@ -15,7 +15,7 @@ public class Gluttony : Enemy
         base.Start();
         action = idle;
         runOnFrame = null;
-        if (!isDummy) { StartCoroutine(Think()); }
+        if (!IsDummy) { StartCoroutine(Think()); }
     }
 
     public override void Update()
@@ -61,7 +61,7 @@ public class Gluttony : Enemy
 
 
 
-        if (!isDummy) { action.Invoke(); }
+        if (!IsDummy) { action.Invoke(); }
 
         yield return new WaitForSeconds(Game.getlevelThreeAI());
         StartCoroutine(Think());

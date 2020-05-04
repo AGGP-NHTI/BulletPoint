@@ -24,13 +24,13 @@ public class AssaultRifle : Weapons
 
             //Caluculateing Bullet Spread
             bulletSpreadMagnitude = Random.Range(-1f, 1f);
-            if (Game.player.currentSpeed <= 0.1)
+            if (Game.player.moveMagnitude <= 0.1)
             {
                 bulletSpreadMagnitude *= standingBulletSpread / 10f;
             }
             else
             {
-                bulletSpreadMagnitude *= Game.player.currentSpeed * walkingBulletSpread /10f;
+                bulletSpreadMagnitude *= Game.player.moveMagnitude * walkingBulletSpread /10f;
             }
             bulletSpreadMagnitude *= BulletSpread;
 

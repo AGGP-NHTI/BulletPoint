@@ -107,27 +107,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  isDummy: 0
+  IsDummy: 0
+  UseSight: 0
   agent: {fileID: 6312149268924019292}
+  randomMoveFactor: 10
   wantedFOV: 30
   sightDistance: 30
   minSightDistance: 0
-  moveSpeed: 5
-  randomMoveFactor: 10
-  spinSpeed: 90
-  UseSight: 0
-  projectile: {fileID: 5661891309676338984, guid: 068f233870a8e054a88d309097e29f25,
-    type: 3}
-  ScareDistance: 10
   fleeSpeed: 20
   fleeDistance: 20
-  attackDistance: 15
-  faceFOV: 10
-  whichFace: 0
+  damage: 10
+  SpitProjectile: {fileID: 5661891309676338984, guid: 068f233870a8e054a88d309097e29f25,
+    type: 3}
   faces:
   - {fileID: 6312149269750613560}
   - {fileID: 6312149268796474100}
   - {fileID: 6312149268566688193}
+  ScareDistance: 10
+  attackDistance: 15
+  faceFOV: 10
+  spinSpeed: 90
 --- !u!195 &6312149268924019292
 NavMeshAgent:
   m_ObjectHideFlags: 0

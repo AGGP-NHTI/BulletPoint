@@ -4,71 +4,76 @@ using UnityEngine;
 
 public class MeleeDemon : Enemy
 {
-    public Animator anim_controller;
 
-
-    public float Circle_Precision = 16;
-    public float Circle_Distance = 10;
-
+    //private variables
     float destinationCount = 0;
     bool reachedCircleDestination = false;
+
+    //public variables
+    [Header("Demon")]
+    public Animator anim_controller;
+
+    public float circlePrecision = 16;
+    public float cirlceDistance = 10;
+
     public override void Start()
     {
         base.Start();
 
         action = chase;
 
-        if (!isDummy)
-        {
-            StartCoroutine(think());
-        }
+        if (!IsDummy) StartCoroutine(think());
     }
-
 
     public override void Update()
     {
-
         base.Update();
 
-
+        //debugging
         gizmoSpheres.Add((transform.position, minSightDistance, Color.blue));
 
+        //Use run on frame for actions that are not based on decision making
         runOnFrame?.Invoke();
-
-
-        if (!isDummy) LOG(_obj?.name + "'s action is " + action?.Method.Name);
-
-
-        
     }
 
+    //chases the player,  defined in enemy
     protected override void chase()
     {
+        //set animation
         anim_controller.SetFloat("ForwardMovement", 2);
+        
         base.chase();
 
+        //Conditions to switch states
         if (distanceFromPlayer < minSightDistance)
         {
             action = attack;
         }
     }
 
+    //deals damage to the player
     protected override void attack()
     {
         anim_controller.SetFloat("ForwardMovement" , 0);
+
         Game.player.takeDamage(damage);
 
+        //Conditions to switch states
         if (distanceFromPlayer < minSightDistance)
         {
             action = flee;
         }
     }
 
+    //defined in enemy
     protected override void flee()
     {
+        //set animation
         anim_controller.SetFloat("ForwardMovement", 2);
+
         base.flee();
 
+        //Conditions to switch states
         if (distanceFromPlayer > fleeDistance)
         {
             isFleeing = false;
@@ -78,67 +83,60 @@ public class MeleeDemon : Enemy
         }
     }
 
+    //The demon sequentially plots a circle around the player, UNLIKE MOST STATES THIS IS DONE ON THE UPDATE
     void circle()
     {
+        //set animation
         anim_controller.SetFloat("ForwardMovement", 2);
+        
+        //declare variable
         Vector3 destination;
 
-        //LOG("Reached Destination: " + reachedCircleDestination);
+        //Only calculates a new circle destination onces the first subdivision has been reached
         if (reachedCircleDestination)
         {
-            //LOG("Destination Count: " + destinationCount);
-            //LOG("Reached Destination: " + reachedCircleDestination);
-
-
             //Calculate Destination
-
-            float angle = Mathf.Deg2Rad * (360 / Circle_Precision * destinationCount);
-            destination = Game.player.transform.position + (new Vector3(Mathf.Sin(angle),0, Mathf.Cos(angle)) * Circle_Distance);
+            float angle = Mathf.Deg2Rad * (360 / circlePrecision * destinationCount);
+            destination = Game.player.transform.position + (new Vector3(Mathf.Sin(angle),0, Mathf.Cos(angle)) * cirlceDistance);
 
 
             //Debug Ray to Destination
-            if (UseSight)
-            {
-                Debug.DrawLine(_transf.position, destination,Color.green, 2f);
-            }
-
+            if (UseSight) Debug.DrawLine(_transf.position, destination,Color.green, 2f);
 
             //Set Destination
             agent.SetDestination(destination);
-
 
             //Set Reached Circle Boolean
             reachedCircleDestination = false;
         }
 
 
-        //LOG("Remaining Distance: " + agent.remainingDistance);
+        //Conditions to switch states
         if (agent.remainingDistance < 2)
         {
             reachedCircleDestination = true;
             destinationCount++;
         }
 
-        if (destinationCount > Circle_Precision)
+        //Conditions to switch states
+        if (destinationCount > circlePrecision)
         {
             runOnFrame = null;
             action = chase;
         }
-
-
     }
+
+    //defined in enemy
     IEnumerator think()
     {
-
+        //checks if the enemy can see the player
         _canSeePlayer = ObjectBlockingView();
 
-        if (!isDummy) action?.Invoke();
+        if (!IsDummy) action?.Invoke();
 
         yield return new WaitForSeconds(Game.getlevelOneAI());
 
 
-        if (!isDummy) StartCoroutine(think());
+        if (!IsDummy) StartCoroutine(think());
     }
-
-
 }
