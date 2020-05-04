@@ -24,7 +24,7 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         if (!game)
         {
             game = this;
