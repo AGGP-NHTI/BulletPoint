@@ -91,7 +91,7 @@ public class Game : MonoBehaviour
         game.playerToSpawn = player.gameObject;
 
         Debug.Log("Player to Spawn: " + game.playerToSpawn.name);
-
+        DontDestroyOnLoad(game.playerToSpawn);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
