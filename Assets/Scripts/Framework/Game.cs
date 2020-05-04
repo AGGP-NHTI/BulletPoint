@@ -6,6 +6,8 @@ public class Game : MonoBehaviour
 {
     //static variables
     public static Game game;
+
+    
     public static PlayerManager player;
     public static Vector3 Player_Starting_Location;
     public static int EnemyCount = 0;
@@ -20,11 +22,13 @@ public class Game : MonoBehaviour
 
     public GameObject[] EnemyPrefabs;
 
+    public GameObject Player;
+
     public GameObject playerToSpawn;
 
     void Awake()
     {
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
         if (!game)
         {
             game = this;
@@ -40,9 +44,16 @@ public class Game : MonoBehaviour
         }
     }
 
+    
+
     void Start()
     {
         player.transform.position = Player_Starting_Location;
+    }
+
+    private void FixedUpdate()
+    {
+        Player = player.gameObject;
     }
 
     public static float getlevelOneAI()
