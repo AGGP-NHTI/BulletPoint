@@ -25,14 +25,14 @@ public class Game : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        if (!game)
-        {
-            game = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //if (!game)
+        //{
+       //     game = this;
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+       // }
 
         if (playerToSpawn)
         {
