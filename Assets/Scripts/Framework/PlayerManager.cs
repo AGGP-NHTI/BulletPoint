@@ -43,6 +43,7 @@ public class PlayerManager : Pawn
 
     protected override void Awake()
 	{
+        DontDestroyOnLoad(_obj);
         base.Awake();
 	}
 
