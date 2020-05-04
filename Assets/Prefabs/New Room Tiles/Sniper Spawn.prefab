@@ -323,6 +323,36 @@ PrefabInstance:
       propertyPath: defaultHeight
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: PlacedScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: PlacedScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: PlacedScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: OwnedScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: OwnedScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: OwnedScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9052431540077408705, guid: d8b21dd4d5722944fba90f511a2d3cf9,
         type: 3}
       propertyPath: m_Name
