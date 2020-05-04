@@ -19,6 +19,9 @@ public class Game : MonoBehaviour
     public List<Spawner> spawners = new List<Spawner>();
 
     public GameObject[] EnemyPrefabs;
+
+    private GameObject playerToSpawn;
+
     void Awake()
     {
         if (!game)
@@ -79,6 +82,8 @@ public class Game : MonoBehaviour
 
     public static void LoadNextScene()
     {
+        game.playerToSpawn = player.gameObject;
+        DontDestroyOnLoad(player.gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
