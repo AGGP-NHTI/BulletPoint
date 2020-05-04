@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Game : MonoBehaviour
 {
     //static variables
@@ -78,6 +78,9 @@ public class Game : MonoBehaviour
         }
     }
 
-
+    public static void LoadNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+    }
 
 }
