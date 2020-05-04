@@ -38,14 +38,22 @@ public class Game : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+    }
 
-        if (PlayerPrefab && !player)
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += loadObjs;
+    }
+
+    void loadObjs(Scene scene, LoadSceneMode mode)
+    {
+        if (PlayerPrefab)
         {
-           player = Instantiate(game.PlayerPrefab).GetComponent<PlayerManager>();
+            player = Instantiate(PlayerPrefab).GetComponent<PlayerManager>();
         }
     }
 
-    
 
     void Start()
     {
@@ -100,14 +108,14 @@ public class Game : MonoBehaviour
 
     public static void LoadNextScene()
     {
-        game.PlayerPrefab = player.gameObject;
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
-    public static void playerStats()
+
+    void OnDisable()
     {
 
+        SceneManager.sceneLoaded -= loadObjs;
     }
 
 }
