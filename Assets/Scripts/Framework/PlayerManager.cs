@@ -43,6 +43,7 @@ public class PlayerManager : Pawn
 
     protected override void Awake()
 	{
+        DontDestroyOnLoad(gameObject);
         if (!player)
         {
             player = this;

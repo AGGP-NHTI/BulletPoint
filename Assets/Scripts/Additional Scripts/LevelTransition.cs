@@ -10,6 +10,7 @@ public class LevelTransition : MonoBehaviour
 
         if (player)
         {
+            
             Game.LoadNextScene();
         }
     }

@@ -82,4 +82,9 @@ public class Game : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
+    public static void playerStats()
+    {
+
+    }
+
 }
