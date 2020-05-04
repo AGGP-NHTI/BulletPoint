@@ -23,12 +23,11 @@ public class Game : MonoBehaviour
     public GameObject[] EnemyPrefabs;
 
     public GameObject Player;
+    public GameObject PlayerPrefab;
 
-    public GameObject playerToSpawn;
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
         if (!game)
         {
             game = this;
@@ -38,9 +37,9 @@ public class Game : MonoBehaviour
            Destroy(gameObject);
         }
 
-        if (playerToSpawn)
+        if (PlayerPrefab && !player)
         {
-            Instantiate(game.playerToSpawn);
+           player = Instantiate(game.PlayerPrefab).GetComponent<PlayerManager>();
         }
     }
 
@@ -99,10 +98,8 @@ public class Game : MonoBehaviour
 
     public static void LoadNextScene()
     {
-        game.playerToSpawn = player.gameObject;
+        game.PlayerPrefab = player.gameObject;
 
-        Debug.Log("Player to Spawn: " + game.playerToSpawn.name);
-        DontDestroyOnLoad(game.playerToSpawn);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 

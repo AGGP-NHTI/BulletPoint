@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelTransition : MonoBehaviour
 {
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         PlayerManager player = other.GetComponent<PlayerManager>();
 
