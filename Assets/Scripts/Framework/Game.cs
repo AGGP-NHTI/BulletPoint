@@ -37,6 +37,8 @@ public class Game : MonoBehaviour
            Destroy(gameObject);
         }
 
+        DontDestroyOnLoad(gameObject);
+
         if (PlayerPrefab && !player)
         {
            player = Instantiate(game.PlayerPrefab).GetComponent<PlayerManager>();
