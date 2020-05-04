@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         Game.Player_Starting_Location = transform.position;
         Game.player.playerStartingY = transform.position.y;

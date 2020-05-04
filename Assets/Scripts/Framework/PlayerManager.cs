@@ -100,7 +100,7 @@ public class PlayerManager : Pawn
         }
         
         //move
-        charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
+        charController.SimpleMove((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
         
         //set animations
         if (playerAnimator) playerAnimator.SetFloat("Movement", moveMagnitude);

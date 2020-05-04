@@ -46,12 +46,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1000
-  playerAnimator: {fileID: 0}
-  gunAnimator: {fileID: 0}
-  twoHandedAnimator: {fileID: 0}
-  oneHandedAnimator: {fileID: 0}
+  playerAnimator: {fileID: 2878659861261643084, guid: f92985a20c4a1ad4097b3b72d088a7c1,
+    type: 3}
+  gunAnimator: {fileID: 9100000, guid: b7922e77021d3a54ebbe11fb3b634dc7, type: 2}
+  twoHandedAnimator: {fileID: 9100000, guid: c68ae3608ed24c7478ec1092270260d3, type: 2}
+  oneHandedAnimator: {fileID: 9100000, guid: fdb699649f05e214884f9b1cb06fc334, type: 2}
   animationInputs: {x: 0, y: 0}
-  playerModel: {fileID: 0}
+  playerModel: {fileID: 9160981336602620453, guid: f92985a20c4a1ad4097b3b72d088a7c1,
+    type: 3}
   weaponOwned: {fileID: 0}
   Hand_Node: {fileID: 5929946012703463987}
   charController: {fileID: 3230090007496856119}
@@ -77,7 +79,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &3230090008556154684
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,6 +243,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2878659861261643084, guid: f92985a20c4a1ad4097b3b72d088a7c1,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b7922e77021d3a54ebbe11fb3b634dc7, type: 2}
     - target: {fileID: 2896103231616934814, guid: f92985a20c4a1ad4097b3b72d088a7c1,
         type: 3}
       propertyPath: m_StaticEditorFlags
