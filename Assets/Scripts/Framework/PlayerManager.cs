@@ -64,8 +64,9 @@ public class PlayerManager : Pawn
 
     private void FixedUpdate()
     {
-        goToGround();
+        //goToGround();
         animationInputs = moveDirection();
+        LOG("Animation Inputs: " + animationInputs);
         playerAnimator.SetFloat("ForwardMovement", animationInputs.y);
         playerAnimator.SetFloat("RightMovement", animationInputs.x);
 		moveAround();
