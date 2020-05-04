@@ -24,6 +24,7 @@ public class Game : MonoBehaviour
 
     void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (!game)
         {
             game = this;
@@ -31,6 +32,11 @@ public class Game : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        if (playerToSpawn)
+        {
+            Instantiate(game.playerToSpawn);
         }
     }
 
@@ -83,7 +89,7 @@ public class Game : MonoBehaviour
     public static void LoadNextScene()
     {
         game.playerToSpawn = player.gameObject;
-        DontDestroyOnLoad(player.gameObject);
+        //DontDestroyOnLoad(player.gameObject);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
