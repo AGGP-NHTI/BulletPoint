@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-
+    //static variables
     public static Game game;
     public static PlayerManager player;
     public static Vector3 Player_Starting_Location;
-
     public static int EnemyCount = 0;
-
-    public GameObject[] EnemyPrefabs;
-    public static int EnemyCap = 10;
+    public static int EnemyCap = 30;
 
     private static float levelOneAI = 0.1f; // time it takes to update system
     private static float levelTwoAI = 0.5f; // time it takes to update system
     private static float levelThreeAI = 0.25f; // time it takes to update system
     private static float levelFourAI = 0.1f; // time it takes to update system
+    List<int> numbers = new List<int>();
 
+    public List<Spawner> spawners = new List<Spawner>();
+
+    public GameObject[] EnemyPrefabs;
     void Awake()
     {
         if (!game)

@@ -29,6 +29,8 @@ public class Spawner : EntityController
         if(LocationReference)
             Destroy(LocationReference);
 
+        Game.game.spawners.Add(this);
+
         timeTracker = 0f;
     }
 
@@ -66,7 +68,9 @@ public class Spawner : EntityController
                 //if reached spawn cap delete this object
                 if (Amount_Spawned >= amountToSpawn)
                 {
+                    Game.game.spawners.Remove(this);
                     Destroy(gameObject);
+                   
                 }
             }
         }

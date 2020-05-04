@@ -64,7 +64,7 @@ public class PlayerManager : Pawn
 
     private void FixedUpdate()
     {
-        //goToGround();
+        goToGround();
         animationInputs = moveDirection();
         playerAnimator.SetFloat("ForwardMovement", animationInputs.y);
         playerAnimator.SetFloat("RightMovement", animationInputs.x);
@@ -158,10 +158,6 @@ public class PlayerManager : Pawn
         }
     }
 
-    void directForce(float time, Vector3 dir, float amount)
-    {
-        
-    }
 
 
     
@@ -233,7 +229,13 @@ public class PlayerManager : Pawn
         }
     }
 
-
+    void goToGround()
+    {
+        if (transform.position.y > playerStartingY)
+        {
+            _transf.Translate(-transform.up);
+        }
+    }
 
     IEnumerator rollCoolDown(float input)
     {
