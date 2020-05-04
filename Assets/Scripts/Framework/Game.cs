@@ -7,7 +7,7 @@ public class Game : MonoBehaviour
     //static variables
     public static Game game;
 
-    
+
     public static PlayerManager player;
     public static Vector3 Player_Starting_Location;
     public static int EnemyCount = 0;
@@ -25,7 +25,7 @@ public class Game : MonoBehaviour
     public GameObject Player;
     public GameObject PlayerPrefab;
 
-
+    bool objectsLoaded = false;
     void Awake()
     {
         if (!game)
@@ -34,22 +34,30 @@ public class Game : MonoBehaviour
         }
         else
         {
-           Destroy(gameObject);
+            Destroy(gameObject);
         }
 
         DontDestroyOnLoad(gameObject);
 
-        if (PlayerPrefab && !player)
-        {
-           player = Instantiate(game.PlayerPrefab).GetComponent<PlayerManager>();
-        }
-    }
 
-    
+    }
 
     void Start()
     {
         player.transform.position = Player_Starting_Location;
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += loadObjs;
+    }
+
+    void loadObjs(Scene scene, LoadSceneMode mode)
+    {
+        if (PlayerPrefab)
+        {
+            player = Instantiate(PlayerPrefab).GetComponent<PlayerManager>();
+        }
     }
 
     private void FixedUpdate()
@@ -100,14 +108,14 @@ public class Game : MonoBehaviour
 
     public static void LoadNextScene()
     {
-        game.PlayerPrefab = player.gameObject;
+        //game.PlayerPrefab = player.gameObject;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
-    public static void playerStats()
+    void OnDisable()
     {
-
+        SceneManager.sceneLoaded -= loadObjs;
     }
 
 }
