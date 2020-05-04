@@ -20,7 +20,7 @@ public class Game : MonoBehaviour
 
     public GameObject[] EnemyPrefabs;
 
-    private GameObject playerToSpawn;
+    public GameObject playerToSpawn;
 
     void Awake()
     {
@@ -89,7 +89,9 @@ public class Game : MonoBehaviour
     public static void LoadNextScene()
     {
         game.playerToSpawn = player.gameObject;
-        //DontDestroyOnLoad(player.gameObject);
+
+        Debug.Log("Player to Spawn: " + game.playerToSpawn.name);
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 
