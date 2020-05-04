@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f900ec843657d4ca6d59d2910d2c18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Game_ID: 2
   PlacedRotation: {x: -90, y: 0, z: 0}
   PlacedScale: {x: 2, y: 2, z: 2}
   OwnedScale: {x: 1, y: 1, z: 1}

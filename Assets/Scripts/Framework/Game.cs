@@ -22,8 +22,15 @@ public class Game : MonoBehaviour
 
     public GameObject[] EnemyPrefabs;
 
+    [Header("Debugging")]
     public GameObject Player;
+
+    [Header("Scene Transitions")]
+    public int NextWeapon = 0;
+
+    [Header("Scene Prefabs")]
     public GameObject PlayerPrefab;
+    public GameObject[] WeaponPrefab;
 
 
     void Awake()
@@ -48,28 +55,42 @@ public class Game : MonoBehaviour
 
     void loadObjs(Scene scene, LoadSceneMode mode)
     {
-        if (PlayerPrefab)
+
+
+
+        if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-            player = Instantiate(PlayerPrefab).GetComponent<PlayerManager>();
+            if (PlayerPrefab)
+            {
+                Debug.Log("INSTANTIATING PLAYER");
+                player = Instantiate(PlayerPrefab).GetComponent<PlayerManager>();
+                Debug.Log("Player: " + player.gameObject.name);
+                Weapons weapon = Instantiate(WeaponPrefab[NextWeapon]).GetComponent<Weapons>();
+                if (weapon)
+                {
+                    Debug.Log("SHOULD SET WEAPON OWNED--------------------------------------------------------------------------");
+                    player.setOwnedWeapon(weapon);
+                }
+            }
         }
+
+
+
     }
 
 
-    void Start()
-    {
-        player.transform.position = Player_Starting_Location;
-    }
+
 
     private void FixedUpdate()
     {
-        Player = player.gameObject;
+        //Debug.Log("Player: " + player?.name);
+        Player = player?.gameObject;
     }
 
     public static float getlevelOneAI()
     {
         return levelOneAI;
     }
-
     public static float getlevelTwoAI()
     {
         return levelTwoAI;
@@ -108,6 +129,8 @@ public class Game : MonoBehaviour
 
     public static void LoadNextScene()
     {
+        game.NextWeapon = player.weaponOwned.Game_ID;
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 

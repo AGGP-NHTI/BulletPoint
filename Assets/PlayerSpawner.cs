@@ -8,9 +8,16 @@ public class PlayerSpawner : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(setPositions());
         
+    }
+
+    IEnumerator setPositions()
+    {
+        yield return new WaitForEndOfFrame();
+
         Game.Player_Starting_Location = transform.position + offeset;
         Game.player.transform.position = Game.Player_Starting_Location;
-        Game.player.playerStartingY = transform.position.y;
+        Game.player.playerStartingY = transform.position.y; 
     }
 }

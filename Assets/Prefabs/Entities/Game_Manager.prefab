@@ -49,8 +49,15 @@ MonoBehaviour:
   - {fileID: 6312149268924019293, guid: 08a028be5d608ce47be4ac8995c98e6c, type: 3}
   - {fileID: 2728754432984799515, guid: 2b0eb5d046804f840ba78260976495d7, type: 3}
   Player: {fileID: 0}
+  NextWeapon: 0
   PlayerPrefab: {fileID: 3230090007496856113, guid: f04759c6715d61e49b942add4b2febe9,
     type: 3}
+  WeaponPrefab:
+  - {fileID: 0}
+  - {fileID: 4529349503644557152, guid: 3f149b846caa74d4fafb52afba5a4d3e, type: 3}
+  - {fileID: 9052431540077408705, guid: d8b21dd4d5722944fba90f511a2d3cf9, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &6644111174390208197
 MonoBehaviour:
   m_ObjectHideFlags: 0

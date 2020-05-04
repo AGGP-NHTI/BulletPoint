@@ -5,6 +5,7 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public abstract class Weapons : EntityController
 {
+    public int Game_ID;
 	public Vector3 PlacedRotation;
 	public Vector3 PlacedScale;
 	public Vector3 OwnedScale;
@@ -31,6 +32,8 @@ public abstract class Weapons : EntityController
 		{
 			Game.player.Drop(this);
 		}
+        LOG("WEAPON: " + name);
+        LOG("HAS PARENT: " + parent?.name);
 	}
 
     protected virtual void OnTriggerStay(Collider other)

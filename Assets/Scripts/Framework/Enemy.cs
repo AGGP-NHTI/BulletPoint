@@ -64,7 +64,7 @@ public class Enemy : Pawn
         distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
 
         //debugging
-        if (!IsDummy) LOG(_obj?.name + "'s action is " + action?.Method.Name);
+        //if (!IsDummy) LOG(_obj?.name + "'s action is " + action?.Method.Name);
     }
 
     //Debugging

@@ -44,13 +44,14 @@ public class PlayerManager : Pawn
     protected override void Awake()
 	{
         base.Awake();
-	}
+        Game.game.Player = gameObject;
+        Game.player = Game.game.Player.GetComponent<PlayerManager>();
+    }
 
 	public override void Start()
     {
-        Game.player = gameObject.GetComponent<PlayerManager>();
         base.Start();
-        playerAnimator.runtimeAnimatorController = oneHandedAnimator;
+        if(!weaponOwned) playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         weaponOwned = null;
     }
 
@@ -65,12 +66,15 @@ public class PlayerManager : Pawn
 
     private void FixedUpdate()
     {
-        //goToGround();
+        goToGround();
         animationInputs = moveDirection();
-        LOG("Animation Inputs: " + animationInputs);
+        //LOG("Animation Inputs: " + animationInputs);
         playerAnimator.SetFloat("ForwardMovement", animationInputs.y);
         playerAnimator.SetFloat("RightMovement", animationInputs.x);
 		moveAround();
+
+        //LOG("Weapon Owned: " + weaponOwned?.name);
+        //LOG("Takes Continuos Input: " + weaponOwned?.takes_Continuous_Input);
     }
 
 
@@ -113,7 +117,6 @@ public class PlayerManager : Pawn
     {
         if (rightStick.magnitude > 0)
         {
-            LOG("RIGHT STICK " + rightStick);
             float deltaX = rightStick.x;
             float deltaY = rightStick.y;
             float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
@@ -133,7 +136,8 @@ public class PlayerManager : Pawn
 		{
 			if (InputManager.GetButtonPressed(GamepadButton.RightTrigger, true))
 			{
-				weaponOwned.Use();
+                LOG("TRYING TO USE WEAPON");
+                weaponOwned.Use();
 				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
 			else
@@ -146,6 +150,7 @@ public class PlayerManager : Pawn
         {
             if (InputManager.rightTriggerConstant())
 			{
+                LOG("TRYING TO USE WEAPON");
                 weaponOwned.Use();
 				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
@@ -166,32 +171,39 @@ public class PlayerManager : Pawn
         {
             if (!weaponOwned)
             {
-                weaponOwned = weapon;
-                weapon.trigger.enabled = false;
-
-                weapon.transform.localScale = weapon.OwnedScale;
-                weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
-                weapon.transform.parent = Hand_Node.transform;
-
-                
-                if (weaponOwned is AssaultRifle || weaponOwned is Sniper)
-                {
-                    playerAnimator.runtimeAnimatorController = gunAnimator;
-                }
-                else if (true)//SWORD
-                {
-
-
-                 }
-                    //else if (true)// Hammer
-                    //{
-
-                    //}
-                }
+                setOwnedWeapon(weapon);
+            }
             else
             {
                 LOG("DROP YOUR CURRENT ITEM BEFORE PICKING UP ANOTHER");
             }
+        }
+    }
+
+    public virtual void setOwnedWeapon(Weapons weapon)
+    {
+        weaponOwned = weapon;
+        weapon.trigger.enabled = false;
+
+        weapon.transform.localScale = weapon.OwnedScale;
+        weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
+        weapon.transform.parent = Hand_Node.transform;
+
+
+        setWeaponAnims();
+
+    }
+
+    void setWeaponAnims()
+    {
+        if (weaponOwned is AssaultRifle || weaponOwned is Sniper)
+        {
+            playerAnimator.runtimeAnimatorController = gunAnimator;
+        }
+        else if (true)//SWORD
+        {
+
+
         }
     }
 
@@ -234,6 +246,8 @@ public class PlayerManager : Pawn
             _transf.Translate(-transform.up);
         }
     }
+
+    
 
     IEnumerator rollCoolDown(float input)
     {
