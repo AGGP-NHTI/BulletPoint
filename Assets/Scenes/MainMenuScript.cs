@@ -18,7 +18,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void Start_Button()
     {
-        SceneManager.LoadScene("LevelOne");
+        Game.LoadNextScene();
     }
 
     public void Quit_Button()

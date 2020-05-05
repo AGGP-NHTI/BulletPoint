@@ -43,14 +43,14 @@ public class Game : MonoBehaviour
         {
            Destroy(gameObject);
         }
-
-        DontDestroyOnLoad(gameObject);
+        setupSceneLoading();
+        //DontDestroyOnLoad(gameObject);
     }
 
 
     void OnEnable()
     {
-        SceneManager.sceneLoaded += loadObjs;
+        //SceneManager.sceneLoaded += loadObjs;
     }
 
     void loadObjs(Scene scene, LoadSceneMode mode)
@@ -83,7 +83,6 @@ public class Game : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("Player: " + player?.name);
         Player = player?.gameObject;
     }
 
@@ -127,18 +126,38 @@ public class Game : MonoBehaviour
         }
     }
 
-    public static void LoadNextScene()
-    {
-        game.NextWeapon = player.weaponOwned.Game_ID;
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
-    }
+    
 
 
     void OnDisable()
     {
 
         SceneManager.sceneLoaded -= loadObjs;
+    }
+
+
+
+
+    //Scene Loading
+
+    void setupSceneLoading()
+    {
+        Debug.Log("SETUP LOADING SCENE");
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+    }
+
+    public static void LoadNextScene()
+    {
+        game.NextWeapon = player.weaponOwned.Game_ID;
+
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+    }
+    
+    IEnumerator Unload(int scene)
+    {
+        yield return null;
+
+        SceneManager.UnloadSceneAsync(scene);
     }
 
 }
