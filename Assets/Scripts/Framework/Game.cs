@@ -7,7 +7,7 @@ public class Game : MonoBehaviour
     //static variables
     public static Game game;
 
-    
+    public string firstScene;
     public static PlayerManager player;
     public static Vector3 Player_Starting_Location;
     public static int EnemyCount = 0;
@@ -32,58 +32,66 @@ public class Game : MonoBehaviour
     public GameObject PlayerPrefab;
     public GameObject[] WeaponPrefab;
 
+    bool isNeverUnloadLoaded = false;
 
-    void Awake()
+    System.Func<bool> isCurrentSceneLoaded = () => false;
+    public static System.Func<bool> playerExists = () => false;
+
+
+    int currentSceneLoaded = 1;
+
+    private void Start()
     {
-        if (!game)
+        playerExists = () => player;
+        if (!isNeverUnloadLoaded)
         {
-            game = this;
-        }
-        else
-        {
-           Destroy(gameObject);
-        }
-        setupSceneLoading();
-        //DontDestroyOnLoad(gameObject);
-    }
-
-
-    void OnEnable()
-    {
-        //SceneManager.sceneLoaded += loadObjs;
-    }
-
-    void loadObjs(Scene scene, LoadSceneMode mode)
-    {
-
-
-
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            if (PlayerPrefab)
+            if (!game)
             {
-                Debug.Log("INSTANTIATING PLAYER");
-                player = Instantiate(PlayerPrefab).GetComponent<PlayerManager>();
-                Debug.Log("Player: " + player.gameObject.name);
-                Weapons weapon = Instantiate(WeaponPrefab[NextWeapon]).GetComponent<Weapons>();
-                if (weapon)
-                {
-                    Debug.Log("SHOULD SET WEAPON OWNED--------------------------------------------------------------------------");
-                    player.setOwnedWeapon(weapon);
-                }
+                game = this;
             }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+
+            setupSceneLoading();
+
+            isNeverUnloadLoaded = true;
         }
-
-
-
     }
 
 
+    //void loadObjs(Scene scene, LoadSceneMode mode)
+    //{
+
+
+
+    //    if (SceneManager.GetActiveScene().buildIndex != 0)
+    //    {
+    //        if (PlayerPrefab)
+    //        {
+    //            Debug.Log("INSTANTIATING PLAYER");
+    //            player = Instantiate(PlayerPrefab).GetComponent<PlayerManager>();
+    //            Debug.Log("Player: " + player.gameObject.name);
+    //            Weapons weapon = Instantiate(WeaponPrefab[NextWeapon]).GetComponent<Weapons>();
+    //            if (weapon)
+    //            {
+    //                Debug.Log("SHOULD SET WEAPON OWNED--------------------------------------------------------------------------");
+    //                player.setOwnedWeapon(weapon);
+    //            }
+    //        }
+    //    }
+
+
+
+    //}
 
 
     private void FixedUpdate()
     {
-        Player = player?.gameObject;
+        Debug.Log("Player In The Scene: " +player?.name);
+        Debug.Log("Active Scene: " + SceneManager.GetActiveScene().name);
     }
 
     public static float getlevelOneAI()
@@ -125,34 +133,57 @@ public class Game : MonoBehaviour
             return false;
         }
     }
-
     
 
 
-    void OnDisable()
-    {
 
-        SceneManager.sceneLoaded -= loadObjs;
-    }
+
+
+
+
+
+
+
+
+
 
 
 
 
     //Scene Loading
 
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += setisSceneLoaded;
+    }
+
+    void setisSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneManager.SetActiveScene(scene);
+        
+        isCurrentSceneLoaded = () => true;
+    }
+
     void setupSceneLoading()
     {
+        player = GameObject.Find("Player").GetComponent<PlayerManager>();
         Debug.Log("SETUP LOADING SCENE");
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        game.StartCoroutine(LoadScene(1));
     }
 
     public static void LoadNextScene()
     {
-        game.NextWeapon = player.weaponOwned.Game_ID;
+        //game.NextWeapon = player.weaponOwned.Game_ID;
 
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Additive);
+        game.StartCoroutine(game.LoadScene(game.currentSceneLoaded + 1));
+
+
+        game.StartCoroutine(game.Unload(game.currentSceneLoaded));
+        game.currentSceneLoaded++;
+        
+
     }
-    
+
     IEnumerator Unload(int scene)
     {
         yield return null;
@@ -160,4 +191,14 @@ public class Game : MonoBehaviour
         SceneManager.UnloadSceneAsync(scene);
     }
 
+
+    IEnumerator LoadScene(int scene)
+    {
+        yield return null;
+
+        game.isCurrentSceneLoaded = () => false;
+
+        Debug.Log("Start Loading");
+        SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+    }
 }

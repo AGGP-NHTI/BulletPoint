@@ -38,21 +38,15 @@ public class PlayerManager : Pawn
     [Header("Control")]
     public float playerStartingY;
 
-
-
-
-    protected override void Awake()
-	{
-        base.Awake();
-        Game.game.Player = gameObject;
-        Game.player = Game.game.Player.GetComponent<PlayerManager>();
-    }
+    public System.Func<bool> isPlayerSetup = () => false;
 
 	public override void Start()
     {
         base.Start();
         if(!weaponOwned) playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         weaponOwned = null;
+
+        isPlayerSetup = () => true;
     }
 
     // Update is called once per frame
@@ -63,6 +57,8 @@ public class PlayerManager : Pawn
         spinAround();
         attack();
     }
+    
+    
 
     private void FixedUpdate()
     {

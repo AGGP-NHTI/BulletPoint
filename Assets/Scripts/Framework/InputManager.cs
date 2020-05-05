@@ -31,6 +31,7 @@ public class InputManager : MonoBehaviour
 		{GamepadButton.West,	new Buffer(0.5f) },
         {GamepadButton.RightTrigger,    new Buffer(0.5f) },
     };
+
 	Gamepad gp;
 
     void Awake()
@@ -52,26 +53,26 @@ public class InputManager : MonoBehaviour
 	
     void Update()
     {
-		foreach (KeyValuePair<GamepadButton,Buffer> entry in buffer)
-		{
-			if (gp[entry.Key].wasPressedThisFrame)
-			{
-				entry.Value.timePressed = Time.time;
-			}
-			else if (gp[entry.Key].wasReleasedThisFrame)
-			{
-				entry.Value.timeReleased = Time.time;
-			}
+		//foreach (KeyValuePair<GamepadButton,Buffer> entry in buffer)
+		//{
+		//	if (gp[entry.Key].wasPressedThisFrame)
+		//	{
+		//		entry.Value.timePressed = Time.time;
+		//	}
+		//	else if (gp[entry.Key].wasReleasedThisFrame)
+		//	{
+		//		entry.Value.timeReleased = Time.time;
+		//	}
 
-			if (entry.Value.timePressed != -1)
-			{
-				if ((Time.time - entry.Value.timePressed) > entry.Value.bufferTime)
-				{
-					entry.Value.timePressed = -1;
-				}
-			}
+		//	if (entry.Value.timePressed != -1)
+		//	{
+		//		if ((Time.time - entry.Value.timePressed) > entry.Value.bufferTime)
+		//		{
+		//			entry.Value.timePressed = -1;
+		//		}
+		//	}
 			
-		}
+		//}
 	}
 
 	public static bool GetButtonPressed(GamepadButton btn, bool useBuffer = true)

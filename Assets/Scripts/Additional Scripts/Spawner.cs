@@ -41,7 +41,7 @@ public class Spawner : EntityController
 
         //counts to the amount of spawn rate, calls a function and then resets to zero
         timeTracker += Time.fixedDeltaTime;
-        if (timeTracker > spawnRate)
+        if (Game.player && timeTracker > spawnRate)
         {
             spawn();
             timeTracker = 0f;
@@ -75,6 +75,5 @@ public class Spawner : EntityController
             }
         }
     }
-
 
 }
