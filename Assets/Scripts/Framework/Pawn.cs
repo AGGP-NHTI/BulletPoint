@@ -31,8 +31,8 @@ public class Pawn : EntityController
         }
 
 		LOG($"{gameObject.name} was killed by {(source.name??"karma")}");
-
-        Destroy(_obj,2f);
+        gameObject.GetComponent<Collider>().enabled = false;
+        Destroy(_obj,0.5f);
     }
 
     public void takeDamage(int amount, GameObject source = null)

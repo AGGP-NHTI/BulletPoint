@@ -10,7 +10,7 @@ public class Game : MonoBehaviour
     public static PlayerManager player;
     public static Vector3 Player_Starting_Location;
     public static int EnemyCount = 0;
-    public static int EnemyCap = 30;
+    public static int EnemyCap = 10;
 
     private static float levelOneAI = 0.1f; // time it takes to update system
     private static float levelTwoAI = 0.5f; // time it takes to update system

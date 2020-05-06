@@ -32,6 +32,7 @@ public class PlayerManager : Pawn
 
     public float moveSpeed = 10f;
     public float moveMagnitude;
+    public float lookMagnitude;
     public bool canRoll = true;
     public float rollSpeed = 20f;
     
@@ -112,7 +113,8 @@ public class PlayerManager : Pawn
     //look in the direction of the right stick
     void spinAround()
     {
-        if (rightStick.magnitude > 0)
+        lookMagnitude = rightStick.magnitude;
+        if (lookMagnitude > 0)
         {
             float deltaX = rightStick.x;
             float deltaY = rightStick.y;
@@ -120,7 +122,6 @@ public class PlayerManager : Pawn
 
 
             transform.eulerAngles = new Vector3(0, joypos + 90, 0);
-
 
             playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
         }
