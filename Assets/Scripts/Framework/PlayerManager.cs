@@ -163,7 +163,7 @@ public class PlayerManager : Pawn
 
     public virtual void PickUp(Weapons weapon)
     {
-        if (InputManager.GetButtonPressed(GamepadButton.West))
+        if (InputManager.GetButtonPressed(GamepadButton.West) || Input.GetKeyDown(KeyCode.Space))
         {
             if (!weaponOwned)
             {
