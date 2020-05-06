@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5389084681442305673
 Transform:
@@ -74,7 +74,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -318,6 +318,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5389084681442305673}
     m_Modifications:
+    - target: {fileID: 1960412088962171830, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4877821207666219699, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 9052431540077408704, guid: d8b21dd4d5722944fba90f511a2d3cf9,
         type: 3}
       propertyPath: defaultHeight
@@ -357,6 +367,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SniperRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431540077408705, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 9052431540077408707, guid: d8b21dd4d5722944fba90f511a2d3cf9,
         type: 3}
@@ -427,6 +442,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052431541046317448, guid: d8b21dd4d5722944fba90f511a2d3cf9,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b21dd4d5722944fba90f511a2d3cf9, type: 3}

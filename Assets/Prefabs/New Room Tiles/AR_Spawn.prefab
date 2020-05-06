@@ -18,7 +18,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6064554308754236698
 Transform:
@@ -74,7 +74,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
+  m_SelectedEditorRenderState: 2
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -318,10 +318,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6064554308754236698}
     m_Modifications:
+    - target: {fileID: 4529349503427846929, guid: 3f149b846caa74d4fafb52afba5a4d3e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 4529349503644557152, guid: 3f149b846caa74d4fafb52afba5a4d3e,
         type: 3}
       propertyPath: m_Name
       value: AsaultRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529349503644557152, guid: 3f149b846caa74d4fafb52afba5a4d3e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 4529349503644557155, guid: 3f149b846caa74d4fafb52afba5a4d3e,
         type: 3}
@@ -412,6 +422,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5852008583514818939, guid: 3f149b846caa74d4fafb52afba5a4d3e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7091127938351279564, guid: 3f149b846caa74d4fafb52afba5a4d3e,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f149b846caa74d4fafb52afba5a4d3e, type: 3}
