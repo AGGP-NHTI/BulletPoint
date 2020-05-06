@@ -130,17 +130,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 413216426149834873, guid: 20ad3edfd65def844afa5e8204072cd3,
         type: 3}
-      propertyPath: firstScene
-      value: LevelOne
-      objectReference: {fileID: 0}
-    - target: {fileID: 413216426149834873, guid: 20ad3edfd65def844afa5e8204072cd3,
-        type: 3}
-      propertyPath: hpDisplayPrefab
-      value: 
-      objectReference: {fileID: 2940690511298798057, guid: 6c5172cfc65edd0478cd6777cc1886b0,
-        type: 3}
-    - target: {fileID: 413216426149834873, guid: 20ad3edfd65def844afa5e8204072cd3,
-        type: 3}
       propertyPath: canvas
       value: 
       objectReference: {fileID: 644927895}
