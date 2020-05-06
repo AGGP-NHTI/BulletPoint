@@ -34,6 +34,9 @@ public class Game : MonoBehaviour
     bool isNeverUnloadLoaded = false;
 
     System.Func<bool> isCurrentSceneLoaded = () => false;
+
+    System.Func<bool> isSceneUnloaded = () => false;
+
     public static System.Func<bool> playerExists = () => false;
 
 
@@ -188,15 +191,21 @@ public class Game : MonoBehaviour
     public static void LoadNextScene()
     {
         //game.NextWeapon = player.weaponOwned.Game_ID;
-        game.StartCoroutine(game.Unload(game.currentSceneLoaded));
+        if (game.currentSceneLoaded < SceneManager.sceneCountInBuildSettings - 1)
+        {
+            game.StartCoroutine(game.Unload(game.currentSceneLoaded));
 
 
-        game.StartCoroutine(game.LoadScene(game.currentSceneLoaded + 1));
+            game.StartCoroutine(game.LoadScene(game.currentSceneLoaded + 1));
 
 
-        
-        game.currentSceneLoaded++;
-        
+
+            game.currentSceneLoaded++;
+        }
+        else
+        {
+            Debug.Log("Reached BOSS LEVEL");
+        }
 
     }
 
@@ -220,8 +229,11 @@ public class Game : MonoBehaviour
     IEnumerator Unload(int scene)
     {
         yield return new WaitForEndOfFrame();
+        isSceneUnloaded = () => false;
 
         SceneManager.UnloadSceneAsync(scene);
+
+        //isSceneUnloaded = () => SceneManager.GetSceneByBuildIndex(scene).isLoaded;
     }
 
 
@@ -229,9 +241,14 @@ public class Game : MonoBehaviour
     {
         yield return null;
 
+       // yield return new WaitUntil(game.isSceneUnloaded);
+
         game.isCurrentSceneLoaded = () => false;
 
         Debug.Log("Start Loading");
+
         SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+
+        //game.isCurrentSceneLoaded = () => SceneManager.GetSceneByBuildIndex(scene).isLoaded;
     }
 }
