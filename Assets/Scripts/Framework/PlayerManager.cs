@@ -50,8 +50,9 @@ public class PlayerManager : Pawn
     }
 
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
+        base.Update();
         rightStick = InputManager.getRightJoyStick();
         leftStick = InputManager.getLeftJoyStick();
         spinAround();
