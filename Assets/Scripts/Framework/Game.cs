@@ -7,7 +7,6 @@ public class Game : MonoBehaviour
     //static variables
     public static Game game;
 
-    public string firstScene;
     public static PlayerManager player;
     public static Vector3 Player_Starting_Location;
     public static int EnemyCount = 0;
@@ -87,7 +86,17 @@ public class Game : MonoBehaviour
 
     //}
 
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            LoadNextScene();
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            LoadLastScene();
+        }
+    }
     private void FixedUpdate()
     {
         Debug.Log("Player In The Scene: " +player?.name);
@@ -157,11 +166,16 @@ public class Game : MonoBehaviour
         SceneManager.sceneLoaded += setisSceneLoaded;
     }
 
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= setisSceneLoaded;
+    }
+
     void setisSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SceneManager.SetActiveScene(scene);
         
-        isCurrentSceneLoaded = () => true;
+        isCurrentSceneLoaded = () => false;
     }
 
     void setupSceneLoading()
@@ -174,19 +188,38 @@ public class Game : MonoBehaviour
     public static void LoadNextScene()
     {
         //game.NextWeapon = player.weaponOwned.Game_ID;
+        game.StartCoroutine(game.Unload(game.currentSceneLoaded));
+
 
         game.StartCoroutine(game.LoadScene(game.currentSceneLoaded + 1));
 
 
-        game.StartCoroutine(game.Unload(game.currentSceneLoaded));
+        
         game.currentSceneLoaded++;
         
 
     }
 
+    public static void LoadLastScene()
+    {
+        //game.NextWeapon = player.weaponOwned.Game_ID;
+        if (game.currentSceneLoaded > 0)
+        {
+            game.StartCoroutine(game.Unload(game.currentSceneLoaded));
+
+
+            game.StartCoroutine(game.LoadScene(game.currentSceneLoaded - 1));
+
+
+
+            game.currentSceneLoaded--;
+
+        }
+    }
+
     IEnumerator Unload(int scene)
     {
-        yield return null;
+        yield return new WaitForEndOfFrame();
 
         SceneManager.UnloadSceneAsync(scene);
     }
