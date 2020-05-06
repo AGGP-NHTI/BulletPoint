@@ -42,7 +42,7 @@ public class PlayerManager : Pawn
 
 	public override void Start()
     {
-        base.Start();
+        //base.Start();
         if(!weaponOwned) playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         weaponOwned = null;
 
