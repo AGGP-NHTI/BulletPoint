@@ -43,11 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92833a666a6e71247977bfa4efdd39e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstScene: 
   spawners: []
   EnemyPrefabs:
   - {fileID: 6312149268924019293, guid: 08a028be5d608ce47be4ac8995c98e6c, type: 3}
   - {fileID: 2728754432984799515, guid: 2b0eb5d046804f840ba78260976495d7, type: 3}
+  canvas: {fileID: 0}
+  hpDisplayPrefab: {fileID: 2940690511298798057, guid: 6c5172cfc65edd0478cd6777cc1886b0,
+    type: 3}
   Player: {fileID: 0}
   NextWeapon: 0
   PlayerPrefab: {fileID: 3230090007496856113, guid: f04759c6715d61e49b942add4b2febe9,
