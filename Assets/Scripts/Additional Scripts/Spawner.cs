@@ -20,12 +20,14 @@ public class Spawner : EntityController
 
     [Header("Control")]
     public int[] Enemys_To_Spawn;
-    
+    public int Amount_Unspawned;
+
     [Header("Design")]
     public GameObject LocationReference;
 
     void Start()
     {
+        Amount_Unspawned = amountToSpawn;
         if(LocationReference)
             Destroy(LocationReference);
 
@@ -60,11 +62,12 @@ public class Spawner : EntityController
         //Spawns the enemy requested
         if (Enemys_To_Spawn.Length > 0 && spawnerTriggered)
         {
+            nextEnemyToSpawn = Random.Range(0,Game.game.EnemyPrefabs.Length);
             if (Game.SpawmEnemy(Enemys_To_Spawn[nextEnemyToSpawn], _transf.position))
             {
                 //increas the amount spawned by 1
                 Amount_Spawned++;
-
+                Amount_Unspawned--;
                 //if reached spawn cap delete this object
                 if (Amount_Spawned >= amountToSpawn)
                 {

@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 6312149268924019294}
   - component: {fileID: 6312149268924019295}
   - component: {fileID: 6312149268924019292}
-  - component: {fileID: -786362305436237223}
+  - component: {fileID: 1312621866270912970}
   m_Layer: 8
   m_Name: Liars Head
   m_TagString: Untagged
@@ -107,8 +107,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  hpDisplayPrefab: {fileID: 2940690511298798057, guid: 6c5172cfc65edd0478cd6777cc1886b0,
-    type: 3}
   IsDummy: 0
   UseSight: 0
   agent: {fileID: 6312149268924019292}
@@ -151,8 +149,8 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &-786362305436237223
-SphereCollider:
+--- !u!136 &1312621866270912970
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -161,9 +159,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2.16
-  m_Center: {x: 0, y: 1.92, z: 0}
+  m_Radius: 2
+  m_Height: 6
+  m_Direction: 1
+  m_Center: {x: 0, y: 3, z: 0}
 --- !u!1 &6312149269750613560
 GameObject:
   m_ObjectHideFlags: 0

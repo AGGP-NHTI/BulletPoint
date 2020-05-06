@@ -6,13 +6,6 @@ public class Sniper : Weapons
 {
     
 
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        takes_Continuous_Input = false;
-    }
-
     public override void Use()
     {
         if (!coolingDown)
@@ -20,6 +13,7 @@ public class Sniper : Weapons
             
             float tracerLength = 100f;
             Vector3 shootDir = Shoot_Node.transform.forward;
+            shootDir.y = 0;
             Vector3 origin = Shoot_Node.transform.position;
 
 
@@ -56,7 +50,6 @@ public class Sniper : Weapons
                             enemy.takeDamage(damageLeft, Game.player.gameObject);
 
                             damageLeft -= enemyHealth;
-                            LOG("BASE DAMAGE: " + damage);
                         }
 
                         if (damageLeft <= 0)

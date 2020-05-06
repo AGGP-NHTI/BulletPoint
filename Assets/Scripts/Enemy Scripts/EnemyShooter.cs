@@ -52,7 +52,7 @@ public class EnemyShooter : Enemy
 
         MoveRandomly();
 
-
+        LOG("Can see player: " + _canSeePlayer + " Distance From Player: " + distanceFromPlayer);
         //Conditions to switch states
         if (_canSeePlayer && distanceFromPlayer > attackDistance)
         {

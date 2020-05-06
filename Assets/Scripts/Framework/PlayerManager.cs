@@ -15,7 +15,7 @@ public class PlayerManager : Pawn
     Vector3 lastPos;
 
     //public variables
-    [Header("Animation Controll")]
+    [Header("Animation Control")]
     public Animator playerAnimator;
     public RuntimeAnimatorController gunAnimator;
     public RuntimeAnimatorController twoHandedAnimator;
@@ -89,6 +89,18 @@ public class PlayerManager : Pawn
     //if right stick input is detected move based off of x and z axis
     void moveAround()
     {
+        playerModel.transform.position = Vector3.zero;
+
+        float cushion = 0.25f;
+        if (_transf.position.y > playerStartingY + cushion)
+        {
+            charController.Move(_transf.TransformDirection(Vector3.down)/10);
+        }
+        else if (_transf.position.y < playerStartingY -cushion)
+        {
+            charController.Move(_transf.TransformDirection(Vector3.up)/10);
+        }
+
         //last position for animations
 		lastPos = transform.position;
 
@@ -251,5 +263,11 @@ public class PlayerManager : Pawn
     {
         yield return new WaitForSeconds(input);
         canRoll = true;
+    }
+
+    protected override void dead(GameObject source = null, int timeUntilRemove = 1)
+    {
+        playerAnimator.SetInteger("Health", 0);
+        base.dead();
     }
 }

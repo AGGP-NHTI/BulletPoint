@@ -9,13 +9,9 @@ public class AssaultRifle : Weapons
     public float standingBulletSpread = 0f;
     public float walkingBulletSpread = 0f;
     public float BulletSpread = 100f;
-    private void Start()
-    {
-        takes_Continuous_Input = true;
-    }
+
 
     
-
     public override void Use()
     {
 

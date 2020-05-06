@@ -20,22 +20,28 @@ public class Pawn : EntityController
 
 	public virtual void Update()
 	{
-		hpdisp?.UpdatePosition(transform.position);
+        if(hpdisp) hpdisp.UpdatePosition(transform.position);
 	}
 
-    protected virtual void dead(GameObject source = null)
+    protected virtual void dead(GameObject source = null, int timeUntilRemove = 1)
     {
         if (this is Enemy)
         {
             Game.EnemyCount--;
         }
+        Collider col = gameObject.GetComponent<Collider>();
 
-		LOG($"{gameObject.name} was killed by {(source.name??"karma")}");
-        gameObject.GetComponent<Collider>().enabled = false;
-        Destroy(_obj,0.5f);
+        if (col)
+        {
+            col.enabled = false;
+        }
+
+        hpdisp.Remove();
+
+        Destroy(_obj,timeUntilRemove);
     }
 
-    public void takeDamage(int amount, GameObject source = null)
+    public virtual void takeDamage(int amount, GameObject source = null)
     {
         if (amount > 0)
         {

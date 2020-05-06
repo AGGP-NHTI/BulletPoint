@@ -64,8 +64,8 @@ public class Enemy : Pawn
         //calculate data for every frame
         distanceFromPlayer = Vector3.Distance(_transf.position, Game.player.transform.position);
 
-        //debugging
-        //if (!IsDummy) LOG(_obj?.name + "'s action is " + action?.Method.Name);
+        
+        LOG(_obj?.name + "'s action is " + action?.Method.Name);
     }
 
     //Debugging
@@ -175,7 +175,7 @@ public class Enemy : Pawn
     protected virtual void MoveRandomly()
     {
         //if the enemy is already moveing it will not start moving to a random location
-        if (!agent.pathPending && agent.remainingDistance < 1)
+        if (!agent.pathPending && agent?.remainingDistance < 1)
         {
             Vector3 startingPos = _transf.position;
             
@@ -194,7 +194,6 @@ public class Enemy : Pawn
     //Returns true if there is not object in the way of the player from the enemies perspective
     protected virtual bool ObjectBlockingView()
     { 
-        bool objectInWay = true;
         Vector3 playerDirection = Game.player.transform.position - _transf.position;
         RaycastHit hit;
 
@@ -204,19 +203,24 @@ public class Enemy : Pawn
         //Raycasts to the player
         if (Physics.Raycast(_transf.position, playerDirection.normalized, out hit,sightDistance, ~(1 << 8)))
         {
+            LOG("Enter RAYCAST------------------------------------------------------------------------------");
             //draws a green line to the object that was hit
+
+
             if (UseSight) Debug.DrawLine(_transf.position, hit.transform.position, Color.green, Game.getlevelTwoAI());
 
 
             //if player was the object hit then there was not object in the way
-            PlayerManager player = hit.collider.gameObject.GetComponent<PlayerManager>();
+            PlayerManager player = hit.collider.gameObject.GetComponentInParent<PlayerManager>();
+
+            LOG("Player Name:  " + player?.name);
             if (player)
             {
-                objectInWay = false;
+                return false;
             }
         }
 
-        return objectInWay;
+        return true;
     }
 
     //Shoots a given projectile forward 
@@ -231,6 +235,7 @@ public class Enemy : Pawn
     protected void projectileShoot(GameObject origin, GameObject toward, GameObject projectile)
     {
         Vector3 lookDir = toward.transform.position - origin.transform.position;
+        lookDir.y = 0;
 
         Quaternion rotation = Quaternion.LookRotation(lookDir, Vector3.up);
 

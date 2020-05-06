@@ -23,6 +23,7 @@ public class PlayerSpawner : MonoBehaviour
         Debug.Log("SET THE PLAYERS LOCATION");
         Game.Player_Starting_Location = transform.position + offeset;
         Game.player.transform.position = Game.Player_Starting_Location;
-        Game.player.playerStartingY = transform.position.y; 
     }
+
+
 }
