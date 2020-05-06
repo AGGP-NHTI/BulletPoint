@@ -32,8 +32,8 @@ public abstract class Weapons : EntityController
 		{
 			Game.player.Drop(this);
 		}
-        LOG("WEAPON: " + name);
-        LOG("HAS PARENT: " + parent?.name);
+        //LOG("WEAPON: " + name);
+        //LOG("HAS PARENT: " + parent?.name);
 	}
 
     protected virtual void OnTriggerStay(Collider other)

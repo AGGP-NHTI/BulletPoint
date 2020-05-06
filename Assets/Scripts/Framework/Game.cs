@@ -21,7 +21,10 @@ public class Game : MonoBehaviour
 
     public GameObject[] EnemyPrefabs;
 
-    [Header("Debugging")]
+	public Canvas canvas;
+	public GameObject hpDisplayPrefab;
+
+	[Header("Debugging")]
     public GameObject Player;
 
     [Header("Scene Transitions")]

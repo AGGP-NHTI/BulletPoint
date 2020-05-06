@@ -51,8 +51,9 @@ public class Enemy : Pawn
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public override void Update()
     {
+		base.Update();
 
         //Add gizmos for sight
         gizmoSpheres.Add((transform.position, sightDistance, Color.yellow));

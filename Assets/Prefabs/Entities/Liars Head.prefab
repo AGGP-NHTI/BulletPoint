@@ -107,6 +107,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  hpDisplayPrefab: {fileID: 2940690511298798057, guid: 6c5172cfc65edd0478cd6777cc1886b0,
+    type: 3}
   IsDummy: 0
   UseSight: 0
   agent: {fileID: 6312149268924019292}

@@ -23,13 +23,13 @@ public class InputManager : MonoBehaviour
 
 	private static InputManager instance;
 
-	Dictionary<GamepadButton, Buffer> buffer = new Dictionary<GamepadButton, Buffer>()
+	static Dictionary<GamepadButton, Buffer> buffer = new Dictionary<GamepadButton, Buffer>()
 	{
-		{GamepadButton.North,	new Buffer(0.5f) },
-		{GamepadButton.East,	new Buffer(0.5f) },
-		{GamepadButton.South,	new Buffer(0.5f) },
-		{GamepadButton.West,	new Buffer(0.5f) },
-        {GamepadButton.RightTrigger,    new Buffer(0.5f) },
+		{GamepadButton.North,		new Buffer(0.5f)},
+		{GamepadButton.East,		new Buffer(0.5f)},
+		{GamepadButton.South,		new Buffer(0.5f)},
+		{GamepadButton.West,		new Buffer(0.5f)},
+        {GamepadButton.RightTrigger,new Buffer(0.5f)},
     };
 
 	Gamepad gp;
@@ -46,15 +46,13 @@ public class InputManager : MonoBehaviour
         }
     }
 	
-    void Start()
+    void OnEnable()
     {
         gp = Gamepad.current;
 	}
 	
     void Update()
     {
-
-        Debug.Log("------------------------------------------GB: " + gp?.name + " is populated: " + (gp != null));// && gp is Gamepad));
         foreach (KeyValuePair<GamepadButton, Buffer> entry in buffer)
         {
             if (gp[entry.Key].wasPressedThisFrame)
@@ -81,11 +79,11 @@ public class InputManager : MonoBehaviour
 	{
 		if (useBuffer)
 		{
-			if (instance.buffer.ContainsKey(btn))
+			if (buffer.ContainsKey(btn))
 			{
-				if (instance.buffer[btn].timePressed != -1)
+				if (buffer[btn].timePressed != -1)
 				{
-					instance.buffer[btn].timePressed = -1;
+					buffer[btn].timePressed = -1;
 					return true;
 				}
 				else

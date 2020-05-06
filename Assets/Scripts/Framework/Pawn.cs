@@ -4,59 +4,49 @@ using UnityEngine;
 
 public class Pawn : EntityController
 {
-
+	
     
-    
-
     public int health = 10;
     protected int startingHealth;
+	
+	HPDisplay hpdisp;
 
-
-    // Start is called before the first frame update
-    public virtual void Start()
+	public virtual void Start()
     {
         startingHealth = health;
-        //LOG("Starting Health: " + startingHealth);
-    }
+		
+		hpdisp = Instantiate(Game.game.hpDisplayPrefab, Game.game.canvas.transform).GetComponent<HPDisplay>();
+	}
 
-    protected virtual void dead()
+	public virtual void Update()
+	{
+		hpdisp?.UpdatePosition(transform.position);
+	}
+
+    protected virtual void dead(GameObject source = null)
     {
         if (this is Enemy)
         {
             Game.EnemyCount--;
         }
-        else
-        {
-            LOG(gameObject.name + " is dieing");
-        }
+
+		LOG($"{gameObject.name} was killed by {(source.name??"karma")}");
+
         Destroy(_obj,2f);
     }
 
-    public void takeDamage(int howMuch)
+    public void takeDamage(int amount, GameObject source = null)
     {
-
-        health -= howMuch;
-        //LOG(_obj.name + " has " + health + " health");
-
-        if (health <= 0)
+        if (amount > 0)
         {
-            dead();
-        }
-    }
+            health -= amount;
 
-    public void takeDamage(int howMuch, GameObject source)
-    {
+			if (health <= 0)
+			{
+				dead(source);
+			}
 
-        if (howMuch >= 0)
-        {
-            health -= howMuch;
-        }
-        //LOG(source.name + " dealth "+ howMuch + " damage to" + _obj.name);
-        //LOG(_obj.name + " now has " + health + " health");
-
-        if (health <= 0)
-        {
-            dead();
-        }
-    }
+			hpdisp?.UpdateHP(health, startingHealth);
+		}
+	}
 }
