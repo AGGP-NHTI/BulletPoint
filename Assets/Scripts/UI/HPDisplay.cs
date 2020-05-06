@@ -17,16 +17,10 @@ public class HPDisplay : MonoBehaviour
 		if (value <= 0) value = 0;
 
 		image.fillAmount = (float)value / maxvalue;
-
-		if (value == 0)
-		{
-			StartCoroutine(Remove());
-		}
 	}
 
-	IEnumerator Remove()
+	public void Remove()
 	{
-		yield return new WaitForSeconds(1);
 		Destroy(gameObject);
 	}
 }
