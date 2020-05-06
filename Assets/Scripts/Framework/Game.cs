@@ -26,6 +26,7 @@ public class Game : MonoBehaviour
 
 	[Header("Debugging")]
     public GameObject Player;
+    public bool canAutoTransition = false;
 
     [Header("Scene Transitions")]
     public int NextWeapon = 0;
@@ -43,7 +44,7 @@ public class Game : MonoBehaviour
     public static System.Func<bool> playerExists = () => false;
 
 
-    int currentSceneLoaded = 1;
+   public int currentSceneLoaded = 1;
 
     private void Start()
     {

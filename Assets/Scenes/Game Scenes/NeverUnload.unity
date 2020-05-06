@@ -133,6 +133,11 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 644927895}
+    - target: {fileID: 413216426149834873, guid: 20ad3edfd65def844afa5e8204072cd3,
+        type: 3}
+      propertyPath: canAutoTransition
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1925240892508740742, guid: 20ad3edfd65def844afa5e8204072cd3,
         type: 3}
       propertyPath: m_LocalPosition.x
