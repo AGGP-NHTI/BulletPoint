@@ -405,6 +405,9 @@ MonoBehaviour:
   - tileIndex: 5
     x: 4
     y: 1
+  - tileIndex: 6
+    x: 5
+    y: 1
 --- !u!82 &2114943857
 AudioSource:
   m_ObjectHideFlags: 0
