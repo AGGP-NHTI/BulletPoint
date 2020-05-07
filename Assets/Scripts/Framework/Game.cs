@@ -62,7 +62,7 @@ public class Game : MonoBehaviour
                 Destroy(gameObject);
             }
 
-
+            
             setupSceneLoading();
 
             isNeverUnloadLoaded = true;
@@ -108,7 +108,7 @@ public class Game : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        setEnemiesLeft();
+        
         Debug.Log("Player In The Scene: " +player?.name);
         Debug.Log("Active Scene: " + SceneManager.GetActiveScene().name);
     }
@@ -153,18 +153,6 @@ public class Game : MonoBehaviour
         }
     }
 
-    void setEnemiesLeft()
-    {
-        int total = 0 ;
-        foreach (Spawner obj in game.spawners)
-        {
-            total += obj.Amount_Unspawned;
-        }
-
-        total += EnemyCount;
-
-        game.EnemiesLeft = total;
-    }
 
 
 

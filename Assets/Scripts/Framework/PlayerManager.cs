@@ -153,7 +153,7 @@ public class PlayerManager : Pawn
 			}
 			else
 			{
-				if (playerAnimator) playerAnimator.SetBool("Attack", true);
+				if (playerAnimator) playerAnimator.SetBool("Attack", false);
 			}
             
         }

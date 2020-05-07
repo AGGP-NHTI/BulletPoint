@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 5
-  IsDummy: 1
+  IsDummy: 0
   UseSight: 0
   agent: {fileID: 2728754432984799514}
   randomMoveFactor: 10
