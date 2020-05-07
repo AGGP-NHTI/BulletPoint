@@ -56,7 +56,7 @@ public class PlayerManager : Pawn
         base.Update();
         rightStick = InputManager.getRightJoyStick();
         leftStick = InputManager.getLeftJoyStick();
-        spinAround();
+        //spinAround();
         attack();
     }
     
@@ -105,7 +105,7 @@ public class PlayerManager : Pawn
 		lastPos = transform.position;
 
         //look direction for when no right stick input
-        if (rightStick.magnitude <= 0)
+        if (rightStick.magnitude <= 0.001f)
         {
             float deltaX = leftStick.x;
             float deltaY = leftStick.y;
@@ -114,6 +114,7 @@ public class PlayerManager : Pawn
             transform.eulerAngles = new Vector3(0, joypos + 45, 0);
             playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
         }
+		else { spinAround(); }
         
         //move
         charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
@@ -126,7 +127,7 @@ public class PlayerManager : Pawn
     void spinAround()
     {
         lookMagnitude = rightStick.magnitude;
-        if (lookMagnitude > 0)
+        if (lookMagnitude > 0.001f)
         {
             float deltaX = rightStick.x;
             float deltaY = rightStick.y;
