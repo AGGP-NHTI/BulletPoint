@@ -16,6 +16,7 @@ public class Pawn : EntityController
         startingHealth = health;
 		
 		hpdisp = Instantiate(Game.game.hpDisplayPrefab, Game.game.canvas.transform).GetComponent<HPDisplay>();
+        hpdisp.UpdateHP(health, startingHealth);
 	}
 
 	public virtual void Update()
@@ -23,7 +24,7 @@ public class Pawn : EntityController
         if(hpdisp) hpdisp.UpdatePosition(transform.position);
 	}
 
-    protected virtual void dead(GameObject source = null, int timeUntilRemove = 1)
+    protected virtual void dead(GameObject source = null, float timeUntilRemove = 1)
     {
         if (this is Enemy)
         {

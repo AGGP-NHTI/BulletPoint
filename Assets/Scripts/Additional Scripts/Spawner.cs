@@ -63,7 +63,7 @@ public class Spawner : EntityController
         if (Enemys_To_Spawn.Length > 0 && spawnerTriggered)
         {
             nextEnemyToSpawn = Random.Range(0,Game.game.EnemyPrefabs.Length);
-            if (Game.SpawmEnemy(Enemys_To_Spawn[nextEnemyToSpawn], _transf.position))
+            if (Game.SpawmEnemy(nextEnemyToSpawn, _transf.position))
             {
                 //increas the amount spawned by 1
                 Amount_Spawned++;

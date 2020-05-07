@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : Pawn
 {
@@ -56,7 +56,7 @@ public class PlayerManager : Pawn
         base.Update();
         rightStick = InputManager.getRightJoyStick();
         leftStick = InputManager.getLeftJoyStick();
-        spinAround();
+        //spinAround();
         attack();
     }
     
@@ -105,7 +105,7 @@ public class PlayerManager : Pawn
 		lastPos = transform.position;
 
         //look direction for when no right stick input
-        if (rightStick.magnitude <= 0)
+        if (rightStick.magnitude <= 0.001f)
         {
             float deltaX = leftStick.x;
             float deltaY = leftStick.y;
@@ -114,6 +114,7 @@ public class PlayerManager : Pawn
             transform.eulerAngles = new Vector3(0, joypos + 45, 0);
             playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
         }
+		else { spinAround(); }
         
         //move
         charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
@@ -126,7 +127,7 @@ public class PlayerManager : Pawn
     void spinAround()
     {
         lookMagnitude = rightStick.magnitude;
-        if (lookMagnitude > 0)
+        if (lookMagnitude > 0.001f)
         {
             float deltaX = rightStick.x;
             float deltaY = rightStick.y;
@@ -210,10 +211,13 @@ public class PlayerManager : Pawn
         {
             playerAnimator.runtimeAnimatorController = gunAnimator;
         }
-        else if (true)//SWORD
+        else if (weaponOwned is Hammer)//SWORD
         {
-
-
+            playerAnimator.runtimeAnimatorController = twoHandedAnimator;
+        }
+        else if (weaponOwned is Sword || weaponOwned == null)
+        {
+            playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         }
     }
 
@@ -235,6 +239,8 @@ public class PlayerManager : Pawn
                 weapon.transform.position = new Vector3(_transf.position.x, weapon.defaultHeight, weapon.transform.position.z);
                 weapon.transform.rotation = Quaternion.Euler(weapon.PlacedRotation);
                 weapon.transform.localScale = weapon.PlacedScale;
+
+                SceneManager.MoveGameObjectToScene(weapon.gameObject, SceneManager.GetActiveScene());
 
                 Game.player.weaponOwned = null;
                 //Game.player.itemPickedUp = false;
@@ -265,9 +271,17 @@ public class PlayerManager : Pawn
         canRoll = true;
     }
 
-    protected override void dead(GameObject source = null, int timeUntilRemove = 1)
+    protected override void dead(GameObject source = null, float timeUntilRemove = 1)
     {
         playerAnimator.SetInteger("Health", 0);
-        base.dead();
+        StartCoroutine(playerDied());
+    }
+
+    IEnumerator playerDied()
+    {
+        yield return new WaitForSeconds(5f);
+
+
+
     }
 }

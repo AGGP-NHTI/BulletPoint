@@ -56,13 +56,13 @@ public class MeleeDemon : Enemy
     {
         anim_controller.SetFloat("ForwardMovement" , 0);
 
-        Game.player.takeDamage(damage);
-
-        //Conditions to switch states
         if (distanceFromPlayer < minSightDistance)
         {
-            action = flee;
+            Game.player.takeDamage(damage);
         }
+        //Conditions to switch states
+        
+        action = flee;
     }
 
     //defined in enemy

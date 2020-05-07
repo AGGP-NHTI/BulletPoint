@@ -244,6 +244,18 @@ public class Game : MonoBehaviour
         }
     }
 
+    public static void LoadMainMenu()
+    {
+        if (game.currentSceneLoaded > 0)
+        {
+            game.StartCoroutine(game.Unload(game.currentSceneLoaded));
+
+            game.currentSceneLoaded = 1;
+
+            game.StartCoroutine(game.LoadScene(game.currentSceneLoaded));
+        }
+    }
+
     IEnumerator Unload(int scene)
     {
         yield return new WaitForEndOfFrame();
