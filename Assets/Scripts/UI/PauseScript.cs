@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public class PauseScript : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PauseScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || InputManager.GetButtonPressed(GamepadButton.Start))
         {
             if (GameIsPaused)
             {

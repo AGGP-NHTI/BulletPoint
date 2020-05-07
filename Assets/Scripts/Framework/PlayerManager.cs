@@ -172,10 +172,6 @@ public class PlayerManager : Pawn
         }
     }
 
-
-
-    
-
     public virtual void PickUp(Weapons weapon)
     {
         if (InputManager.GetButtonPressed(GamepadButton.West) || Input.GetKeyDown(KeyCode.Space))
@@ -281,7 +277,7 @@ public class PlayerManager : Pawn
     {
         yield return new WaitForSeconds(5f);
 
-
+        Game.LoadMainMenu();
 
     }
 }
