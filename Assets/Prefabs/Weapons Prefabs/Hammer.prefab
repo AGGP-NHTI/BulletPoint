@@ -60,7 +60,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Game_ID: 4
   PlacedRotation: {x: 0, y: 0, z: 0}
-  PlacedScale: {x: 4, y: 4, z: 4}
+  PlacedScale: {x: 2, y: 2, z: 2}
   OwnedScale: {x: 2, y: 2, z: 2}
   Shoot_Node: {fileID: 0}
   defaultHeight: 2.5
@@ -69,7 +69,7 @@ MonoBehaviour:
   tracerPrefab: {fileID: 0}
   takes_Continuous_Input: 0
   trigger: {fileID: 8649997016654783628}
-  positionOffset: {x: -1, y: 0.5, z: 0}
+  positionOffset: {x: -0.65, y: 0.5, z: 0.65}
   hitRange: 3.5
 --- !u!1001 &1641251162217995653
 PrefabInstance:
