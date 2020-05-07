@@ -32,7 +32,7 @@ public class Spawner : EntityController
             Destroy(LocationReference);
 
         Game.game.spawners.Add(this);
-
+        Game.game.EnemiesLeft += amountToSpawn;
         timeTracker = 0f;
     }
 
@@ -67,7 +67,6 @@ public class Spawner : EntityController
             {
                 //increas the amount spawned by 1
                 Amount_Spawned++;
-                Amount_Unspawned--;
                 //if reached spawn cap delete this object
                 if (Amount_Spawned >= amountToSpawn)
                 {

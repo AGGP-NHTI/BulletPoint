@@ -29,6 +29,7 @@ public class Pawn : EntityController
         if (this is Enemy)
         {
             Game.EnemyCount--;
+            Game.game.EnemiesLeft--;
         }
         Collider col = gameObject.GetComponent<Collider>();
 
