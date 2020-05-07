@@ -388,19 +388,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navMeshSurface: {fileID: 1380858659}
   mapSize: 8
-  tileset: {fileID: 577784387292197874, guid: e6bebfb28e5d7c249af5b91c11bd9c91, type: 3}
+  tileset: {fileID: 1509249208668672930, guid: ee549b64e928b9c4299030d3ee82355e, type: 3}
   staticTiles:
-  - tileIndex: 2
+  - tileIndex: 1
     x: -2
     y: -2
-  - tileIndex: 7
+  - tileIndex: 2
     x: 1
     y: 1
-  - tileIndex: 8
+  - tileIndex: 3
     x: 3
     y: 1
-  - tileIndex: 6
+  - tileIndex: 4
     x: 2
+    y: 1
+  - tileIndex: 5
+    x: 4
     y: 1
 --- !u!82 &2114943857
 AudioSource:
