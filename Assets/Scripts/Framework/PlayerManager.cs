@@ -265,9 +265,17 @@ public class PlayerManager : Pawn
         canRoll = true;
     }
 
-    protected override void dead(GameObject source = null, int timeUntilRemove = 1)
+    protected override void dead(GameObject source = null, float timeUntilRemove = 1)
     {
         playerAnimator.SetInteger("Health", 0);
-        base.dead();
+        StartCoroutine(playerDied());
+    }
+
+    IEnumerator playerDied()
+    {
+        yield return new WaitForSeconds(5f);
+
+
+
     }
 }

@@ -11,7 +11,7 @@ public class HPDisplay : MonoBehaviour
 
 	public void UpdatePosition(Vector3 worldPosition)
 	{
-		image.rectTransform.position = Camera.main.WorldToScreenPoint(worldPosition + Vector3.up * 3);
+		image.rectTransform.position = Camera.main.WorldToScreenPoint(worldPosition + Vector3.up * 4);
 	}
 
 	public void UpdateHP(int value, int maxvalue)
