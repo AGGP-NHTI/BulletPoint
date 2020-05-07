@@ -96,7 +96,7 @@ MonoBehaviour:
   Shoot_Node: {fileID: 4529349503427846929}
   defaultHeight: 2.5
   damage: 2
-  coolDownDuration: 0.01
+  coolDownDuration: 0.06666667
   tracerPrefab: {fileID: 3804833174766833709, guid: b90a534016bd32a4eb4ead99dcff9364,
     type: 3}
   takes_Continuous_Input: 1

@@ -5,6 +5,8 @@ using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
 
 public abstract class Weapons : EntityController
 {
+
+
     public int Game_ID;
 	public Vector3 PlacedRotation;
 	public Vector3 PlacedScale;
@@ -24,7 +26,10 @@ public abstract class Weapons : EntityController
 
 	GameObject parent;
 
-
+    private void Start()
+    {
+        transform.localScale = PlacedScale;
+    }
 
     private void Update()
 	{

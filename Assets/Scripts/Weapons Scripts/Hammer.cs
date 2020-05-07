@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Hammer : Weapons
 {
-    float hitRange = 5f;
-    float forwardOffset = 2f;
-    int slashThroughAmount = 5;
+    [Header("Hammer")]
+    public Vector3 positionOffset;
+    public float hitRange = 5f;
 
     // Start is called before the first frame update
 
@@ -15,8 +15,7 @@ public class Hammer : Weapons
 
         Gizmos.color = Color.red;
 
-        Vector3 playerLoc = Game.player.transform.position;
-        Vector3 playerOffset = playerLoc + (Game.player.transform.forward * forwardOffset);
+        Vector3 playerOffset = Game.player.transform.TransformPoint(positionOffset);
         Gizmos.DrawWireSphere(playerOffset, hitRange);
     }
 
@@ -24,8 +23,7 @@ public class Hammer : Weapons
     {
         if (!coolingDown)
         {
-            Vector3 playerLoc = Game.player.transform.position;
-            Vector3 playerOffset = playerLoc + (Game.player.transform.forward * forwardOffset);
+            Vector3 playerOffset = Game.player.transform.TransformPoint(positionOffset);
             RaycastHit[] hit = Physics.SphereCastAll(playerOffset, hitRange, Game.player.transform.forward, 5f);
 
 
