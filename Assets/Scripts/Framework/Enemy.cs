@@ -243,6 +243,8 @@ public class Enemy : Pawn
         bullet.GetComponent<bulletScript>().owner = this;
     }
 
+
+
     //Recursive Repeating function to operate State machine
     protected virtual IEnumerator Think()
     {

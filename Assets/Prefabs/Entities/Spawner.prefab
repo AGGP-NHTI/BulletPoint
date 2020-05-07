@@ -45,7 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnForever: 0
   spawnDistance: 10
-  amountToSpawn: 10
+  amountToSpawn: 5
   spawnRate: 1
   Enemys_To_Spawn: 01000000
+  Amount_Unspawned: 0
   LocationReference: {fileID: 0}
