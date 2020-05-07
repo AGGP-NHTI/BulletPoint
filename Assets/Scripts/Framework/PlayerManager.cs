@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
-
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : Pawn
 {
@@ -211,10 +211,13 @@ public class PlayerManager : Pawn
         {
             playerAnimator.runtimeAnimatorController = gunAnimator;
         }
-        else if (true)//SWORD
+        else if (weaponOwned is Hammer)//SWORD
         {
-
-
+            playerAnimator.runtimeAnimatorController = twoHandedAnimator;
+        }
+        else if (weaponOwned is Sword || weaponOwned == null)
+        {
+            playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         }
     }
 
@@ -236,6 +239,8 @@ public class PlayerManager : Pawn
                 weapon.transform.position = new Vector3(_transf.position.x, weapon.defaultHeight, weapon.transform.position.z);
                 weapon.transform.rotation = Quaternion.Euler(weapon.PlacedRotation);
                 weapon.transform.localScale = weapon.PlacedScale;
+
+                SceneManager.MoveGameObjectToScene(weapon.gameObject, SceneManager.GetActiveScene());
 
                 Game.player.weaponOwned = null;
                 //Game.player.itemPickedUp = false;
