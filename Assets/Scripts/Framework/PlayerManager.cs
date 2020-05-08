@@ -6,291 +6,292 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : Pawn
 {
-    //private variables
-    float mass = 3.0f; // defines the character mass
-    Vector3 impact = Vector3.zero;
-    Vector2 leftStick;
-    Vector2 rightStick;
-    
-    Vector3 lastPos;
+	//private variables
+	float mass = 3.0f; // defines the character mass
+	Vector3 impact = Vector3.zero;
+	Vector2 leftStick;
+	Vector2 rightStick;
 
-    //public variables
-    [Header("Animation Control")]
-    public Animator playerAnimator;
-    public RuntimeAnimatorController gunAnimator;
-    public RuntimeAnimatorController twoHandedAnimator;
-    public RuntimeAnimatorController oneHandedAnimator;
-    public Vector2 animationInputs;
-    public GameObject playerModel;
+	Vector3 lastPos;
 
-    [Header("Attacking")]
-    public Weapons weaponOwned;
-    public GameObject Hand_Node;
+	//public variables
+	[Header("Animation Control")]
+	public Animator playerAnimator;
+	public RuntimeAnimatorController gunAnimator;
+	public RuntimeAnimatorController twoHandedAnimator;
+	public RuntimeAnimatorController oneHandedAnimator;
+	public Vector2 animationInputs;
+	public GameObject playerModel;
 
-    [Header("Movement")]
-    public CharacterController charController;
+	[Header("Attacking")]
+	public Weapons weaponOwned;
+	public GameObject Hand_Node;
 
-    public float moveSpeed = 10f;
-    public float moveMagnitude;
-    public float lookMagnitude;
-    public bool canRoll = true;
-    public float rollSpeed = 20f;
-    
-    [Header("Control")]
-    public float playerStartingY;
+	[Header("Movement")]
+	public CharacterController charController;
 
-	public HPDisplay hpdisp;
+	public float moveSpeed = 10f;
+	public float moveMagnitude;
+	public float lookMagnitude;
+	public bool canRoll = true;
+	public float rollSpeed = 20f;
 
-    public System.Func<bool> isPlayerSetup = () => false;
+	[Header("Control")]
+	public float playerStartingY;
+
+	public HPDisplay hpDisplay;
+
+	public System.Func<bool> isPlayerSetup = () => false;
 
 	public override void Start()
-    {
+	{
 		startingHealth = health;
-        //base.Start();
-        if(!weaponOwned) playerAnimator.runtimeAnimatorController = oneHandedAnimator;
-        weaponOwned = null;
+		//base.Start();
+		if (!weaponOwned) playerAnimator.runtimeAnimatorController = oneHandedAnimator;
+		weaponOwned = null;
 
-        isPlayerSetup = () => true;
-    }
+		hpDisplay.gameObject.SetActive(true);
+		hpDisplay.UpdateHP(health, startingHealth);
 
-    // Update is called once per frame
-    public override void Update()
-    {
-        base.Update();
-        rightStick = InputManager.getRightJoyStick();
-        leftStick = InputManager.getLeftJoyStick();
-        //spinAround();
-        
-    }
-    
-    
+		isPlayerSetup = () => true;
+	}
 
-    private void FixedUpdate()
-    {
-        attack();
-        goToGround();
-        animationInputs = moveDirection();
-        //LOG("Animation Inputs: " + animationInputs);
-        playerAnimator.SetFloat("ForwardMovement", animationInputs.y);
-        playerAnimator.SetFloat("RightMovement", animationInputs.x);
+	// Update is called once per frame
+	public override void Update()
+	{
+		base.Update();
+		rightStick = InputManager.getRightJoyStick();
+		leftStick = InputManager.getLeftJoyStick();
+		//spinAround();
+		
+	}
+
+
+
+	private void FixedUpdate()
+	{
+		goToGround();
+		animationInputs = moveDirection();
+		//LOG("Animation Inputs: " + animationInputs);
+		playerAnimator.SetFloat("ForwardMovement", animationInputs.y);
+		playerAnimator.SetFloat("RightMovement", animationInputs.x);
 		moveAround();
 
-        //LOG("Weapon Owned: " + weaponOwned?.name);
-        //LOG("Takes Continuos Input: " + weaponOwned?.takes_Continuous_Input);
-    }
+		attack();
+
+		//LOG("Weapon Owned: " + weaponOwned?.name);
+		//LOG("Takes Continuos Input: " + weaponOwned?.takes_Continuous_Input);
+	}
 
 
-    //Returns a Vector2 for Animation control
-    Vector2 moveDirection()
-    {
-        Vector3 dir = transform.InverseTransformDirection(transform.position - lastPos);
+	//Returns a Vector2 for Animation control
+	Vector2 moveDirection()
+	{
+		Vector3 dir = transform.InverseTransformDirection(transform.position - lastPos);
 
-        return new Vector2(dir.x, dir.z).normalized;
-    }
+		return new Vector2(dir.x, dir.z).normalized;
+	}
 
 
-    //if no right stick input is detected look in the direction of the player, then move that way
-    //if right stick input is detected move based off of x and z axis
-    void moveAround()
-    {
-        playerModel.transform.position = Vector3.zero;
+	//if no right stick input is detected look in the direction of the player, then move that way
+	//if right stick input is detected move based off of x and z axis
+	void moveAround()
+	{
+		playerModel.transform.position = Vector3.zero;
 
-        float cushion = 0.25f;
-        if (_transf.position.y > playerStartingY + cushion)
-        {
-            charController.Move(_transf.TransformDirection(Vector3.down)/10);
-        }
-        else if (_transf.position.y < playerStartingY -cushion)
-        {
-            charController.Move(_transf.TransformDirection(Vector3.up)/10);
-        }
+		float cushion = 0.25f;
+		if (_transf.position.y > playerStartingY + cushion)
+		{
+			charController.Move(_transf.TransformDirection(Vector3.down) / 10);
+		}
+		else if (_transf.position.y < playerStartingY - cushion)
+		{
+			charController.Move(_transf.TransformDirection(Vector3.up) / 10);
+		}
 
-        //last position for animations
+		//last position for animations
 		lastPos = transform.position;
 
-        //look direction for when no right stick input
-        if (rightStick.magnitude <= 0.001f)
-        {
-            float deltaX = leftStick.x;
-            float deltaY = leftStick.y;
-            float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
+		//look direction for when no right stick input
+		if (rightStick.magnitude <= 0.001f)
+		{
+			float deltaX = leftStick.x;
+			float deltaY = leftStick.y;
+			float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
 
-            transform.eulerAngles = new Vector3(0, joypos + 45, 0);
-            playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
-        }
+			transform.eulerAngles = new Vector3(0, joypos + 45, 0);
+			playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
+		}
 		else { spinAround(); }
-        
-        //move
-        charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
-        
-        //set moveMagnitude to see how much input is from the left stick.
-        moveMagnitude = leftStick.magnitude;
-    }
 
-    //look in the direction of the right stick
-    void spinAround()
-    {
-        lookMagnitude = rightStick.magnitude;
-        if (lookMagnitude > 0.001f)
-        {
-            float deltaX = rightStick.x;
-            float deltaY = rightStick.y;
-            float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
+		//move
+		charController.Move((new Vector3((leftStick.x + leftStick.y) / 2, 0, (leftStick.y - leftStick.x) / 2) * moveSpeed / 10));
+
+		//set moveMagnitude to see how much input is from the left stick.
+		moveMagnitude = leftStick.magnitude;
+	}
+
+	//look in the direction of the right stick
+	void spinAround()
+	{
+		lookMagnitude = rightStick.magnitude;
+		if (lookMagnitude > 0.001f)
+		{
+			float deltaX = rightStick.x;
+			float deltaY = rightStick.y;
+			float joypos = Mathf.Atan2(deltaX, deltaY) * Mathf.Rad2Deg;
 
 
-            transform.eulerAngles = new Vector3(0, joypos + 90, 0);
+			transform.eulerAngles = new Vector3(0, joypos + 90, 0);
 
-            playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
-        }
-    }
+			playerModel.transform.eulerAngles = transform.rotation.eulerAngles;
+		}
+	}
 
-    //attacks with the weapon that is owned
-    void attack()
-    {
+	//attacks with the weapon that is owned
+	void attack()
+	{
 		if (weaponOwned && !weaponOwned.takes_Continuous_Input)
 		{
 			if (InputManager.GetButtonPressed(GamepadButton.RightTrigger, true))
 			{
-                LOG("TRYING TO USE WEAPON");
-                weaponOwned.Use();
+				LOG("TRYING TO USE WEAPON");
+				weaponOwned.Use();
 				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
 			else
 			{
 				if (playerAnimator) playerAnimator.SetBool("Attack", false);
 			}
-            
-        }
-        else if(weaponOwned && weaponOwned.takes_Continuous_Input)
-        {
-            if (InputManager.rightTriggerConstant())
+
+		}
+		else if (weaponOwned && weaponOwned.takes_Continuous_Input)
+		{
+			if (InputManager.rightTriggerConstant())
 			{
-                LOG("TRYING TO USE WEAPON");
-                weaponOwned.Use();
+				LOG("TRYING TO USE WEAPON");
+				weaponOwned.Use();
 				if (playerAnimator) playerAnimator.SetBool("Attack", true);
 			}
 			else
 			{
 				if (playerAnimator) playerAnimator.SetBool("Attack", false);
 			}
-        }
-    }
+		}
+	}
 
-    public virtual void PickUp(Weapons weapon)
-    {
-        if (InputManager.GetButtonPressed(GamepadButton.West) || Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!weaponOwned)
-            {
-                setOwnedWeapon(weapon);
-            }
-            else
-            {
-                LOG("DROP YOUR CURRENT ITEM BEFORE PICKING UP ANOTHER");
-            }
-        }
-    }
+	public virtual void PickUp(Weapons weapon)
+	{
+		if (InputManager.GetButtonPressed(GamepadButton.West) || Input.GetKeyDown(KeyCode.Space))
+		{
+			if (!weaponOwned)
+			{
+				setOwnedWeapon(weapon);
+			}
+			else
+			{
+				LOG("DROP YOUR CURRENT ITEM BEFORE PICKING UP ANOTHER");
+			}
+		}
+	}
 
-    public virtual void setOwnedWeapon(Weapons weapon)
-    {
-        weaponOwned = weapon;
-        weapon.trigger.enabled = false;
+	public virtual void setOwnedWeapon(Weapons weapon)
+	{
+		weaponOwned = weapon;
+		weapon.trigger.enabled = false;
 
-        weapon.transform.localScale = weapon.OwnedScale;
-        weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
-        weapon.transform.parent = Hand_Node.transform;
-
-
-        setWeaponAnims();
-
-    }
-
-    void setWeaponAnims()
-    {
-        if (weaponOwned is AssaultRifle || weaponOwned is Sniper)
-        {
-            playerAnimator.runtimeAnimatorController = gunAnimator;
-        }
-        else if (weaponOwned is Hammer)//SWORD
-        {
-            playerAnimator.runtimeAnimatorController = twoHandedAnimator;
-        }
-        else if (weaponOwned is Sword || weaponOwned == null)
-        {
-            playerAnimator.runtimeAnimatorController = oneHandedAnimator;
-        }
-    }
-
-    public virtual void Drop(Weapons weapon)
-    {
-        if (InputManager.GetButtonPressed(GamepadButton.East))
-        {
-            //LOG("TRYING TO DROP" + weapon.gameObject.transform.name);
-
-            if (weaponOwned)
-            {
-
-                //LOG("SETTING PARENT NULL");
-                weapon.transform.parent = null;
-               // LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
+		weapon.transform.localScale = weapon.OwnedScale;
+		weapon.transform.SetPositionAndRotation(Hand_Node.transform.position, Hand_Node.transform.rotation);
+		weapon.transform.parent = Hand_Node.transform;
 
 
-                weapon.transform.position = Game.player.transform.position;
-                weapon.transform.position = new Vector3(_transf.position.x, weapon.defaultHeight, weapon.transform.position.z);
-                weapon.transform.rotation = Quaternion.Euler(weapon.PlacedRotation);
-                weapon.transform.localScale = weapon.PlacedScale;
+		setWeaponAnims();
 
-                SceneManager.MoveGameObjectToScene(weapon.gameObject, SceneManager.GetActiveScene());
+	}
 
-                Game.player.weaponOwned = null;
-                //Game.player.itemPickedUp = false;
-                weapon.trigger.enabled = true;
-                playerAnimator.runtimeAnimatorController = oneHandedAnimator;
-            }
-            else
-            {
-               // LOG("Parent of " + gameObject.transform.name + " is " + gameObject.transform.parent);
-                LOG("NO ITEM TO DROP" + gameObject.transform.name);
-            }
-        }
-    }
+	void setWeaponAnims()
+	{
+		if (weaponOwned is AssaultRifle || weaponOwned is Sniper)
+		{
+			playerAnimator.runtimeAnimatorController = gunAnimator;
+		}
+		else if (weaponOwned is Hammer)//SWORD
+		{
+			playerAnimator.runtimeAnimatorController = twoHandedAnimator;
+		}
+		else if (weaponOwned is Sword || weaponOwned == null)
+		{
+			playerAnimator.runtimeAnimatorController = oneHandedAnimator;
+		}
+	}
 
-    void goToGround()
-    {
-        if (transform.position.y > playerStartingY)
-        {
-            _transf.Translate(-transform.up);
-        }
-    }
+	public virtual void Drop(Weapons weapon)
+	{
+		if (InputManager.GetButtonPressed(GamepadButton.East))
+		{
+			//LOG("TRYING TO DROP" + weapon.gameObject.transform.name);
 
-    
+			if (weaponOwned)
+			{
 
-    IEnumerator rollCoolDown(float input)
-    {
-        yield return new WaitForSeconds(input);
-        canRoll = true;
-    }
+				//LOG("SETTING PARENT NULL");
+				weapon.transform.parent = null;
+				// LOG("Parent of " + weapon.transform.name + " is " + weapon.transform.parent);
 
-    protected override void dead(GameObject source = null, float timeUntilRemove = 1)
-    {
-        playerAnimator.SetInteger("Health", 0);
-        StartCoroutine(playerDied());
-    }
 
-    IEnumerator playerDied()
-    {
-        yield return new WaitForSeconds(5f);
-        Drop(weaponOwned);
-        setWeaponAnims();
-        playerAnimator.SetInteger("Health", 1);
-        health = 500;
-        Game.LoadMainMenu();
+				weapon.transform.position = Game.player.transform.position;
+				weapon.transform.position = new Vector3(_transf.position.x, weapon.defaultHeight, weapon.transform.position.z);
+				weapon.transform.rotation = Quaternion.Euler(weapon.PlacedRotation);
+				weapon.transform.localScale = weapon.PlacedScale;
 
-    }
+				SceneManager.MoveGameObjectToScene(weapon.gameObject, SceneManager.GetActiveScene());
+
+				Game.player.weaponOwned = null;
+				//Game.player.itemPickedUp = false;
+				weapon.trigger.enabled = true;
+				playerAnimator.runtimeAnimatorController = oneHandedAnimator;
+			}
+			else
+			{
+				// LOG("Parent of " + gameObject.transform.name + " is " + gameObject.transform.parent);
+				LOG("NO ITEM TO DROP" + gameObject.transform.name);
+			}
+		}
+	}
+
+	void goToGround()
+	{
+		if (transform.position.y > playerStartingY)
+		{
+			_transf.Translate(-transform.up);
+		}
+	}
+
+
+
+	IEnumerator rollCoolDown(float input)
+	{
+		yield return new WaitForSeconds(input);
+		canRoll = true;
+	}
+
+	protected override void dead(GameObject source = null, float timeUntilRemove = 1)
+	{
+		playerAnimator.SetInteger("Health", 0);
+		StartCoroutine(playerDied());
+	}
+
+	IEnumerator playerDied()
+	{
+		yield return new WaitForSeconds(5f);
+		Drop(weaponOwned);
+		Game.LoadMainMenu();
+
+	}
 
 	public override void takeDamage(int amount, GameObject source = null)
 	{
 		base.takeDamage(amount, source);
-		hpdisp.UpdateHP(health, startingHealth);
+		hpDisplay.UpdateHP(health, startingHealth);
 	}
 }
