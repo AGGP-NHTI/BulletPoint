@@ -33,9 +33,10 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         Debug.Log(Game.game.currentSceneLoaded);
-        if (Game.game.currentSceneLoaded == 1)
+        if (!isMusicPlaying && Game.game.currentSceneLoaded == 1)
         {
             playMusic();
+            isMusicPlaying = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))

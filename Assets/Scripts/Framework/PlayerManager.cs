@@ -60,13 +60,14 @@ public class PlayerManager : Pawn
         rightStick = InputManager.getRightJoyStick();
         leftStick = InputManager.getLeftJoyStick();
         //spinAround();
-        attack();
+        
     }
     
     
 
     private void FixedUpdate()
     {
+        attack();
         goToGround();
         animationInputs = moveDirection();
         //LOG("Animation Inputs: " + animationInputs);
