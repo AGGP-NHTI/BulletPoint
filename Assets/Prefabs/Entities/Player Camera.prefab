@@ -116,6 +116,8 @@ MonoBehaviour:
   MusicSource: {fileID: -4273810160029187753}
   musicClip: {fileID: 8300000, guid: 745207a017e32aa4babf9300343e93be, type: 3}
   AssaultRifleShot: {fileID: 8300000, guid: 6170988ae3635a04ba7b8c10e8f96cbe, type: 3}
+  SniperShot: {fileID: 8300000, guid: c9d627b75222d934499a62ea1fc6cb4c, type: 3}
+  BodyHit: {fileID: 8300000, guid: 5de3c0a0f76b93c429c6feef83ed6cbd, type: 3}
 --- !u!82 &-4273810160029187753
 AudioSource:
   m_ObjectHideFlags: 0
