@@ -281,6 +281,9 @@ public class PlayerManager : Pawn
     {
         yield return new WaitForSeconds(5f);
         Drop(weaponOwned);
+        setWeaponAnims();
+        playerAnimator.SetInteger("Health", 1);
+        health = 500;
         Game.LoadMainMenu();
 
     }

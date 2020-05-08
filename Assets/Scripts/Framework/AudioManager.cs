@@ -33,7 +33,7 @@ public class AudioManager : MonoBehaviour
     private void Update()
     {
         Debug.Log(Game.game.currentSceneLoaded);
-        if (!isMusicPlaying && Game.game.currentSceneLoaded == 1)
+        if (!isMusicPlaying && Game.game.currentSceneLoaded == 2)
         {
             playMusic();
             isMusicPlaying = true;
