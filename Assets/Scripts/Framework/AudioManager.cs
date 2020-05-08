@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+
+    public GameObject AudioPrefab;
+
     public static AudioManager audioManager;
 
     public static AudioSource MusicSource;
@@ -20,7 +23,7 @@ public class AudioManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            playAssualtRifle(MusicSource);
+            playAssualtRifle();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -49,7 +52,19 @@ public class AudioManager : MonoBehaviour
 
     public static void playAssualtRifle()
     {
-        source.clip = audioManager.AssaultRifleShot;
+        playSound(audioManager.AssaultRifleShot);
+    }
+
+    public static void playSound(AudioClip clip)
+    {
+
+        GameObject obj = Instantiate(audioManager.AudioPrefab);
+        AudioClip obj_clip = obj.GetComponent<AudioClip>();
+
+        obj_clip = clip;
+        AudioSource source = obj.GetComponent<AudioSource>();
+
+        source.clip = obj_clip;
     }
 
 }
