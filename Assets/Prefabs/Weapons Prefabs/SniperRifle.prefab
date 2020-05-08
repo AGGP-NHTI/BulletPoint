@@ -61,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Game_ID: 2
   PlacedRotation: {x: -90, y: 0, z: 0}
-  PlacedScale: {x: 2, y: 2, z: 2}
+  PlacedScale: {x: 4, y: 4, z: 4}
   OwnedScale: {x: 1, y: 1, z: 1}
   Shoot_Node: {fileID: 9052431541046317448}
   defaultHeight: 2.5

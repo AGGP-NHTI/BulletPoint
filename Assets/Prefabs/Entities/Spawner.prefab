@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnForever: 0
-  spawnDistance: 10
+  spawnDistance: 100
   amountToSpawn: 5
   spawnRate: 1
   Enemys_To_Spawn: 01000000
