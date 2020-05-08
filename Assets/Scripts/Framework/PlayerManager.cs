@@ -39,10 +39,13 @@ public class PlayerManager : Pawn
     [Header("Control")]
     public float playerStartingY;
 
+	public HPDisplay hpdisp;
+
     public System.Func<bool> isPlayerSetup = () => false;
 
 	public override void Start()
     {
+		startingHealth = health;
         //base.Start();
         if(!weaponOwned) playerAnimator.runtimeAnimatorController = oneHandedAnimator;
         weaponOwned = null;
@@ -280,4 +283,10 @@ public class PlayerManager : Pawn
         Game.LoadMainMenu();
 
     }
+
+	public override void takeDamage(int amount, GameObject source = null)
+	{
+		base.takeDamage(amount, source);
+		hpdisp.UpdateHP(health, startingHealth);
+	}
 }
