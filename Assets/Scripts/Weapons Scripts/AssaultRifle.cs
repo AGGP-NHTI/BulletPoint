@@ -17,6 +17,8 @@ public class AssaultRifle : Weapons
 
         if (!coolingDown)
         {
+            AudioManager.playAssualtRifle();
+
 
             //Caluculateing Bullet Spread
             bulletSpreadMagnitude = Random.Range(-1f, 1f);

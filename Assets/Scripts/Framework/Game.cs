@@ -108,7 +108,7 @@ public class Game : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha0)) LoadMainMenu();
         Debug.Log("Player In The Scene: " +player?.name);
         Debug.Log("Active Scene: " + SceneManager.GetActiveScene().name);
     }
@@ -238,9 +238,9 @@ public class Game : MonoBehaviour
         {
             game.StartCoroutine(game.Unload(game.currentSceneLoaded));
 
-            game.currentSceneLoaded = 1;
+            game.StartCoroutine(game.LoadScene(1));
 
-            game.StartCoroutine(game.LoadScene(game.currentSceneLoaded));
+            game.currentSceneLoaded = 1;
         }
     }
 
