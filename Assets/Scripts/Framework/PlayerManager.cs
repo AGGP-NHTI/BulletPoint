@@ -284,6 +284,9 @@ public class PlayerManager : Pawn
 	IEnumerator playerDied()
 	{
 		yield return new WaitForSeconds(5f);
+
+
+        
 		Drop(weaponOwned);
 		Game.LoadMainMenu();
 

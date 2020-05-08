@@ -234,6 +234,7 @@ public class Game : MonoBehaviour
 
     public static void LoadMainMenu()
     {
+        
         if (game.currentSceneLoaded > 0)
         {
             game.StartCoroutine(game.Unload(game.currentSceneLoaded));

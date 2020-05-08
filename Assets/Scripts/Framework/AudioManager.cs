@@ -70,17 +70,17 @@ public class AudioManager : MonoBehaviour
 
     public static void playAssualtRifle()
     {
-        playSound(audioManager.AssaultRifleShot, 0.3f);
+        playSound(audioManager.AssaultRifleShot, 0.2f);
     }
 
     public static void playSniper()
     {
-        playSound(audioManager.SniperShot,0.3f);
+        playSound(audioManager.SniperShot,0.2f);
     }
 
     public static void playBodyHit()
     {
-        playSound(audioManager.BodyHit, 0.7f);
+        playSound(audioManager.BodyHit, 0.5f);
     }
 
     public static void playSound(AudioClip clip, float audioDeviation)
