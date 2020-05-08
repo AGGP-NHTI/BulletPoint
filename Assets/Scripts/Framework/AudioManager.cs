@@ -9,18 +9,33 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager audioManager;
 
-    public static AudioSource MusicSource;
+    public AudioSource MusicSource;
 
-    public AudioClip Music;
+    public AudioClip musicClip;
+
     public AudioClip AssaultRifleShot;
 
+    bool isMusicPlaying = false;
     private void Start()
     {
-        playMusic();
+        if (!audioManager)
+        {
+            audioManager = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
     {
+        Debug.Log(Game.game.currentSceneLoaded);
+        if (Game.game.currentSceneLoaded == 2)
+        {
+            playMusic();
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             playAssualtRifle();
@@ -46,8 +61,8 @@ public class AudioManager : MonoBehaviour
 
     public static void playMusic()
     {
-        MusicSource.clip = audioManager.Music;
-        MusicSource.Play();
+        audioManager.MusicSource.clip = audioManager.musicClip;
+        audioManager.MusicSource.Play();
     }
 
     public static void playAssualtRifle()
@@ -59,12 +74,17 @@ public class AudioManager : MonoBehaviour
     {
 
         GameObject obj = Instantiate(audioManager.AudioPrefab);
-        AudioClip obj_clip = obj.GetComponent<AudioClip>();
+        if (obj)
+        {
+            AudioClip obj_clip = obj.GetComponent<AudioClip>();
 
-        obj_clip = clip;
-        AudioSource source = obj.GetComponent<AudioSource>();
+            obj_clip = clip;
+            AudioSource source = obj.GetComponent<AudioSource>();
 
-        source.clip = obj_clip;
+            source.clip = obj_clip;
+
+            source.Play();
+        }
     }
 
 }
