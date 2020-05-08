@@ -10,7 +10,8 @@ public class Sniper : Weapons
     {
         if (!coolingDown)
         {
-            
+            AudioManager.playSniper();
+
             float tracerLength = 100f;
             Vector3 shootDir = Shoot_Node.transform.forward;
             shootDir.y = 0;

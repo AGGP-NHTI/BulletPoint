@@ -47,6 +47,7 @@ public class Pawn : EntityController
     {
         if (amount > 0)
         {
+            AudioManager.playBodyHit();
             health -= amount;
 
 			if (health <= 0)
