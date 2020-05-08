@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GamepadButton = UnityEngine.InputSystem.LowLevel.GamepadButton;
+
 
 public class PauseScript : MonoBehaviour
 {
